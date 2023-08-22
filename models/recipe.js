@@ -15,7 +15,7 @@ const recipeSchema = new mongoose.Schema({
         required: true
     },
     cookTimeActive:{
-        type: number,
+        type: Number,
         required: true
     },
     dateAdded:{
