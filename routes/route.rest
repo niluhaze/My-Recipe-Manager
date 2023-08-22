@@ -21,7 +21,23 @@ GET http://localhost:3000/recipe/falafel
 GET http://localhost:3000/edit
 //show empty edit page TBD
 
-### 
+###
+
+POST http://localhost:3000/edit
+Content-Type: application/json
+
+{
+    "url_name": "fried-potatoes",
+    "name": "Fried Potatoes",
+    "cookTimeTotal": "45",
+    "cookTimeActive": "45",
+    "dateAdded": 0,
+    "tags": ["Vegan"],
+    "ingredients": ["Potatoes", "Spices of Choice", "Salt", "Oil"],
+    "instructions": "slice potatoes, mix with spices, and fry until ready"
+}
+
+###
 
 GET http://localhost:3000/edit/falafel
 //show edit page with loaded falafel recipe data TBD
