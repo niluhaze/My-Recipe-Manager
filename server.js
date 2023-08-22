@@ -31,4 +31,5 @@ app.use("/edit", editRouter)
 app.use("/my-recipes", myRecipesRouter)
 app.use("/recipe", recipeRouter)
 
+//tell server to listen on specified port
 app.listen(3000, () => console.log("Server Started"))
