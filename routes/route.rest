@@ -1,0 +1,27 @@
+GET http://localhost:3000/
+//redirect to /my-recipes
+
+###
+
+GET http://localhost:3000/my-recipes
+//show list of recipes TBD
+
+###
+
+GET http://localhost:3000/recipe/
+//redirect to /my-recipes
+
+### 
+
+GET http://localhost:3000/recipe/falafel
+//show falafel recipe page TBD
+
+###
+
+GET http://localhost:3000/edit
+//show empty edit page TBD
+
+### 
+
+GET http://localhost:3000/edit/falafel
+//show edit page with loaded falafel recipe data TBD
