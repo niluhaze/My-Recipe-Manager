@@ -28,10 +28,10 @@ Content-Type: application/json
 
 {
     "url_name": "fried-potatoes",
-    "name": "Fried Potatoes",
+    "recipe_name": "Fried Potatoes",
     "cookTimeTotal": "45",
     "cookTimeActive": "45",
-    "dateAdded": 0,
+    "dateAdded": 1000000000000,
     "tags": ["Vegan"],
     "ingredients": ["Potatoes", "Spices of Choice", "Salt", "Oil"],
     "instructions": "slice potatoes, mix with spices, and fry until ready"
