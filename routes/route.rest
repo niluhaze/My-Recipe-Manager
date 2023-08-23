@@ -33,6 +33,8 @@ Content-Type: application/json
     "cookTimeActive": "45",
     "dateAdded": 1000000000000,
     "tags": ["Vegan"],
+    "quantity": 2,
+    "quantity_unit": "portions",
     "ingredients": ["Potatoes", "Spices of Choice", "Salt", "Oil"],
     "instructions": "slice potatoes, mix with spices, and fry until ready"
 }
