@@ -32,10 +32,4 @@ router.post("/", async (req, res) => {
     }
 })
 
-/* TBD 
-function nameToUrlName(name){
-
-    return name
-} */
-
 module.exports = router
