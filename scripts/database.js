@@ -2,7 +2,12 @@
 This contains scripts related to the MongoDB database.
 */
 
-const recipes_per_page = 20
+const recipes_per_page = 20 //number of recipes per /my-recipes page
+//specifies recipe variables needed for the recipe list
+vars_for_recipe_list = {
+url_name: 1, recipe_name: 1, cookTimeTotal: 1, cookTimeActive: 1, dateAdded: 0,
+tags: 0, quantity: 0, quantity_unit: 0, ingredients: 0, instructions: 0
+}
 
 const unidecode = require("unidecode")
 const Recipe = require("../models/recipe")
@@ -84,10 +89,12 @@ async function getRecipeListAmount(query_json){
 
 
 async function getRecipeListData(query_json){
+
     const query_count = getRecipeListAmount(query_json) //get amount of recipes that fit the filter
     const pages_amount = Math.round(query_count/recipes_per_page) //get the amount of resulting pages
-    //TODO: sort: query_json.sort_by: query_json.sort_direction, 
-    return await Recipe.find(generateRecipeListQuery(query_json)).sort({name: 1}).skip(recipes_per_page * query_json.page || 0).limit(recipes_per_page) 
+    //TODO: sort: query_json.sort_by: query_json.sort_direction,
+    //retrieve needed recipe data given the filters, sort type and page number
+    return await Recipe.find(generateRecipeListQuery(query_json), vars_for_recipe_list).sort({name: 1}).skip(recipes_per_page * query_json.page || 0).limit(recipes_per_page) 
 }
 
 module.exports = {
