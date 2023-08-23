@@ -1,3 +1,8 @@
+/*
+This is the main backend file.
+*/
+
+
 //dev requirements
 require("dotenv").config()
 
