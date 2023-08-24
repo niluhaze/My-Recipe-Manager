@@ -1,5 +1,5 @@
 //recipe schema, specifying the variables a recipe object should have
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
 const recipeSchema = new mongoose.Schema({
     url_name:{
@@ -38,4 +38,4 @@ const recipeSchema = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model("Recipe", recipeSchema)
+module.exports = mongoose.model("Recipe", recipeSchema);
