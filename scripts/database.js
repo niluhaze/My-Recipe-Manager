@@ -112,5 +112,5 @@ async function getRecipeListData(query){
 }
 
 module.exports = {
-    checkIfExists, getNewUrlName, getRecipeListData
+    checkIfUrlNameExists, getNewUrlName, getRecipeListData
 }
