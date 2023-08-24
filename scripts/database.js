@@ -2,13 +2,13 @@
 This contains scripts related to the MongoDB database.
 */
 
-const RECIPES_PER_PAGE = 20; //number of recipes per /my-recipes page
-VARS_FOR_RECIPE_LIST = { //specifies recipe variables needed for the recipe list
+const RECIPES_PER_PAGE = 20 //number of recipes per /my-recipes page
+const VARS_FOR_RECIPE_LIST = { //specifies recipe variables needed for the recipe list
 url_name: 1, recipe_name: 1, cookTimeTotal: 1, cookTimeActive: 1, _id: 0
-};
+}
 
-const unidecode = require("unidecode");
-const Recipe = require("../models/recipe");
+const unidecode = require("unidecode")
+const Recipe = require("../models/recipe")
 
 //return true if a specific url name already exists
 async function checkIfUrlNameExists(urlNameToCheck){
@@ -62,7 +62,7 @@ function generateRecipeListQuery(query){
         }*/
 
         //filter by tags if given
-        if (query.tags != null && query.tags != []){ 
+        if (query.tags != null && query.tags != []){
             query += `tags: {$all: ${query.tags} },`
         }
 
@@ -80,7 +80,7 @@ function generateRecipeListQuery(query){
         console.log(error)
         throw error
     }
-    
+
 }
 
 //returns the amount of recipes that fit the given filter
