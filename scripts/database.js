@@ -4,17 +4,17 @@ This contains scripts related to the MongoDB database.
 
 const RECIPES_PER_PAGE = 20 //number of recipes per /my-recipes page
 const VARS_FOR_RECIPE_LIST = { //specifies recipe variables needed for the recipe list
-url_name: 1, recipe_name: 1, cookTimeTotal: 1, cookTimeActive: 1, _id: 0
+urlName: 1, recipeName: 1, cookTimeTotal: 1, cookTimeActive: 1, _id: 0
 }
 
 const unidecode = require("unidecode")
 const Recipe = require("../models/recipe")
 
 //return true if a specific url name already exists
-async function checkIfUrlNameExists(urlNameToCheck){
+async function checkIfUrlNameExists(ToCheck){
 
     try {
-        if (await Recipe.find({url_name: urlNameToCheck}).limit(1).size() > 0){
+        if (await Recipe.find({urlName: ToCheck}).limit(1).size() > 0){
             return true
         }
     } catch (error) {
@@ -25,28 +25,28 @@ async function checkIfUrlNameExists(urlNameToCheck){
 }
 
 //generate a url name from a recipe name
-async function getNewUrlName(recipe_name){
+async function getNewUrlName(recipeName){
 
     //clean up string a bit
-    recipe_name = recipe_name.trim().toLowerCase()
-    recipe_name = unidecode(recipe_name) //decodes any special unicode chars like umlauts to ascii
-    recipe_name = recipe_name.replace(/ /g,"-").replace //replace spaces with -
-    recipe_name = recipe_name.replace(/^a-z-/g, "") //remove everything that is not a roman letter or -
+    recipeName = recipeName.trim().toLowerCase()
+    recipeName = unidecode(recipeName) //decodes any special unicode chars like umlauts to ascii
+    recipeName = recipeName.replace(/ /g,"-").replace //replace spaces with -
+    recipeName = recipeName.replace(/^a-z-/g, "") //remove everything that is not a roman letter or -
 
     //if recipe name already exists in a different object, add "-i" after it
     //finds lowest i which doesn't exist yet
-    if (await checkIfUrlNameExists(recipe_name)){
+    if (await checkIfUrlNameExists(recipeName)){
         i = 2
         while(true){
-            recipe_name_i = recipe_name + " " + i
-            //if unique name found, return recipe_name_i
-            if(await !checkIfUrlNameExists(recipe_name_i)){
-                return recipe_name_i
+            recipeName_i = recipeName + " " + i
+            //if unique name found, return recipeName_i
+            if(await !checkIfExists(recipeName_i)){
+                return recipeName_i
             }
             i++
         }
     }
-    return recipe_name
+    return recipeName
 }
 
 /* generates the query that will go inside the Recipe.find() method
@@ -91,18 +91,26 @@ async function getRecipeListAmount(query){
 //get a json of the required recipe data for the /my-recipes list
 async function getRecipeListData(query){
 
-    const query_count = await getRecipeListAmount(query) //get amount of recipes that fit the filter
-    const pages_amount = Math.round(query_count/RECIPES_PER_PAGE) //get the amount of resulting pages
-    //TODO: sort: query.sort_by: query.sort_direction,
-    //retrieve needed recipe data given the filters, sort type and page number
-    //recipes = await Recipe.find()
-    //console.log("RECIPES:\n" + recipes)
-    //return recipes
-    recipes = await Recipe.find(/* generateRecipeListQuery(query) */{}, VARS_FOR_RECIPE_LIST)/* .sort({name: 1}).skip(RECIPES_PER_PAGE * query.page || 0).limit(RECIPES_PER_PAGE) */
-    //console.log("RECIPES:\n" + recipes)
-    return recipes
+    try {
+
+        const query_count = await getRecipeListAmount(query) //get amount of recipes that fit the filter
+        const pages_amount = Math.round(query_count/RECIPES_PER_PAGE) //get the amount  of resulting pages
+        //TODO: sort: query.sort_by: query.sort_direction,
+        //retrieve needed recipe data given the filters, sort type and page number
+        recipes = await Recipe
+        .find(
+            generateRecipeListQuery(query), //find objects which match the query
+            VARS_FOR_RECIPE_LIST) //and only include the relevant vars for the recipe list
+        .sort({"recipeName": 1})  
+        .skip(RECIPES_PER_PAGE * (query.page-1) || 0) //skip elements of previous pages or skip 0 if page not given
+        .limit(RECIPES_PER_PAGE) //only retrieve elements needed for current page
+        return recipes
+
+    } catch (error) {
+        throw error
+    }
 }
 
 module.exports = {
-    checkIfUrlNameExists, getNewUrlName, getRecipeListData
+    checkIfExists, getNewUrlName, getRecipeListData
 }

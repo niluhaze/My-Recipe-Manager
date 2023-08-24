@@ -2,11 +2,11 @@
 const mongoose = require("mongoose")
 
 const recipeSchema = new mongoose.Schema({
-    url_name:{
+    urlName:{
         type: String,
         required: true
     },
-    recipe_name:{
+    recipeName:{
         type: String,
         required: true
     },

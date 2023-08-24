@@ -27,8 +27,8 @@ POST http://localhost:3000/edit
 Content-Type: application/json
 
 {
-    "url_name": "fried-potatoes",
-    "recipe_name": "Fried Potatoes",
+    "urlName": "fried-potatoes",
+    "recipeName": "Fried Potatoes",
     "cookTimeTotal": "45",
     "cookTimeActive": "45",
     "dateAdded": 1000000000000,

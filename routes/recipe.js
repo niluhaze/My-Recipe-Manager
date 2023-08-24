@@ -7,9 +7,9 @@ router.get("/", (req, res) => {
     res.redirect("/my-recipes")
 })
 
-router.get("/:url_name", (req, res) => {
-    //for testing: return url_name
-    res.send(req.params.url_name)
+router.get("/:urlName", (req, res) => {
+    //for testing: return urlName
+    res.send(req.params.urlName)
 })
 
 module.exports = router

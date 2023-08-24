@@ -8,15 +8,15 @@ router.get("/", (req, res) => {
 })
 
 //open edit page of existing recipe
-router.get("/:url_name", (req, res) => {
+router.get("/:urlName", (req, res) => {
     res.render("edit")
 })
 
 //post a new recipe
 router.post("/", async (req, res) => {
     const recipe = new Recipe({
-        url_name: req.body.url_name,
-        recipe_name: req.body.recipe_name,
+        urlName: req.body.urlName,
+        recipeName: req.body.recipeName,
         cookTimeTotal: req.body.cookTimeTotal,
         cookTimeActive: req.body.cookTimeActive,
         dateAdded: req.body.dateAdded,
