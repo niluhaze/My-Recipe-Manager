@@ -8,7 +8,7 @@ GET http://localhost:3000/my-recipes
 
 ###
 
-GET http://localhost:3000/my-recipes?sortBy=cookTimeTotal&page=0
+GET http://localhost:3000/my-recipes?sortBy=cookTimeTotal&sortDir=1
 
 ###
 

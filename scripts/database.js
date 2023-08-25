@@ -10,6 +10,26 @@ urlName: 1, recipeName: 1, cookTimeTotal: 1, cookTimeActive: 1, _id: 0
 const unidecode = require("unidecode")
 const Recipe = require("../models/recipe")
 
+//takes array of strings which form json "key: value" pairs and uses them to create a json
+function createJson(jsonParts) {
+
+    let jsonString = "{" //start with {
+
+    for (i in jsonParts) {
+
+        jsonString += jsonParts[i] //add key: value pair
+
+        if(i < jsonParts.length - 1){ //if another pair follows, add a comma
+            jsonString += ","
+        }
+
+    }
+
+    jsonString += "}" //end with }
+
+    return JSON.parse(jsonString)
+}
+
 //return true if a specific url name already exists
 async function checkIfUrlNameExists(ToCheck){
 
@@ -18,7 +38,7 @@ async function checkIfUrlNameExists(ToCheck){
             return true
         }
     } catch (error) {
-        throw 500
+        throw error
     }
     return false
 
@@ -51,10 +71,10 @@ async function getNewUrlName(recipeName){
 
 /* generates the query that will go inside the Recipe.find() method
 to find a list of recipes matching the filter parameters given in query */
-function generateRecipeListQuery(query){
+function generateRecipeListFindEntry(query){
     try {
 
-        var query = "{" //start with {}
+        jsonParts = []
 
         /* TODO: filter recipe names by search
         if (query.search != null){
@@ -63,29 +83,56 @@ function generateRecipeListQuery(query){
 
         //filter by tags if given
         if (query.tags != null && query.tags != []){
-            query += `tags: {$all: ${query.tags} },`
+            jsonParts.push(`tags: {$all: ${query.tags}}`)
         }
 
-        //if last char in query is a comma, remove it
-        if (query[query.slice(-1)] == ","){
-            query = query.slice(0,-1)
-        }
-
-        query += "}" //end with }
-
-        console.log("QUERY:\n" + query)
-        return JSON.parse(query) //convert string to json and return
+        return createJson(jsonParts) //create json from parts and return
 
     } catch (error) {
-        console.log(error)
         throw error
     }
 
 }
 
+//determine how many recipes to skip in the following query depending on which page was queried
+function generateRecipeListSkipEntry(query) { 
+
+    if (query.page == null || query.page <= 0) {
+        return 0 //skip none if no page given, or if page value is not positive
+    } else {
+        return RECIPES_PER_PAGE * (query.page-1) //skip elements of previous pages if page number given
+    }
+
+}
+
+//determine by which variables to sort the recipes depending on the query
+function generateRecipeListSortEntry(query){
+    try {
+
+        if (query.sortBy == null || !(query.sortDir == 1 || query.sortDir == -1)){
+
+            return {"dateAdded":1 ,"name" :1} //default sorting if no (valid) query given
+
+        } else {
+
+            let jsonParts = [] //build custom sort json based on query
+            jsonParts.push(`"${query.sortBy}": "${query.sortDir}"`)
+
+            //include the following if they are not already included in the query
+            if (query.sortBy != "dateAdded"){ jsonParts.push('"dateAdded": "1"')}
+            if (query.sortBy != "recipeName"){ jsonParts.push('"recipeName": "1"')}
+
+            return createJson(jsonParts)
+        }
+
+    } catch (error) {
+        throw error
+    }
+}
+
 //returns the amount of recipes that fit the given filter
 async function getRecipeListAmount(query){
-    return await Recipe.find(generateRecipeListQuery(query)).count()
+    return await Recipe.find(generateRecipeListFindEntry(query)).count()
 }
 
 //get a json of the required recipe data for the /my-recipes list
@@ -95,14 +142,18 @@ async function getRecipeListData(query){
 
         const query_count = await getRecipeListAmount(query) //get amount of recipes that fit the filter
         const pages_amount = Math.round(query_count/RECIPES_PER_PAGE) //get the amount  of resulting pages
+
+        
+
         //TODO: sort: query.sort_by: query.sort_direction,
         //retrieve needed recipe data given the filters, sort type and page number
         recipes = await Recipe
         .find(
-            generateRecipeListQuery(query), //find objects which match the query
-            VARS_FOR_RECIPE_LIST) //and only include the relevant vars for the recipe list
-        .sort({"recipeName": 1})  
-        .skip(RECIPES_PER_PAGE * (query.page-1) || 0) //skip elements of previous pages or skip 0 if page not given
+            generateRecipeListFindEntry(query), //find objects which match the query
+            VARS_FOR_RECIPE_LIST //and only include the relevant vars for the recipe list
+        )
+        .sort(generateRecipeListSortEntry(query)) //specify how elements are sorted
+        .skip(generateRecipeListSkipEntry(query)) //skip elements of previous pages
         .limit(RECIPES_PER_PAGE) //only retrieve elements needed for current page
         return recipes
 
@@ -112,5 +163,5 @@ async function getRecipeListData(query){
 }
 
 module.exports = {
-    checkIfUrlNameExists, getNewUrlName, getRecipeListData
+    RECIPES_PER_PAGE, checkIfUrlNameExists, getNewUrlName, getRecipeListAmount, getRecipeListData
 }
