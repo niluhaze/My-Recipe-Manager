@@ -1,20 +1,14 @@
 const express = require("express")
 const router = express.Router()
 const Recipe = require("../models/recipe")
+const getRecipe = require("../scripts/getRecipe")
 
+
+
+//functions for creating new recipe under "/":
 //open edit page to create new recipe
 router.get("/", (req, res) => {
     res.render("edit")
-})
-
-//open edit page of existing recipe
-router.get("/:urlName", async (req, res) => {
-    try {
-        //retrieve data of corresponding recipe
-        res.json(await Recipe.find({"urlName": req.params.urlName}).limit(1))
-    } catch (error) {
-        res.json({message: error.message})
-    }
 })
 
 //post a new recipe
@@ -34,6 +28,23 @@ router.post("/", async (req, res) => {
         res.status(201).json(newRecipe)
     } catch (error) {
         res.status(400).json({message: error.message})
+    }
+})
+
+
+
+//functions for editing existing recipe under "/urlName":
+//open edit page of existing recipe
+router.get("/:urlName", getRecipe, async (req, res) => {
+    res.send(res.recipe)
+})
+
+router.delete("/:urlName", getRecipe, async (req, res) => {
+    try {
+        await res.recipe.remove() //remove recipe from database
+        res.status(201).json({message: `Deleted recipe "${urlName}".`}) //respond with confirmation
+    } catch (error) {
+        res.status(500).send({message: error.message}) //
     }
 })
 
