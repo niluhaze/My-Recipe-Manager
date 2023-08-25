@@ -8,8 +8,13 @@ router.get("/", (req, res) => {
 })
 
 //open edit page of existing recipe
-router.get("/:urlName", (req, res) => {
-    res.render("edit")
+router.get("/:urlName", async (req, res) => {
+    try {
+        //retrieve data of corresponding recipe
+        res.json(await Recipe.find({"urlName": req.params.urlName}).limit(1))
+    } catch (error) {
+        res.json({message: error.message})
+    }
 })
 
 //post a new recipe
