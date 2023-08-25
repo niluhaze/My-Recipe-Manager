@@ -45,5 +45,9 @@ Content-Type: application/json
 
 ###
 
+DELETE http://localhost:3000/edit/fried-potatoes
+
+###
+
 GET http://localhost:3000/edit/falafel
 //show edit page with loaded falafel recipe data TBD
