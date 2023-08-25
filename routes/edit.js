@@ -36,15 +36,16 @@ router.post("/", async (req, res) => {
 //functions for editing existing recipe under "/urlName":
 //open edit page of existing recipe
 router.get("/:urlName", getRecipe, async (req, res) => {
+    //get data via middleware function and send
     res.send(res.recipe)
 })
 
-router.delete("/:urlName", getRecipe, async (req, res) => {
+router.delete("/:urlName", async (req, res) => {
     try {
-        await res.recipe.remove() //remove recipe from database
-        res.status(201).json({message: `Deleted recipe "${urlName}".`}) //respond with confirmation
+        await Recipe.deleteOne({"urlName": req.params.urlName}) //remove recipe from database
+        res.status(201).json({message: `Deleted recipe '${req.params.urlName}'.`}) //respond with confirmation
     } catch (error) {
-        res.status(500).send({message: error.message}) //
+        res.status(500).send({message: error.message})
     }
 })
 
