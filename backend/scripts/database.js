@@ -118,9 +118,11 @@ function generateRecipeListSkipEntry(query) {
 function generateRecipeListSortEntry(query){
     try {
 
+        //A valid sort query has a sortBy String and a sortDir(ection) which is 1 or -1
+        //if no (valid) query given 
         if (query.sortBy == null || !(query.sortDir == 1 || query.sortDir == -1)){
 
-            return {"dateAdded":1 ,"name" :1} //default sorting if no (valid) query given
+            return {"dateAdded":1 ,"name" :1} //resort to default sorting 
 
         } else {
 
