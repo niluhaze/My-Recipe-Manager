@@ -31,14 +31,13 @@ POST http://localhost:3000/edit
 Content-Type: application/json
 
 {
-    "urlName": "fried-potatoes",
-    "recipeName": "Fried Potatoes",
-    "cookTimeTotal": "45",
-    "cookTimeActive": "45",
+    "recipeName": "Fried Pötatoes",
+    "cookTimeTotal": 45,
+    "cookTimeActive": 45,
     "dateAdded": 1000000000000,
     "tags": ["Vegan"],
-    //"quantity": 2, TODO
-    //"quantity_unit": "portions",
+    "quantity": 2,
+    "quantity_unit": "portions",
     "ingredients": ["Potatoes", "Spices of Choice", "Salt", "Oil"],
     "instructions": "slice potatoes, mix with spices, and fry until ready"
 }

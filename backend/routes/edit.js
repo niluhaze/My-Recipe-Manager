@@ -2,23 +2,27 @@ const express = require("express")
 const router = express.Router()
 const Recipe = require("../models/recipe")
 const getRecipe = require("../scripts/getRecipe")
+const database = require("../scripts/database")
 
 
 
 //functions for creating new recipe under "/":
 //open edit page to create new recipe
 router.get("/", (req, res) => {
-    res.render("edit")
+    res.json({message: "edit page"})
 })
 
 //post a new recipe
 router.post("/", async (req, res) => {
+    const newUrlName = await database.getNewUrlName(req.body.recipeName)
+    const newDate = Date.now()
+
     const recipe = new Recipe({
-        urlName: req.body.urlName,
+        urlName: newUrlName,
         recipeName: req.body.recipeName,
         cookTimeTotal: req.body.cookTimeTotal,
         cookTimeActive: req.body.cookTimeActive,
-        dateAdded: req.body.dateAdded,
+        dateAdded: newDate,
         tags: req.body.tags,
         ingredients: req.body.ingredients,
         instructions: req.body.instructions
@@ -42,8 +46,15 @@ router.get("/:urlName", getRecipe, async (req, res) => {
 
 router.delete("/:urlName", async (req, res) => {
     try {
-        await Recipe.deleteOne({"urlName": req.params.urlName}) //remove recipe from database
-        res.status(201).json({message: `Deleted recipe '${req.params.urlName}'.`}) //respond with confirmation
+        if (await database.checkIfUrlNameExists(req.params.urlName)) { //if the given urlName exists
+
+            await Recipe.deleteOne({"urlName": req.params.urlName}) //remove recipe from database
+            res.status(201).json({message: `Deleted recipe '${req.params.urlName}'`}) //respond with confirmation
+
+        } else { //if the name doesn't exist
+            res.status(404).json({message: `Recipe '${req.params.urlName}' not found`})
+        }
+        
     } catch (error) {
         res.status(500).send({message: error.message})
     }

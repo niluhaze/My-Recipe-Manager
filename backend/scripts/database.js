@@ -10,6 +10,70 @@ urlName: 1, recipeName: 1, cookTimeTotal: 1, cookTimeActive: 1, _id: 0
 const unidecode = require("unidecode")
 const Recipe = require("../models/recipe")
 
+
+//return true if a specific url name already exists
+async function checkIfUrlNameExists(toCheck){
+
+    try {
+        const query = await Recipe.aggregate([
+            {
+                //find all elements where urlName matches the name toCheck
+                $match: {
+                    urlName: toCheck
+                }
+            },
+            {   //cound the number of matching onjects
+                $count: "recipeName"
+            }
+        ])
+        /* 
+        query will be [{count: *amount*}] if found elements is not 0
+        and [] if no matching objects are found
+        */
+
+        if ( query.length == 0 ){ //if no object was found
+            return false
+        }
+    } catch (error) {
+        throw error
+    }
+    //else
+    return true 
+
+}
+
+//generate a valid url name from a recipe name
+async function getNewUrlName(recipeName){
+
+    console.log("recipeName: " + recipeName)
+
+    //clean up string a bit
+    const urlName = 
+    unidecode(recipeName) //decodes any special unicode chars like umlauts to ascii characters
+    .trim() //removes leading and trailing spaces
+    .toLowerCase() 
+    .replace(/ /g,"-") //replace spaces with -
+    .replace(/^a-z-/g, "") //remove everything that is not a roman letter or -
+
+    console.log("urlName: " + urlName)
+
+    //if recipe name already exists in a different object, append a trailing number "-i"
+    //finds lowest i which doesn't exist yet
+    if (await checkIfUrlNameExists(urlName)){
+        let i = 2
+        while(true){
+            var urlName_i = urlName + "-" + i
+            console.log("urlName_i: " + urlName_i)
+            //if unique name found, return urlName_i
+            if(!(await checkIfUrlNameExists(urlName_i))){
+                return urlName_i
+            }
+            i++
+        }
+    }
+    return urlName //return urlName if adding a trailing number is not needed
+}
+
 //takes array of strings which form json "key: value" pairs and uses them to create a json
 function createJson(jsonParts) {
 
@@ -17,7 +81,7 @@ function createJson(jsonParts) {
 
     for (i in jsonParts) {
 
-        jsonString += jsonParts[i] //add key: value pair
+        jsonString += jsonParts[i] //add key:value pair
 
         if(i < jsonParts.length - 1){ //if another pair follows, add a comma
             jsonString += ","
@@ -28,45 +92,6 @@ function createJson(jsonParts) {
     jsonString += "}" //end with }
 
     return JSON.parse(jsonString)
-}
-
-//return true if a specific url name already exists
-async function checkIfUrlNameExists(ToCheck){
-
-    try {
-        if (await Recipe.find({urlName: ToCheck}).limit(1).size() > 0){
-            return true
-        }
-    } catch (error) {
-        throw error
-    }
-    return false
-
-}
-
-//generate a url name from a recipe name
-async function getNewUrlName(recipeName){
-
-    //clean up string a bit
-    recipeName = recipeName.trim().toLowerCase()
-    recipeName = unidecode(recipeName) //decodes any special unicode chars like umlauts to ascii
-    recipeName = recipeName.replace(/ /g,"-").replace //replace spaces with -
-    recipeName = recipeName.replace(/^a-z-/g, "") //remove everything that is not a roman letter or -
-
-    //if recipe name already exists in a different object, add "-i" after it
-    //finds lowest i which doesn't exist yet
-    if (await checkIfUrlNameExists(recipeName)){
-        i = 2
-        while(true){
-            recipeName_i = recipeName + " " + i
-            //if unique name found, return recipeName_i
-            if(await !checkIfExists(recipeName_i)){
-                return recipeName_i
-            }
-            i++
-        }
-    }
-    return recipeName
 }
 
 /* generates the query that will go inside the Recipe.find() method

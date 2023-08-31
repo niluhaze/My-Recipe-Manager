@@ -7,13 +7,12 @@ require("dotenv").config()
 
 //specify requirements
 const express = require("express")
-const app = express()
-
 const mongoose = require("mongoose")
+const app = express()
 
 app.use(express.json()) //let server accept json
 
-//connect to mongoDB database on localhost
+//connect to MongoDB database on localhost
 mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true}) 
 const db = mongoose.connection
 db.on("error",(error) => console.error(error)) //log errors in console
