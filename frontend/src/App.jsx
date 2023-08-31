@@ -1,6 +1,6 @@
 //specify imports
 import React from 'react'
-import { Route, Routes } from "react-router-dom"
+import { Link, Route, Routes } from "react-router-dom"
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
 
@@ -15,8 +15,13 @@ import { NotFound } from "./pages/NotFound"
 function App() {
   return (
     <>
-      <h1>Header</h1>
-
+      {/* Page Header */}
+      <nav>
+        <ul>
+          <li><Link to="/my-recipes">Recipes</Link></li>
+          <li><Link to="/edit">New Recipe</Link></li>
+        </ul>
+      </nav>
       {/* Assign the pages to routes */}
       <Routes>
         <Route path="/" element={<Home />}/>
