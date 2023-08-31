@@ -168,8 +168,6 @@ async function getRecipeListData(query){
         const query_count = await getRecipeListAmount(query) //get amount of recipes that fit the filter
         const pages_amount = Math.round(query_count/RECIPES_PER_PAGE) //get the amount  of resulting pages
 
-        
-
         //TODO: sort: query.sort_by: query.sort_direction,
         //retrieve needed recipe data given the filters, sort type and page number
         recipes = await Recipe
