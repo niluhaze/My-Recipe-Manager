@@ -15,23 +15,7 @@ const Recipe = require("../models/recipe")
 async function checkIfUrlNameExists(toCheck){
 
     try {
-        const query = await Recipe.aggregate([
-            {
-                //find all elements where urlName matches the name toCheck
-                $match: {
-                    urlName: toCheck
-                }
-            },
-            {   //cound the number of matching onjects
-                $count: "recipeName"
-            }
-        ])
-        /* 
-        query will be [{count: *amount*}] if found elements is not 0
-        and [] if no matching objects are found
-        */
-
-        if ( query.length == 0 ){ //if no object was found
+        if (await Recipe.find({urlName: toCheck}).limit(1).count() == 0){ //if no object matches the urlName
             return false
         }
     } catch (error) {
