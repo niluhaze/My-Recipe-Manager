@@ -29,8 +29,6 @@ async function checkIfUrlNameExists(toCheck){
 //generate a valid url name from a recipe name
 async function getNewUrlName(recipeName){
 
-    console.log("recipeName: " + recipeName)
-
     //clean up string a bit
     const urlName = 
     unidecode(recipeName) //decodes any special unicode chars like umlauts to ascii characters
@@ -39,15 +37,12 @@ async function getNewUrlName(recipeName){
     .replace(/ /g,"-") //replace spaces with -
     .replace(/^a-z-/g, "") //remove everything that is not a roman letter or -
 
-    console.log("urlName: " + urlName)
-
     //if recipe name already exists in a different object, append a trailing number "-i"
     //finds lowest i which doesn't exist yet
     if (await checkIfUrlNameExists(urlName)){
         let i = 2
         while(true){
             var urlName_i = urlName + "-" + i
-            console.log("urlName_i: " + urlName_i)
             //if unique name found, return urlName_i
             if(!(await checkIfUrlNameExists(urlName_i))){
                 return urlName_i
@@ -85,14 +80,22 @@ function generateRecipeListFindEntry(query){
 
         jsonParts = []
 
-        /* TODO: filter recipe names by search
+        //filter by search string if given
         if (query.search != null){
-
-        }*/
+            jsonParts.push(`"recipeName": { "$regex": "${query.search}", "$options": "i" }`)
+        }
 
         //filter by tags if given
-        if (query.tags != null && query.tags != []){
-            jsonParts.push(`tags: {$all: ${query.tags}}`)
+        if (query.tags != null){
+            /*
+            A comment on passing the tags array through the url query:
+            Since we want to be able to select multiple tags to search for at once,
+            we will pass them through the url query like "?tag=vegan&tag=oriental".
+            Express will combine these as an array ["vegan", "oriental"],
+            whereas a single tag "?tag=vegan" will result in "vegan" in Express.
+            According to the docs and my tests, the MongoDB $all tag handles both of these data types.
+            */
+            jsonParts.push(`"tags": {"$all": "${query.tags}"}`)
         }
 
         return createJson(jsonParts) //create json from parts and return
@@ -119,7 +122,7 @@ function generateRecipeListSortEntry(query){
     try {
 
         //A valid sort query has a sortBy String and a sortDir(ection) which is 1 or -1
-        //if no (valid) query given 
+        //if no (valid) query given
         if (query.sortBy == null || !(query.sortDir == 1 || query.sortDir == -1)){
 
             return {"dateAdded":1 ,"name" :1} //resort to default sorting 
