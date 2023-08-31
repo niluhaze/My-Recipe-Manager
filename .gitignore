@@ -1,3 +1,5 @@
-.env
-node_modules
-test.js
+backend/env
+backend/node_modules
+backend/test.js
+
+frontend/node_modules
