@@ -9,8 +9,10 @@ require("dotenv").config()
 const express = require("express")
 const mongoose = require("mongoose")
 const app = express()
+const cors = require("cors")
 
 app.use(express.json()) //let server accept json
+app.use(cors({ origin: true, credentials: true })) //allows queries from localhost to localhost
 
 //connect to MongoDB database on localhost
 mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true}) 

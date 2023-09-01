@@ -2,16 +2,15 @@ import { useState } from "react"
 import { useQuery, useMutation } from "@tanstack/react-query"
 import axios from "axios"
 
-const RECIPES = [
-  {_id: 1, recipeName: "Falafel"},
-  {_id: 2, recipeName: "Pancakes"}
-]
-
 export function MyRecipes(){
 
   const recipesQuery =  useQuery({
-    queryKey: ["recipes"],
-    queryFn: () => wait(1000).then(() => [...RECIPES])
+    queryKey: ["my-recipes"],
+    queryFn: async () => {
+      const { data } = await axios.get(
+        "http://localhost:3000/my-recipes")
+      return data
+    }
   })
 
   if(recipesQuery.isLoading) return <h1>Loading...</h1>
@@ -20,16 +19,14 @@ export function MyRecipes(){
   return (
     <>
       <h1>MyRecipes</h1>
-      <h1>{recipesQuery.data.map(recipe => (
-        <div key={recipe._id}>{recipe.recipeName}</div>
-      ))}</h1>
+
       <form className="query-form">
-        
+
       </form>
+
+      <h1>{recipesQuery.data.map(recipe => (
+        <div key={recipe.urlName}>{recipe.recipeName}, {recipe.cookTimeTotal} min</div>
+      ))}</h1>
     </>
   )
-}
-
-function wait(duration) {
-  return new Promise(resolve => setTimeout(resolve, duration))
 }
