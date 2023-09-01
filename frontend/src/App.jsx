@@ -1,5 +1,5 @@
 //specify imports
-import React from 'react'
+import React, { Component } from 'react'
 import { Link, Route, Routes } from "react-router-dom"
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
@@ -11,8 +11,8 @@ import { Recipe } from "./pages/Recipe"
 import { Edit } from "./pages/Edit"
 import { NotFound } from "./pages/NotFound"
 
-
 function App() {
+
   return (
     <>
       {/* Page Header */}
