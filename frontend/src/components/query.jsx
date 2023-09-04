@@ -4,7 +4,7 @@ import axios from "axios"
 const HOST_PATH = "http://localhost:3000"
 
 //makes an http GET request to the backend with the given queryKey and to the given urlPath
-export function doGetQuery(qKey, urlPath = "/") {
+export function doGetQuery(qKey, urlPath) {
 
   const query = useQuery({
     queryKey: [qKey],
