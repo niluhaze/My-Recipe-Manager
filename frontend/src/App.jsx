@@ -17,7 +17,7 @@ function App() {
   return (
     <>
       {/* Page Header */}
-      <nav>
+      <nav className='header'>
         <ul>
           <li><Link to="/my-recipes">Recipes</Link></li>
           <li><Link to="/edit">New Recipe</Link></li>
