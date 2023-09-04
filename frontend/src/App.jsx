@@ -11,6 +11,7 @@ import { Recipe } from "./pages/Recipe"
 import { Edit } from "./pages/Edit"
 import { NotFound } from "./pages/NotFound"
 
+//create the main App structure
 function App() {
 
   return (
@@ -28,7 +29,7 @@ function App() {
         <Route path="/my-recipes" element={<MyRecipes />}/>
         <Route path="/recipe/:urlName" element={<Recipe />}/>
         <Route path="/edit">
-          <Route index element={<Edit />}/>  {/* The index propery routes to plain "edit" */}
+          <Route index element={<Edit />}/>  {/* The index propery routes to plain "/edit" */}
           <Route path="/edit/:urlName" element={<Edit />}/>
         </Route>
         <Route path="*" element={<NotFound />}/>  {/* Assigns NotFound to any unspecified urls */}
