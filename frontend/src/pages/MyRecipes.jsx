@@ -2,7 +2,6 @@ import { useState } from "react"
 import { useParams } from "react-router-dom"
 import { useQuery, useMutation } from "@tanstack/react-query"
 import { doGetQuery } from "../components/query"
-import axios from "axios"
 
 
 export function MyRecipes(){
@@ -10,14 +9,7 @@ export function MyRecipes(){
   const test = useParams()
   console.log(test)
 
-  const recipesQuery =  useQuery({
-    queryKey: ["my-recipes"],
-    queryFn: async () => {
-      const { data } = await axios.get(
-        "http://localhost:3000/my-recipes")
-      return data
-    }
-  })
+  const recipesQuery = doGetQuery("my-recipes", "/my-recipes?sortBy=cookTimeTotal&sortDir=-1")
 
   if(recipesQuery.isLoading) return <h1>Loading...</h1>
   if(recipesQuery.isError) return <pre>{JSON.stringify(recipesQuery.error)}</pre>
