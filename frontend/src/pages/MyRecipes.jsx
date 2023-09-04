@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useParams } from "react-router-dom"
 import { useQuery, useMutation } from "@tanstack/react-query"
-import { doGetQuery } from "../components/query"
+import { doGetQuery } from "../scripts/query"
 
 
 export function MyRecipes(){

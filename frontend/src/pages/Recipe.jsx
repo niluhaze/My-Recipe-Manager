@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom"
-import { doGetQuery } from "../components/query"
+import { doGetQuery } from "../scripts/query"
 
 export function Recipe(){
 
