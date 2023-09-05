@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom"
 import { useQuery, useMutation } from "@tanstack/react-query"
 import { doGetQuery } from "../scripts/query"
 
+import RecipeTile from "/src/components/RecipeTile"
 
 export function MyRecipes(){
 
@@ -17,7 +18,8 @@ export function MyRecipes(){
   return (
     <>
       <h1>MyRecipes</h1>
-      <h2>{}</h2>
+
+      <RecipeTile/>
 
       <form className="query-form">
 
