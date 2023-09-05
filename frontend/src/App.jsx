@@ -1,8 +1,11 @@
 //specify imports
 import React, { Component } from 'react'
-import { Link, Route, Routes } from "react-router-dom"
+import { Route, Routes } from "react-router-dom"
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
+
+//import components
+import Navbar from './components/Navbar'
 
 //import all pages
 import { Home } from "./pages/Home"
@@ -15,14 +18,9 @@ import { NotFound } from "./pages/NotFound"
 function App() {
 
   return (
-    <>
-      {/* Page Header */}
-      <nav className='header'>
-        <ul>
-          <li><Link to="/my-recipes">Recipes</Link></li>
-          <li><Link to="/edit">New Recipe</Link></li>
-        </ul>
-      </nav>
+    <div className="w-full h-screen">
+      {/* Page Navbar */}
+      <Navbar />
       {/* Assign the pages to routes */}
       <Routes>
         <Route path="/" element={<Home />}/>
@@ -34,7 +32,7 @@ function App() {
         </Route>
         <Route path="*" element={<NotFound />}/>  {/* Assigns NotFound to any unspecified urls */}
       </Routes>
-    </>
+    </div>
   )
 }
 
