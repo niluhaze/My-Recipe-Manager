@@ -6,7 +6,7 @@ const URL_NAME = "falafel"
 const RecipeTile = () => {
   return (
     <Link to={"/recipe/" + URL_NAME}>
-      <div className="max-w-full min-w-0 rounded-lg bg-components drop-shadow" useid="falafel">
+      <div className="max-w-full min-w-0 rounded-lg bg-components drop-shadow hover:drop-shadow-lg" useid="falafel">
         {/* Image section */}
         <div className="w-full aspect-[4/3]">
           <img className="rounded-t-lg object-cover w-full h-full" src="/src/assets/falafel.jpg" alt="Falafel" />
