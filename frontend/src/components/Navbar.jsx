@@ -1,16 +1,20 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+
 
 const Navbar = () => {
 
   //toggle visibility of the navbar links when clicking on the hamburger button
+  const [ isFirst, setIsFirst ] = useState( true )
+  const [ toggle, setToggle ] = useState( false )
   useEffect(() => {
-    const navbarToggleButton = document.getElementById("navbar-toggle")
-    const navbarLinks = document.getElementById("navbar-links")
+    if( isFirst ) {
+      setIsFirst( false )
+      return;
+    }
 
-    navbarToggleButton.addEventListener("click", () => 
-    navbarLinks.classList.toggle("hidden"))
-  })
+    document.getElementById("navbar-links").classList.toggle("hidden");
+  }, [ toggle ] )
 
   return (
     <nav className="min-h-[80px] flex flex-col md:flex-row md:text-center justify-between bg-primary text-background">
@@ -31,7 +35,7 @@ const Navbar = () => {
         </div>
       </div>
       {/* Hamburger menu button */}
-      <button id="navbar-toggle" className="h-20 absolute top-0 right-0 md:static md:hidden aspect-square p-4 -mr-1">
+      <button onClick={e => setToggle( !toggle )} className="h-20 absolute top-0 right-0 md:static md:hidden aspect-square p-4 -mr-1">
         <svg className="h-full fill-background" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
           <path d="M0 96c0-17.7 14.3-32 32-32h384c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zm0 160c0-17.7 14.3-32 32-32h384c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zm448 160c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32h384c17.7 0 32 14.3 32 32z"/>
         </svg>
