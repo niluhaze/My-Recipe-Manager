@@ -29,9 +29,9 @@ const Navbar = () => {
       {/* Links */}
       <div id="navbar-links" className="hidden md:inline-block bg-primary-light md:bg-transparent md:absolute md:top-0 md:right-1/2 md:translate-x-1/2">
         <div className="text-2xl flex flex-col md:flex-row">
-          <Link className="md:hover:bg-primary-light p-2 md:py-6" to="/my-recipes">RECIPES</Link>
-          <Link className="md:hover:bg-primary-light p-2 md:py-6" to="/saved">SAVED</Link>
-          <Link className="md:hover:bg-primary-light p-2 md:py-6" to="/edit">ADD</Link>
+          <Link className="md:hover:bg-primary-light p-2 md:px-3 md:py-6" to="/my-recipes">RECIPES</Link>
+          <Link className="md:hover:bg-primary-light p-2 md:px-3 md:py-6" to="/saved">SAVED</Link>
+          <Link className="md:hover:bg-primary-light p-2 md:px-3 md:py-6" to="/edit">ADD</Link>
         </div>
       </div>
       {/* Hamburger menu button */}
