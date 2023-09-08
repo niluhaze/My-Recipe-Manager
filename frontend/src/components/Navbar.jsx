@@ -4,13 +4,16 @@ import { Link } from "react-router-dom"
 
 const Navbar = () => {
 
-  //toggle visibility of the navbar links when clicking on the hamburger button
-  const [ isFirst, setIsFirst ] = useState( true )
-  const [ toggle, setToggle ] = useState( false )
+  //toggle visibility of the navbar links when clicking on the hamburger button (for small screens)
+  const [ isFirst, setIsFirst ] = useState( true ) //for making sure the toggle doesn't trigger on mount
+  const [ toggle, setToggle ] = useState( false ) //toggle whether the filter menu is shown or hidden
+  
+  //run this whenever toggle changes
   useEffect(() => {
+    //make sure the code after if block does't get run on mount
     if( isFirst ) {
       setIsFirst( false )
-      return;
+      return
     }
 
     document.getElementById("navbar-links").classList.toggle("hidden");
