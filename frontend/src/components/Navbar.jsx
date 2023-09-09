@@ -31,9 +31,9 @@ const Navbar = () => {
       {/* Links */}
       <div id="navbar-links" className="hidden md:inline-block bg-primary-light md:bg-transparent md:absolute md:top-0 md:right-1/2 md:translate-x-1/2">
         <div className="text-2xl flex flex-col md:flex-row">
-          <Link className="md:hover:bg-primary-light p-2 md:px-3 md:py-6" to="/my-recipes">RECIPES</Link>
-          <Link className="md:hover:bg-primary-light p-2 md:px-3 md:py-6" to="/saved">SAVED</Link>
-          <Link className="md:hover:bg-primary-light p-2 md:px-3 md:py-6" to="/edit">ADD</Link>
+          <Link className="p-2 md:px-3 md:py-6 hover:bg-primary-light active:bg-primary-light-light" to="/my-recipes">RECIPES</Link>
+          <Link className="p-2 md:px-3 md:py-6 hover:bg-primary-light active:bg-primary-light-light" to="/saved">SAVED</Link>
+          <Link className="p-2 md:px-3 md:py-6 hover:bg-primary-light active:bg-primary-light-light" to="/edit">ADD</Link>
         </div>
       </div>
       {/* Hamburger menu button */}
@@ -42,7 +42,6 @@ const Navbar = () => {
           <path d="M0 96c0-17.7 14.3-32 32-32h384c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zm0 160c0-17.7 14.3-32 32-32h384c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zm448 160c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32h384c17.7 0 32 14.3 32 32z"/>
         </svg>
       </button>
-      
     </nav>
   )
 }
