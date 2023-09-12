@@ -13,6 +13,7 @@ export function Recipe(){
   return (
     <>
       <h1>Recipe</h1>
+      <img src={recipeQuery.data[0].image} alt="" />
       <h2>{JSON.stringify(recipeQuery.data)}</h2>
     </>
   )
