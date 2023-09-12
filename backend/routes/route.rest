@@ -34,17 +34,15 @@ Content-Type: application/json
     "recipeName": "Fried Pötatoes",
     "cookTimeTotal": 45,
     "cookTimeActive": 45,
-    "dateAdded": 1000000000000,
     "tags": ["Vegan"],
     "quantity": 2,
-    "quantity_unit": "portions",
-    "ingredients": ["Potatoes", "Spices of Choice", "Salt", "Oil"],
-    "instructions": "slice potatoes, mix with spices, and fry until ready"
+    "quantityUnit": "Portions",
+    "body": "Ingredients and instructions here."
 }
 
 ###
 
-DELETE http://localhost:3000/edit/fried-potatoes
+DELETE http://localhost:3000/edit/falafel-2
 
 ###
 
