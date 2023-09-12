@@ -7,20 +7,23 @@ require("dotenv").config()
 
 //specify requirements
 const express = require("express")
-const mongoose = require("mongoose")
-const app = express()
+const bodyParser = require('body-parser');
 const cors = require("cors")
+const mongoose = require("mongoose")
 
-app.use(express.json()) //let server accept json
-app.use(cors({ origin: true, credentials: true })) //allows queries from localhost to localhost
+const app = express()
+
+// Increase the maximum payload size
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(cors({ origin: "http://localhost:5173" })) //allows queries from localhost
 
 //connect to MongoDB database on localhost
 mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true}) 
 const db = mongoose.connection
 db.on("error",(error) => console.error(error)) //log errors in console
 db.once("open", () => console.log("Established connection to MongoDB")) //log when connection to database is established
-
-app.set("view engine", "ejs") //set to use ejs as the view engine
 
 //redirect "/" to "/my-recipes"
 app.get("/", (req, res) => {
