@@ -21,8 +21,8 @@ export function doPostQuery(qKey, urlPath, data) {
   const query = useQuery({
     queryKey: [qKey],
     queryFn: async () => {
-      const promise = await axios.post(HOST_PATH + urlPath, data);
-      return promise;
+      const response = await axios.post(HOST_PATH + urlPath, data);
+      return response;
     },
   });
 
