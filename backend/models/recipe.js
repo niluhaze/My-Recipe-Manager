@@ -12,11 +12,13 @@ const recipeSchema = new mongoose.Schema({
     },
     cookTimeTotal:{
         type: Number,
-        required: true
+        required: true,
+        default: 0
     },
     cookTimeActive:{
         type: Number,
-        required: true
+        required: true,
+        default: 0
     },
     dateAdded:{
         type: Date,
@@ -25,16 +27,16 @@ const recipeSchema = new mongoose.Schema({
     },
     tags:{
         type: Array,
-        required: true,
         default: []
     },
-    ingredients:{
+    body:{
         type: Array,
         required: true,
+        default: ""
     },
-    instructions:{
+    image:{
         type: String,
-        required: true
+        default: ""
     }
 })
 
