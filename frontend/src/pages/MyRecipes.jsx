@@ -69,7 +69,6 @@ export function MyRecipes(){
               <input type="search" placeholder="Search recipes..." className="outline-none bg-transparent"
                 value={searchString} onChange={e => setSearchString(e.target.value)}
               />
-              {/* <button >x</button> */}
               <button className="h-6 aspect-square mx-1">
                 {/* Magnifying glass icon */}
                 <svg className="fill-neutral-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
