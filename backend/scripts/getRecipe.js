@@ -5,11 +5,15 @@ Used to avoid duplicate code for simple requests.
 
 const Recipe = require("../models/recipe")
 
+const VARS_FOR_RECIPE_PAGE = { //specifies recipe variables needed for the recipe list
+    _id: 0, __v: 0
+    }
+
 async function getRecipe (req, res, next) {
     let recipe
     try {
         //retrieve data of single recipe by urlName
-        recipe = await Recipe.find({"urlName": req.params.urlName}).limit(1)
+        recipe = await Recipe.find({"urlName": req.params.urlName}, VARS_FOR_RECIPE_PAGE).limit(1)
         //respond with 404 error if no recipe by that name found
         if (recipe == null){
             return res.status(404).json({message: `No recipe found with urlName "${req.params.urlName}".`})
