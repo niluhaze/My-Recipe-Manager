@@ -11,6 +11,7 @@ module.exports = {
         "primary-light-light": "#66916D",
         background: "#E8E9E1",
         components: "#F5F6F3",
+        "not-found": "#E0E0D7"
       }
     }
   },
