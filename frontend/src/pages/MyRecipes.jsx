@@ -77,28 +77,13 @@ export function MyRecipes(){
               </button>
             </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 m-3">
-            <RecipeTile/>
-            <RecipeTile/>
-            <RecipeTile/>
-            <RecipeTile/>
-            <RecipeTile/>
-            <RecipeTile/>
-            <RecipeTile/>
-            <RecipeTile/>
-            <RecipeTile/>
-            <RecipeTile/>
-            <RecipeTile/>
-            <RecipeTile/>
+          <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 m-3">
+            {recipesQuery.data.map(tileData => (
+              <RecipeTile key={tileData.urlName} data={tileData} className="w-full"/>
+            ))}
           </div>
         </div>
       </div>
-      {/* Test Query */}
-      <h1>
-        {recipesQuery.data.map(recipe => (
-          <div key={recipe.urlName}>{recipe.recipeName}, {recipe.cookTimeTotal} min</div>
-        ))}
-      </h1>
     </>
   )
 }
