@@ -3,12 +3,13 @@ import React, { useEffect, useState } from "react";
 import ImageUpload from "/src/components/ImageUpload";
 import { doPostQuery } from "/src/scripts/query.jsx";
 import tags from "/src/assets/tags.json";
+import { Navigate } from "react-router-dom";
 
 export function Edit() {
 
   const [image, setImage] = useState(null); // will store image from ImageUpload
 
-  var formRef = React.useRef(null); // reference for the form element
+  const formRef = React.useRef(null); // reference for the form element
 
   const postRecipe = doPostQuery("/edit");
   // convert form data to JSON and send as POST to backend
@@ -33,17 +34,25 @@ export function Edit() {
     formJSON.image = image;
     console.log(formJSON)
     postRecipe.mutate(formJSON);
-
   }
 
   useEffect(() => {
-    formRef.current.addEventListener("submit", handleSubmit);
+    if (formRef.current != null) {
+      formRef.current.addEventListener("submit", handleSubmit);
+    }
     return () => {
-      formRef.current.removeEventListener("submit", handleSubmit);
+      if (formRef.current != null) {
+        formRef.current.removeEventListener("submit", handleSubmit);
+      }
     }
   });
 
-  
+  if(postRecipe.isSuccess) {
+    console.log("Success!!", postRecipe.data.data)
+    const delay = ms => new Promise(res => setTimeout(res, ms));
+    delay(1000)
+    return <Navigate to={"/recipe/" + postRecipe.data.data.urlName}/>
+  }
 
   return (
     <form
@@ -153,7 +162,6 @@ export function Edit() {
           {/* Submit Button */}
           <input
             type="submit"
-            disabled={postRecipe.isLoading}
             value="Save new Recipe"
             className="w-36 h-8 p-1 rounded-lg text-components bg-primary hover:bg-primary-light active:bg-primary-light-light"
           />
