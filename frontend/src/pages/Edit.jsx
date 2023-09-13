@@ -57,7 +57,7 @@ export function Edit() {
   return (
     <form
       ref={formRef}
-      className="w-full max-w-[800px] mx-auto m-4 rounded-2xl shadow bg-components"
+      className="w-full max-w-3xl mx-auto m-4 md:rounded-2xl shadow bg-components"
     >
       {/* Image and Title wrapper */}
       <div>

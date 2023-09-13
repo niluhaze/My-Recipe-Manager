@@ -25,10 +25,10 @@ const ImageUpload = ({ image, setImage }) => {
       <div className="border-b w-full aspect-[4/3] flex flex-col justify-center items-center gap-2">
         {/* if an image has been uploaded, show the image container, else show a button and some info */}
         {( image != null ) ?
-          <img src={image} className=" rounded-t-2xl object-cover w-full h-full" />
+          <img src={image} className="md:rounded-t-2xl object-cover w-full h-full" />
         : 
           <>
-            <p className="rounded-lg p-2 text-components bg-primary hover:bg-primary-light active:bg-primary-light-light">Upload image</p>
+            <button className="rounded-lg p-2 text-components bg-primary hover:bg-primary-light active:bg-primary-light-light">Upload image</button>
             <p className="text-neutral-400">or drag an image here...</p>
           </>
         }
