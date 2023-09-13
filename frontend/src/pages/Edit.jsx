@@ -81,6 +81,7 @@ export function Edit() {
                   id="cookTimeTotalHours"
                   placeholder="h"
                   min={0}
+                  max={990}
                   className="w-12 no-arrows"
                 />
                 <input
@@ -89,6 +90,7 @@ export function Edit() {
                   id="cookTimeTotalMinutes"
                   placeholder="min"
                   min={0}
+                  max={240}
                   className="w-12 no-arrows"
                 />
               </div>
@@ -103,6 +105,7 @@ export function Edit() {
                   id="cookTimeActiveHours"
                   placeholder="h"
                   min={0}
+                  max={990}
                   className="w-12 no-arrows"
                 />
                 <input
@@ -112,6 +115,7 @@ export function Edit() {
                   id="cookTimeActiveMinutes"
                   placeholder="min"
                   min={0}
+                  max={240}
                   className="w-12 no-arrows"
                 />
               </div>
@@ -129,6 +133,7 @@ export function Edit() {
                 id="quantity"
                 placeholder="4"
                 min={0}
+                max={9999}
                 className="w-16"
               />
             </div>
