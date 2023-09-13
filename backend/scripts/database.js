@@ -4,7 +4,7 @@ This contains scripts related to the MongoDB database.
 
 const RECIPES_PER_PAGE = 24 //number of recipes per /my-recipes page
 const VARS_FOR_RECIPE_LIST = { //specifies recipe variables needed for the recipe list
-urlName: 1, recipeName: 1, cookTimeTotal: 1, cookTimeActive: 1, _id: 0
+urlName: 1, recipeName: 1, cookTimeTotal: 1, cookTimeActive: 1, image: 1, _id: 0
 }
 
 const unidecode = require("unidecode")
