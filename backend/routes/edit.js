@@ -24,6 +24,8 @@ router.post("/", async (req, res) => {
         cookTimeActive: req.body.cookTimeActive,
         dateAdded: newDate,
         tags: req.body.tags,
+        quantity: req.body.quantity,
+        quantityUnit: req.body.quantityUnit,
         body: req.body.body,
         image: req.body.image
     })
