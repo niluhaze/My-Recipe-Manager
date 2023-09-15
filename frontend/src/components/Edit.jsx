@@ -1,6 +1,7 @@
 // specify imports
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
+import TextareaAutosize from "react-textarea-autosize";
 import ImageUpload from "/src/components/ImageUpload";
 import { doPostQuery } from "/src/scripts/query.jsx";
 import { minutesToHoursMinutes } from "../scripts/time";
@@ -276,14 +277,27 @@ export const Edit = ({ existingData = {} }) => {
           />
         </div>
         <div className="flex flex-col gap-1">
-          {/* Recipe Body */}
-          <label htmlFor="body">Ingredients & Instructions</label>
-          <textarea
+          {/* Ingredients */}
+          <label htmlFor="body" className="text-lg">Ingredients</label>
+          <TextareaAutosize
+            name="ingredients"
+            id="ingredients"
+            className="w-full"
+            rows="128"
+            defaultValue={getValue("ingredients")}
+            minRows={8}
+          />
+        </div>
+        <div className="flex flex-col gap-1">
+          {/* Recipe Instructions / Body */}
+          <label htmlFor="body" className="text-lg">Instructions</label>
+          <TextareaAutosize
             name="body"
             id="body"
             className="w-full"
             rows="128"
             defaultValue={getValue("body")}
+            minRows={8}
           />
         </div>
       </div>

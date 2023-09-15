@@ -35,6 +35,11 @@ const recipeSchema = new mongoose.Schema({
     quantityUnit:{
         type: String
     },
+    ingredients:{
+        type: String,
+        required: true,
+        default: ""
+    },
     body:{
         type: String,
         required: true,

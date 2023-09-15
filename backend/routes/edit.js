@@ -49,6 +49,7 @@ router.post("/", async (req, res) => {
     tags: req.body.tags,
     quantity: req.body.quantity,
     quantityUnit: req.body.quantityUnit,
+    ingredients: req.body.ingredients,
     body: req.body.body,
     image: req.body.image,
   });
@@ -90,7 +91,7 @@ router.post("/:urlName", async (req, res) => {
           recipeName: req.body.recipeName,
           cookTimeTotal: req.body.cookTimeTotal,
           cookTimeActive: req.body.cookTimeActive,
-          // dateAdded: newDate,
+          dateChanged: Date.now(),
           tags: req.body.tags,
           quantity: req.body.quantity,
           quantityUnit: req.body.quantityUnit,
