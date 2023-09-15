@@ -30,12 +30,17 @@ export function Recipe() {
     <>
       <div className="w-full max-w-3xl md:mx-auto md:m-4 md:rounded-2xl shadow bg-components">
         {/* Image */}
-        <div className="w-full aspect-[4/3] flex flex-col justify-center items-center">
-          <img
-            className="object-cover w-full h-full md:rounded-t-2xl"
-            src={data.image}
-            alt="No image found"
-          />
+        <div className="w-full aspect-[4/3] flex flex-col justify-center items-center border-b">
+          {(data.image != undefined && data.image != "") ?
+            <img
+              className="object-cover w-full h-full md:rounded-t-2xl"
+              src={data.image}
+              alt="No image found"
+            />
+            :
+            <p className="text-neutral-500">No image found</p>
+          }
+          
         </div>
         {/* Content wrapper */}
         <div className="break-words flex flex-col gap-2 m-2">
