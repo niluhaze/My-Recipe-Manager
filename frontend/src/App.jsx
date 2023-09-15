@@ -11,7 +11,9 @@ import Navbar from './components/Navbar'
 import { Home } from "./pages/Home"
 import { MyRecipes } from "./pages/MyRecipes"
 import { Recipe } from "./pages/Recipe"
-import { Edit } from "./pages/Edit"
+import { EditNew } from './pages/EditNew'
+import { EditExisting } from "./pages/EditExisting"
+
 import { NotFound } from "./pages/NotFound"
 
 //create the main App structure
@@ -27,8 +29,8 @@ function App() {
         <Route path="/my-recipes" element={<MyRecipes />}/>
         <Route path="/recipe/:urlName" element={<Recipe />}/>
         <Route path="/edit">
-          <Route index element={<Edit />}/>  {/* The index propery routes to plain "/edit" */}
-          <Route path="/edit/:urlName" element={<Edit />}/>
+          <Route index element={<EditNew />}/>  {/* The index propery routes to plain "/edit" */}
+          <Route path="/edit/:urlName" element={<EditExisting />}/>
         </Route>
         <Route path="*" element={<NotFound />}/>  {/* Assigns NotFound to any unspecified urls */}
       </Routes>
