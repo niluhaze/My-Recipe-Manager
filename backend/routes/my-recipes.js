@@ -6,17 +6,10 @@ const database = require('../scripts/database')
 router.get("/", async (req, res) => {
     try {
         const recipes = await database.getRecipeListData(req.query)
-        console.log(recipes)
+        console.log(`my-recipes: retrieved ${recipes.length} recipe(s).`)
         res.json(recipes)
     } catch (error) {
-        res.json({message: error.message})
-        /* if (error.message = 400){
-            //send error code 400 in case of caught client-side error
-            res.status(400).json({message: error.message})
-        } else {    
-            //send error code 500 in case of server-side error
-            res.status(500).json({message: error.message})
-        } */
+        return res.status(500).json({message: error})
     }
 })
 
