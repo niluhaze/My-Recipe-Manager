@@ -24,7 +24,7 @@ const ImageUpload = ({ image, setImage }) => {
       <input {...getInputProps()} accept='.png, .jpg, .jpeg'/>
       <div className="border-b w-full aspect-[4/3] flex flex-col justify-center items-center gap-2">
         {/* if an image has been uploaded, show the image container, else show a button and some info */}
-        {( image != null ) ?
+        {( image != null && image != "" ) ?
           <img src={image} className="md:rounded-t-2xl object-cover w-full h-full" />
         : 
           <>
