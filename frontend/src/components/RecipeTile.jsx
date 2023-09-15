@@ -1,13 +1,10 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import { minutesToTime } from "../scripts/minutesToTime"
+import { minutesToTime } from "../scripts/time"
 
 const RecipeTile = (query) => {
 
   const data = query.data;
-
-  console.log(data)
-  console.log(data.recipeName)
 
   return (
     <Link to={"/recipe/" + data.urlName} className="w-full">
