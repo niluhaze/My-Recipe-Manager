@@ -34,16 +34,13 @@ export function MyRecipes(){
   }, [ toggle ] )
 
 
-
-  /* Page outputs */
-
   //output loading and error messages when fetching recipe data
   if( recipesQuery.isLoading ) return <h1>Loading recipes...</h1>
   if( recipesQuery.isError ) return <pre>{JSON.stringify(recipesQuery.error)}</pre>
 
   return (
     <>
-      <div className="max-w-full flex justify-center">
+      <div className="max-w-full min-h-full flex justify-center">
         {/* Filters menu */}
         <div id="filters-menu" className="z-20 hidden md:block absolute left-0 top-0 bottom-0 md:static h-auto md:max-w-xs bg-components drop-shadow">
           <FiltersMenu toggle={toggle} setToggle={setToggle}/>
