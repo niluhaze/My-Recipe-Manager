@@ -10,7 +10,7 @@ import Navbar from './components/Navbar'
 //import all pages
 import { Home } from "./pages/Home"
 import { MyRecipes } from "./pages/MyRecipes"
-import { Recipe } from "./pages/Recipe"
+import { RecipeQuerier } from "./pages/RecipeQuerier"
 import { EditNew } from './pages/EditNew'
 import { EditExisting } from "./pages/EditExisting"
 
@@ -27,7 +27,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />}/>
         <Route path="/my-recipes" element={<MyRecipes />}/>
-        <Route path="/recipe/:urlName" element={<Recipe />}/>
+        <Route path="/recipe/:urlName" element={<RecipeQuerier />}/>
         <Route path="/edit">
           <Route index element={<EditNew />}/>  {/* The index propery routes to plain "/edit" */}
           <Route path="/edit/:urlName" element={<EditExisting />}/>

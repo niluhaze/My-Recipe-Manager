@@ -1,26 +1,7 @@
-import { Navigate, useParams, Link } from "react-router-dom";
-import { doGetQuery } from "../scripts/query";
+import { Link } from "react-router-dom";
 import { minutesToTime } from "../scripts/time";
 
-export function Recipe() {
-  const { urlName } = useParams();
-
-  // query the recipe data
-  const recipeQuery = doGetQuery("recipe", "/recipe/" + urlName);
-
-  if (recipeQuery.isLoading) return <h1>Loading...</h1>;
-  if (recipeQuery.isError) {
-    try {
-      console.log(recipeQuery.error.response.status);
-      if (recipeQuery.error.response.status == 404)
-        return <Navigate to="/not-found" />;
-    } catch (error) {
-      console.log(error);
-    }
-    return <pre>{JSON.stringify(recipeQuery.error)}</pre>;
-  }
-
-  const data = recipeQuery.data[0];
+export function Recipe({data}) {
 
   let date = data.dateAdded; // Date stored in format yyyy-mm-ddThh:mm:ss.msZ
   date = date.slice(0, date.lastIndexOf("T")); // remove everything after "T"
