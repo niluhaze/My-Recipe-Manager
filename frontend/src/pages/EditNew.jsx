@@ -1,5 +1,5 @@
 import React from "react";
-import { Edit } from "../components/Edit";
+import { Edit } from "./Edit";
 
 export const EditNew = () => {
   return (

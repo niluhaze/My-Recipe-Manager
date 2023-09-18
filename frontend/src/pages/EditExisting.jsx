@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { doGetQuery } from "../scripts/query";
-import { Edit } from "../components/Edit";
+import { Edit } from "./Edit";
 
 export const EditExisting = () => {
   const { urlName } = useParams(); // get accessed urlName from /edit/urlName
