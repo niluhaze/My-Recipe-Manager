@@ -27,5 +27,8 @@ const { urlName } = useParams();
 
   const data = recipeQuery.data[0];
 
-  return <Recipe data={data}/>
+  /* 
+    A unique key tells React to rerender the Recipe, otherwise it might show old data after an edit.
+  */
+  return <Recipe key={"key-"+Date.now()} data={data}/>
 }
