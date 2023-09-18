@@ -53,11 +53,12 @@ router.post("/", async (req, res) => {
     body: req.body.body,
     image: req.body.image,
   });
+  console.log("edit-new:", newUrlName)
   try {
     const newRecipe = await recipe.save();
     res.status(201).json({ urlName: newRecipe.urlName });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 });
 
@@ -82,6 +83,7 @@ router.post("/:urlName", async (req, res) => {
   if (!urlName.includes(urlNameFromReq)) {
     newUrlName = await database.getNewUrlName(urlNameFromReq);
   }
+  console.log("edit-existing:", urlName, "to", newUrlName)
   try {
     // find the recipe with the matching (potentially old) urlName and update it with recipe
     const newRecipe = await Recipe.findOneAndUpdate(
