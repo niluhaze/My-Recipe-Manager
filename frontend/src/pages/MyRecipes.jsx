@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
-import { useQuery, useMutation } from "@tanstack/react-query"
 import { doGetQuery } from "../scripts/query"
 
 import RecipeTile from "/src/components/RecipeTile"
