@@ -104,7 +104,7 @@ export function Recipe() {
           </form>
           {/* Ingredients */}
           <p className="text-lg font-semibold">Ingredients</p>
-          <p className="whitespace-pre-line">{data.instructions}</p>
+          <p className="whitespace-pre-line">{data.ingredients}</p>
           {/* Instructions / Body */}
           <p className="text-lg font-semibold">Instructions</p>
           <p className="whitespace-pre-line">{data.body}</p>
