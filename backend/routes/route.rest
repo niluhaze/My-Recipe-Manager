@@ -1,33 +1,20 @@
-GET http://localhost:3000/
-//redirect to /my-recipes
+// get list of recipes
+GET http://192.168.178.31:3000/my-recipes
 
 ###
 
-GET http://localhost:3000/my-recipes
-//show list of recipes TBD
+// get list of recipes with custom query
+GET http://192.168.178.31:3000/my-recipes?sortBy=cookTimeTotal
 
 ###
 
-GET http://localhost:3000/my-recipes?sortBy=cookTimeTotal&sortDir=1
+// get falafel recipe data
+GET http://192.168.178.31:3000/recipe/falafel
 
 ###
 
-GET http://localhost:3000/recipe/
-//redirect to /my-recipes
-
-### 
-
-GET http://localhost:3000/recipe/falafel
-//show falafel recipe page TBD
-
-###
-
-GET http://localhost:3000/edit
-//show empty edit page TBD
-
-###
-
-POST http://localhost:3000/edit
+// post new recipe
+POST http://192.168.178.31:3000/edit
 Content-Type: application/json
 
 {
@@ -37,14 +24,11 @@ Content-Type: application/json
     "tags": ["Vegan"],
     "quantity": 2,
     "quantityUnit": "Portions",
-    "body": "Ingredients and instructions here."
+    "ingredients": "Ingredients here.",
+    "body": "Instructions here."
 }
 
 ###
 
-DELETE http://localhost:3000/edit/falafel-2
-
-###
-
-GET http://localhost:3000/edit/falafel
-//show edit page with loaded falafel recipe data TBD
+// delete specified recipe
+DELETE http://192.168.178.31:3000/edit/falafel-2
