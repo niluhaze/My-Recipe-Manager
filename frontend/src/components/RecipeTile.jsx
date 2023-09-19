@@ -27,7 +27,7 @@ const RecipeTile = (query) => {
             </svg>
             {/* Time */}
             <div className=" ml-1 text-neutral-500">
-              {`${minutesToTime(data.cookTimeActive)}/${minutesToTime(data.cookTimeTotal)}`}
+              {`${minutesToTime(data.cookTimeActive)} / ${minutesToTime(data.cookTimeTotal)}`}
             </div>
           </div>
         </div>
