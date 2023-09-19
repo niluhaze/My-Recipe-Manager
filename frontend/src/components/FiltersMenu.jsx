@@ -1,23 +1,38 @@
-import React from "react"
-import allTags from "../assets/tags.json"
+import React from "react";
+import allTags from "../assets/tags.json";
 
-const FiltersMenu = ({ toggle, setToggle }) => {
+const FiltersMenu = ({
+  toggleFiltersMenu,
+  setToggleFiltersMenu
+}) => {
   return (
     <>
       {/* Cancel button */}
       <div className="md:hidden flex justify-end mt-2 mx-2">
-        <button onClick={e => setToggle( !toggle )} className="h-10 aspect-square fill-black" >
+        <button
+          onClick={(e) => setToggleFiltersMenu(!toggleFiltersMenu)}
+          className="h-10 aspect-square fill-black"
+        >
           {/* X icon */}
-          <svg className="h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-            <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3l105.4 105.3c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256l105.3-105.4z"/>
+          <svg
+            className="h-full"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 384 512"
+          >
+            <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3l105.4 105.3c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256l105.3-105.4z" />
           </svg>
         </button>
       </div>
-      <form className=" min-w-[200px] flex flex-col p-2 gap-2">
-        <button className="p-1 rounded font-semibold text-lg text-components bg-primary hover:bg-primary-light active:bg-primary-light-light">
+      {/* Submit, SortBy and Filters wrapper */}
+      <div className=" min-w-[200px] flex flex-col p-2 gap-2">
+        {/* Submit button */}
+        <button
+          type="submit"
+          className="p-1 rounded font-semibold text-lg text-components bg-primary hover:bg-primary-light active:bg-primary-light-light"
+        >
           Apply
         </button>
-        {/* Sort By dropdown */}
+        {/* SortBy dropdown */}
         <div>
           <div className="font-semibold text-lg">Sort by</div>
           <select id="selectSortBy" name="sortBy">
@@ -68,9 +83,9 @@ const FiltersMenu = ({ toggle, setToggle }) => {
             </div>
           ))}
         </div>
-      </form>
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default FiltersMenu
+export default FiltersMenu;
