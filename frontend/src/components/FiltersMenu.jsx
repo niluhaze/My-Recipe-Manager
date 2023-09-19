@@ -20,7 +20,7 @@ const FiltersMenu = ({ toggle, setToggle }) => {
         {/* Sort By dropdown */}
         <div>
           <div className="font-semibold text-lg">Sort by</div>
-          <select>
+          <select id="selectSortBy" name="sortBy">
             <option value="-dateAdded">Newest</option>
             <option value="dateAdded">Oldest</option>
             <option value="cookTimeTotal">Fastest (total)</option>
