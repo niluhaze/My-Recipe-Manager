@@ -3,9 +3,8 @@ import { doGetQuery } from "../scripts/query";
 import RecipeTile from "/src/components/RecipeTile";
 
 export const RecipeGrid = ({ queryString }) => {
-
-  const queryUrl =
-    "/my-recipes" + (queryString.length === 0) ? "?" + queryString : "";
+  let queryUrl = "/my-recipes";
+  queryUrl += (queryString.length > 0) ? "?" + queryString : "";
   const recipesQuery = doGetQuery("my-recipes", queryUrl);
 
   //output loading and error messages when fetching recipe data
