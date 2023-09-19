@@ -1,20 +1,17 @@
 import { useEffect, useState } from "react"
-import { doGetQuery } from "../scripts/query"
-
-import RecipeTile from "/src/components/RecipeTile"
 import FiltersMenu from "/src/components/FiltersMenu"
+import { RecipeGrid } from "../components/RecipeGrid"
 
 export function MyRecipes(){
 
   // const test = useParams()
   // console.log(test)
 
-  const recipesQuery = doGetQuery("my-recipes", "/my-recipes?sortBy=cookTimeTotal&sortDir=-1")
-
   /* Variables and functions for the page's dynamic elements */
 
   //needed to rerender page when user types in search bar
-  const [searchString, setSearchString] = useState('')
+  const [ searchString, setSearchString ] = useState("") // stores the string entered in the search bar
+  const [ queryString, setQueryString ] = useState("") // stores the url query string for a get request with filters
 
   //toggle visibility of the filter menu (for small screens)
   const [ isFirst, setIsFirst ] = useState( true ) //for making sure the toggle doesn't trigger on mount
@@ -30,11 +27,6 @@ export function MyRecipes(){
     document.getElementById("filters-menu").classList.toggle("hidden")
     document.getElementById("filters-blur").classList.toggle("hidden")
   }, [ toggle ] )
-
-
-  //output loading and error messages when fetching recipe data
-  if( recipesQuery.isLoading ) return <h1>Loading recipes...</h1>
-  if( recipesQuery.isError ) return <pre>{JSON.stringify(recipesQuery.error)}</pre>
 
   return (
     <>
@@ -73,11 +65,7 @@ export function MyRecipes(){
             </div>
           </div>
           {/* Recipe Grid */}
-          <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 m-3">
-            {recipesQuery.data.map(tileData => (
-              <RecipeTile key={tileData.urlName} data={tileData} className="w-full"/>
-            ))}
-          </div>
+          <RecipeGrid queryString={queryString} />
         </div>
       </div>
     </>
