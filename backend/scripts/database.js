@@ -94,13 +94,13 @@ function generateRecipeListFindEntry(query) {
     //filter by tags if given
     if (query.tags != null) {
       /*
-            A comment on passing the tags array through the url query:
-            Since we want to be able to select multiple tags to search for at once,
-            we will pass them through the url query like "?tag=vegan&tag=oriental".
-            Express will combine these as an array ["vegan", "oriental"],
-            whereas a single tag "?tag=vegan" will result in "vegan" in Express.
-            According to the docs and my tests, the MongoDB $all tag handles both of these data types.
-            */
+        A comment on passing the tags array through the url query:
+        Since we want to be able to select multiple tags to search for at once,
+        we will pass them through the url query like "?tags=vegan&tags=oriental".
+        Express will combine these as an array ["vegan", "oriental"],
+        whereas a single tag "?tags=vegan" will result in "vegan" in Express.
+        According to the docs and my tests, the MongoDB $all tag handles both of these data types.
+      */
       jsonParts.push(`"tags": {"$all": "${query.tags}"}`);
     }
 
@@ -122,24 +122,33 @@ function generateRecipeListSkipEntry(query) {
 //determine by which variables to sort the recipes depending on the query
 function generateRecipeListSortEntry(query) {
   try {
-    //A valid sort query has a sortBy String and a sortDir(ection) which is 1 or -1
-    //if no (valid) query given
-    if (query.sortBy == null || !(query.sortDir == 1 || query.sortDir == -1)) {
-      return { dateAdded: 1, name: 1 }; //resort to default sorting
-    } else {
-      let jsonParts = []; //build custom sort json based on query
-      jsonParts.push(`"${query.sortBy}": "${query.sortDir}"`);
-
-      //include the following if they are not already included in the query
-      if (query.sortBy != "dateAdded") {
-        jsonParts.push('"dateAdded": "1"');
-      }
-      if (query.sortBy != "recipeName") {
-        jsonParts.push('"recipeName": "1"');
-      }
-
-      return createJson(jsonParts);
+    console.log("sortBy",query.sortBy)
+    //if no (valid) sortBy given in query
+    if (query.sortBy == undefined || query.sortBy.length < 1) {
+      return { dateAdded: -1, name: 1 }; //resort to default sorting
     }
+    let sortDirection = 1; // set default sort direction
+    // The search direction can be reversed with a leading "-", check if this is the case
+    console.log(query.sortBy.charAt(0), query.sortBy.charAt(0)==="-")
+    if (query.sortBy.charAt(0) === "-") {
+      console.log("reverse")
+      //if this is the case, remove leading "-" and set search direction accordingly
+      query.sortBy = query.sortBy.substring(1, query.sortBy.length);
+      sortDirection = -1;
+    }
+
+    let jsonParts = []; //build custom sort json based on query
+    jsonParts.push(`"${query.sortBy}": "${sortDirection}"`);
+
+    //include the following if they are not already included in the query
+    if (query.sortBy != "dateAdded") {
+      jsonParts.push('"dateAdded": "1"');
+    }
+    if (query.sortBy != "recipeName") {
+      jsonParts.push('"recipeName": "1"');
+    }
+
+    return createJson(jsonParts);
   } catch (error) {
     throw error;
   }
