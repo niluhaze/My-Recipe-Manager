@@ -1,3 +1,9 @@
+/* 
+  Edit existing or create new recipe.
+  If called by EditExisting: "/edit/urlName" called with existing recipe data which is displayed on page.
+  If called by EditNew: "/edit" called without and data, displaying empty inputs.
+*/
+
 // specify imports
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";

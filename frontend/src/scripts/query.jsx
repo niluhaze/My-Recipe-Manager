@@ -1,3 +1,7 @@
+/* 
+  Make queries to the backend and return a Promise, which can be used to get the response data or the current state of the query.
+*/
+
 import { useQuery, useMutation } from "@tanstack/react-query";
 import axios from "axios";
 

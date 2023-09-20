@@ -1,3 +1,8 @@
+/* 
+  Displayed when accessing an undefined page or trying to access data which doesn't exist.
+  Redirects to "/my-recipes" after 2s
+*/
+
 //specify imports
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";

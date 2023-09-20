@@ -1,5 +1,5 @@
 /*
-This is the main frontend jsx file which loads the react app
+  This is the main frontend jsx file which loads the react app
 */
 
 //specify imports

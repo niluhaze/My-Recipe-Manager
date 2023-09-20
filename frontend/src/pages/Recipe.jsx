@@ -1,3 +1,8 @@
+/* 
+  Called by RecipeQuerier.
+  Takes recipe data and displays it.
+*/
+
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { minutesToTime } from "../scripts/time";

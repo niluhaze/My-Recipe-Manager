@@ -1,3 +1,7 @@
+/*  
+  Navbar component, which is always displayed on top of page and links to the site's pages
+*/
+
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 

@@ -1,3 +1,7 @@
+/* 
+  A field allowing for image uploads via either click or drag and drop on page "/edit"
+*/
+
 // specify imports
 import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";

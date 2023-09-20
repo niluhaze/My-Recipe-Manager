@@ -1,3 +1,7 @@
+/* 
+  Tile displaying limited recipe data including image, recipeName and cookTime, and links to "/recipe/urlName"
+*/
+
 import React from "react";
 import { Link } from "react-router-dom";
 import { minutesToTime } from "../scripts/time";

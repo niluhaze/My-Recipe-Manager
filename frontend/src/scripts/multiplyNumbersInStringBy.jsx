@@ -1,3 +1,8 @@
+/*
+  Take a String and multiply any numbers in it, including floats and fractions, by a given number.
+  Used by Recipe page to multiply ingredient quantities for different numbers of portions.
+*/
+
 // import { toDecimal } from "vulgar-fractions";
 
 export const multiplyNumbersInStringBy = (string, multiplyBy) => {

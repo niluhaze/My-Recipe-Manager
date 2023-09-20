@@ -1,3 +1,7 @@
+/* 
+  Assigns routes to paths and creates the basic page layout with the header at the top.
+*/
+
 //specify imports
 import React, { Component } from "react";
 import { Route, Routes } from "react-router-dom";

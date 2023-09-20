@@ -1,4 +1,8 @@
-import { useEffect } from "react";
+/* 
+  Takes a url query string and makes a request to the backend to retrieve matching recipe data, displaying it in a dynamic grid.
+  Used on "/my-recipes" page.
+*/
+
 import { doGetQuery } from "../scripts/query";
 import RecipeTile from "/src/components/RecipeTile";
 
@@ -7,7 +11,7 @@ export const RecipeGrid = ({ queryString }) => {
   queryUrl += queryString.length > 0 ? "?" + queryString : "";
   const recipesQuery = doGetQuery("my-recipes", queryUrl);
 
-  //output loading and error messages when fetching recipe data
+  // output loading and error messages when fetching recipe data
   if (recipesQuery.isLoading) return <h1>Loading recipes...</h1>;
   if (recipesQuery.isError)
     return <pre>{JSON.stringify(recipesQuery.error)}</pre>;

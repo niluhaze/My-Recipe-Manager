@@ -1,3 +1,7 @@
+/* 
+  Content of menu used to select search parameters on page "/my-recipes"
+*/
+
 import React from "react";
 import allTags from "../assets/tags.json";
 
@@ -66,7 +70,6 @@ const FiltersMenu = ({ toggleFiltersMenu, setToggleFiltersMenu }) => {
                       name="tags"
                       id={"id-" + tag}
                       value={tag}
-                      // defaultChecked={false}
                     />
                     <label
                       className="px-2 py-[2px] rounded-full bg-neutral-400 text-components peer-checked/check:bg-primary"

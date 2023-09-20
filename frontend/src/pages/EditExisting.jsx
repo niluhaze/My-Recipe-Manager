@@ -1,3 +1,7 @@
+/* 
+  Try to get data from "/recipe/urlName" and call Edit with the data.
+*/
+
 import React from "react";
 import { useParams } from "react-router-dom";
 import { doGetQuery } from "../scripts/query";

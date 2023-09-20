@@ -1,3 +1,7 @@
+/* 
+  Scripts related to time conversion
+*/
+
 // database stores time in minutes, this converts it to { hours, minutes }
 export const minutesToHoursMinutes = (minutesIn) => {
   let minutes = minutesIn % 60;

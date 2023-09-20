@@ -1,5 +1,6 @@
 /*
   Query the data for the requested recipe page and then call the page with the queried data.
+  "/recipe/urlName"
 */
 
 import { useParams, Navigate } from "react-router-dom";

@@ -1,3 +1,8 @@
+/* 
+  Home page.
+  Currently unused.
+*/
+
 //specify imports
 import { Navigate } from "react-router-dom";
 

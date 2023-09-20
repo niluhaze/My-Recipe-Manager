@@ -1,3 +1,10 @@
+/* 
+  Displays a grid of recipes, including properties by which to filter and sort recipes.
+  Set to display 24 recipes per page.
+  When filters applied, sends query to RecipeGrid which performs the GET request and displays the resulting data.
+  "/my-recipes"
+*/
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FiltersMenu from "/src/components/FiltersMenu";
