@@ -52,7 +52,8 @@ export function Recipe({ data }) {
               {data.recipeName}
             </p>
             {/* Edit button */}
-            <Link to={"/edit/" + data.urlName}>
+            {/* replace prop prevents page from being stored in history */}
+            <Link to={"/edit/" + data.urlName} replace>
               {/* Edit icon */}
               <svg
                 className="h-6 fill-neutral-500"
