@@ -13,7 +13,9 @@ export const RecipeGrid = ({ queryString }) => {
     return <pre>{JSON.stringify(recipesQuery.error)}</pre>;
   if (recipesQuery.data.length === 0) 
     return (
-      <h1 className="w-auto">Could not find recipes matching the applied filters</h1>
+      <div className=" flex justify-items-center">
+        <p>Could not find any recipes matching the applied filters.</p>
+      </div>
     );
   return (
     // map data to recipe tiles and display as grid

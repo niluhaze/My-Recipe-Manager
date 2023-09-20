@@ -75,7 +75,7 @@ export function MyRecipes() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="h-full flex justify-center"
+      className="h-full max-w-[1500px] flex mx-auto"
     >
       {/* Filters menu */}
       <div
@@ -95,7 +95,8 @@ export function MyRecipes() {
         id="filters-blur"
         className="z-10 hidden md:hidden backdrop-blur-sm absolute top-0 bottom-0 left-0 right-0"
       ></div>
-      <div className="max-w-[1400px]">
+      {/* Wrapper for filter menu button, search bar, and recipe grid */}
+      <div className="mx-auto">
         {/* Wrapper for filter menu button and search bar */}
         <div className="flex justify-center p-5 gap-3">
           {/* Filter menu toggle button (for small view) */}
