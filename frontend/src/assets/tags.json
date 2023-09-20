@@ -1,4 +1,6 @@
 {
-    "Type": ["Appetizer", "Main course", "Side dish", "Dessert", "Baking", "Snack"],
-    "Tags": ["Vegan", "Asian", "Oriental"]
+    "About": ["My Favourites", "Vegan"],
+    "Type": ["Appetizer", "Main course", "Side dish", "Dessert", "Baking", "Breakfast", "Snack"],
+    "Origin": ["African", "American", "Asian", "European", "Latin American", "Oriental"]
+
 }
