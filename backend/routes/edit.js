@@ -53,7 +53,7 @@ router.post("/", async (req, res) => {
     body: req.body.body,
     image: req.body.image,
   });
-  console.log("edit-new:", newUrlName)
+  console.log("edit-new:", newUrlName);
   try {
     const newRecipe = await recipe.save();
     res.status(201).json({ urlName: newRecipe.urlName });
@@ -72,7 +72,7 @@ router.get("/:urlName", getRecipe, async (req, res) => {
 //edit an existing recipe
 router.post("/:urlName", async (req, res) => {
   const urlName = req.params.urlName;
-  console.log("urlName:", urlName)
+  console.log("urlName:", urlName);
   /* 
     Check if the name was changed to require a new urlName.
     If the urlName from the post request url doesn't match the urlName from the request body,
@@ -83,25 +83,26 @@ router.post("/:urlName", async (req, res) => {
   if (!urlName.includes(urlNameFromReq)) {
     newUrlName = await database.getNewUrlName(urlNameFromReq);
   }
-  console.log("edit-existing:", urlName, "to", newUrlName)
+  console.log("edit-existing:", urlName, "to", newUrlName);
   try {
     // find the recipe with the matching (potentially old) urlName and update it with recipe
     const newRecipe = await Recipe.findOneAndUpdate(
-        { urlName: urlName }, // condition
-        { // update
-          urlName: newUrlName,
-          recipeName: req.body.recipeName,
-          cookTimeTotal: req.body.cookTimeTotal,
-          cookTimeActive: req.body.cookTimeActive,
-          dateChanged: Date.now(),
-          tags: req.body.tags,
-          quantity: req.body.quantity,
-          quantityUnit: req.body.quantityUnit,
-          ingredients: req.body.ingredients,
-          body: req.body.body,
-          image: req.body.image,
-        },
-        { new: true } // options: return new instead of old recipe data
+      { urlName: urlName }, // condition
+      {
+        // update
+        urlName: newUrlName,
+        recipeName: req.body.recipeName,
+        cookTimeTotal: req.body.cookTimeTotal,
+        cookTimeActive: req.body.cookTimeActive,
+        dateChanged: Date.now(),
+        tags: req.body.tags,
+        quantity: req.body.quantity,
+        quantityUnit: req.body.quantityUnit,
+        ingredients: req.body.ingredients,
+        body: req.body.body,
+        image: req.body.image,
+      },
+      { new: true } // options: return new instead of old recipe data
     );
     res.status(201).json({ urlName: newRecipe.urlName });
   } catch (error) {

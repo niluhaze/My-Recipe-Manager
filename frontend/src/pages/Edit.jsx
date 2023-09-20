@@ -30,7 +30,6 @@ export const Edit = ({ existingData = {} }) => {
   // prepare POST hook
   const url = isEditExisting ? "/edit/" + urlName : "/edit";
   const postRecipe = doPostQuery(url);
-  
 
   // convert form data to JSON and send as POST request to backend
   const handleSubmit = (event) => {
@@ -279,7 +278,9 @@ export const Edit = ({ existingData = {} }) => {
         </div>
         <div className="flex flex-col gap-1">
           {/* Ingredients */}
-          <label htmlFor="body" className="text-lg">Ingredients</label>
+          <label htmlFor="body" className="text-lg">
+            Ingredients
+          </label>
           <TextareaAutosize
             name="ingredients"
             id="ingredients"
@@ -291,7 +292,9 @@ export const Edit = ({ existingData = {} }) => {
         </div>
         <div className="flex flex-col gap-1">
           {/* Recipe Instructions / Body */}
-          <label htmlFor="body" className="text-lg">Instructions</label>
+          <label htmlFor="body" className="text-lg">
+            Instructions
+          </label>
           <TextareaAutosize
             name="body"
             id="body"

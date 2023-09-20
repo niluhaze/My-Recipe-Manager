@@ -1,11 +1,11 @@
 //specify imports
-import { Navigate } from "react-router-dom"
+import { Navigate } from "react-router-dom";
 
-export function Home(){
+export function Home() {
   return (
     <>
       {/* No content on this page (yet). Redirecting to /my-recipes */}
-      <Navigate to="my-recipes"/>
+      <Navigate to="my-recipes" />
     </>
-  )
+  );
 }

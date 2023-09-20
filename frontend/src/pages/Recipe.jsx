@@ -12,8 +12,11 @@ export function Recipe({ data }) {
     const newQuantity = event.target.form[0].value; // get new quantity from form
 
     // multiply all numbers in instructions to match new quantity and apply new ingredient list to page
-    const newIngredients = multiplyNumbersInStringBy(data.ingredients, (newQuantity / data.quantity));
-    setIngredients(newIngredients)
+    const newIngredients = multiplyNumbersInStringBy(
+      data.ingredients,
+      newQuantity / data.quantity
+    );
+    setIngredients(newIngredients);
   };
 
   let date = data.dateAdded; // Date stored in format yyyy-mm-ddThh:mm:ss.msZ
@@ -74,7 +77,7 @@ export function Recipe({ data }) {
             <div>{date}</div>
           </div>
           {/* Tags */}
-          {(data.tags.length > 0) ?
+          {data.tags.length > 0 ? (
             <div className="flex flex-wrap gap-1 border-b border-neutral-300 pb-2">
               {data.tags.map((tagName) => (
                 <p
@@ -85,10 +88,8 @@ export function Recipe({ data }) {
                 </p>
               ))}
             </div>
-          :
-            null
-          }
-          
+          ) : null}
+
           {/* Quantity */}
           <form className="flex gap-2">
             <input

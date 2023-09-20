@@ -4,7 +4,6 @@ import FiltersMenu from "/src/components/FiltersMenu";
 import { RecipeGrid } from "../components/RecipeGrid";
 
 export function MyRecipes() {
-
   const navigate = useNavigate();
 
   // const test = useParams()
@@ -19,15 +18,14 @@ export function MyRecipes() {
   const [isFirst, setIsFirst] = useState(true); //for making sure the toggle doesn't trigger on mount
   const [toggleFiltersMenu, setToggleFiltersMenu] = useState(false); //toggle whether the filter menu is shown or hidden
 
-
   const buildQueryString = (formJSON) => {
     let newQueryString = "";
 
     // add key-value pairs to search string
     const addToQueryString = (key, value) => {
-      if(newQueryString.length > 0) newQueryString += "&" // add "&" between key-value pairs
-      newQueryString += `${key}=${value}`
-    }
+      if (newQueryString.length > 0) newQueryString += "&"; // add "&" between key-value pairs
+      newQueryString += `${key}=${value}`;
+    };
 
     // SortBy
     addToQueryString("sortBy", formJSON.sortBy);
@@ -51,14 +49,14 @@ export function MyRecipes() {
     const formJSON = Object.fromEntries(formData.entries()); // put form data into JSON
     formJSON.tags = formData.getAll("tags"); // put all selected tags into array and add it to formJSON
 
-    console.log(formJSON)
+    console.log(formJSON);
 
     const newQueryString = buildQueryString(formJSON);
     setQueryString(newQueryString);
     console.log("newQueryString:", newQueryString);
-    console.log("queryString", queryString)
+    console.log("queryString", queryString);
 
-    navigate(`/my-recipes?${newQueryString}`)
+    navigate(`/my-recipes?${newQueryString}`);
   };
 
   //run this whenever toggle changes
@@ -139,7 +137,7 @@ export function MyRecipes() {
         </div>
         {/* Recipe Grid */}
         {/* updating key tells react to update component */}
-        <RecipeGrid queryString={queryString} key={queryString}/>
+        <RecipeGrid queryString={queryString} key={queryString} />
       </div>
     </form>
   );

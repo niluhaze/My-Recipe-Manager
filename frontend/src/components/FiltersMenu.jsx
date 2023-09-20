@@ -1,10 +1,7 @@
 import React from "react";
 import allTags from "../assets/tags.json";
 
-const FiltersMenu = ({
-  toggleFiltersMenu,
-  setToggleFiltersMenu
-}) => {
+const FiltersMenu = ({ toggleFiltersMenu, setToggleFiltersMenu }) => {
   return (
     <>
       {/* Cancel button */}

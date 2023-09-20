@@ -29,6 +29,9 @@ export const EditExisting = () => {
       A unique key tells React to rerender Edit,
       otherwise it might show old data when editing different recipes after each other.
     */
-    <Edit key={existingData.urlName + Date.now()} existingData={existingData}></Edit>
+    <Edit
+      key={existingData.urlName + Date.now()}
+      existingData={existingData}
+    ></Edit>
   );
 };

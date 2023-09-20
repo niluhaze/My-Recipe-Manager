@@ -18,12 +18,12 @@ const Recipe = require("../models/recipe");
 
 //clean up the given string for use in a url
 function convertToUrlName(recipeName) {
-    const urlName = unidecode(recipeName) //decodes any special unicode chars like umlauts to ascii characters
+  const urlName = unidecode(recipeName) //decodes any special unicode chars like umlauts to ascii characters
     .trim() //removes leading and trailing spaces
     .toLowerCase()
     .replace(/ /g, "-") //replace spaces with -
     .replace(/^a-z-/g, ""); //remove everything that is not a roman letter or -
-    return urlName;
+  return urlName;
 }
 
 //return true if a specific url name already exists
@@ -122,16 +122,16 @@ function generateRecipeListSkipEntry(query) {
 //determine by which variables to sort the recipes depending on the query
 function generateRecipeListSortEntry(query) {
   try {
-    console.log("sortBy",query.sortBy)
+    console.log("sortBy", query.sortBy);
     //if no (valid) sortBy given in query
     if (query.sortBy == undefined || query.sortBy.length < 1) {
       return { dateAdded: -1, name: 1 }; //resort to default sorting
     }
     let sortDirection = 1; // set default sort direction
     // The search direction can be reversed with a leading "-", check if this is the case
-    console.log(query.sortBy.charAt(0), query.sortBy.charAt(0)==="-")
+    console.log(query.sortBy.charAt(0), query.sortBy.charAt(0) === "-");
     if (query.sortBy.charAt(0) === "-") {
-      console.log("reverse")
+      console.log("reverse");
       //if this is the case, remove leading "-" and set search direction accordingly
       query.sortBy = query.sortBy.substring(1, query.sortBy.length);
       sortDirection = -1;

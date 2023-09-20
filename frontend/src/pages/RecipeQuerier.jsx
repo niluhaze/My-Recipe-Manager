@@ -7,8 +7,7 @@ import { Recipe } from "./Recipe";
 import { doGetQuery } from "../scripts/query";
 
 export const RecipeQuerier = () => {
-
-const { urlName } = useParams();
+  const { urlName } = useParams();
 
   // query the recipe data
   const recipeQuery = doGetQuery("recipe", "/recipe/" + urlName);
@@ -30,5 +29,5 @@ const { urlName } = useParams();
   /* 
     A unique key tells React to rerender the Recipe, otherwise it might show old data after an edit.
   */
-  return <Recipe key={"key-"+Date.now()} data={data}/>
-}
+  return <Recipe key={"key-" + Date.now()} data={data} />;
+};

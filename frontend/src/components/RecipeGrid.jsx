@@ -4,14 +4,14 @@ import RecipeTile from "/src/components/RecipeTile";
 
 export const RecipeGrid = ({ queryString }) => {
   let queryUrl = "/my-recipes";
-  queryUrl += (queryString.length > 0) ? "?" + queryString : "";
+  queryUrl += queryString.length > 0 ? "?" + queryString : "";
   const recipesQuery = doGetQuery("my-recipes", queryUrl);
 
   //output loading and error messages when fetching recipe data
   if (recipesQuery.isLoading) return <h1>Loading recipes...</h1>;
   if (recipesQuery.isError)
     return <pre>{JSON.stringify(recipesQuery.error)}</pre>;
-  if (recipesQuery.data.length === 0) 
+  if (recipesQuery.data.length === 0)
     return (
       <div className=" flex justify-items-center">
         <p>Could not find any recipes matching the applied filters.</p>
