@@ -5,3 +5,14 @@
 :root {
     background-color: theme(colors.background);
 }
+
+/* remove arrow buttons from number inputs */
+@layer base {
+    input[type='number']::-webkit-outer-spin-button,
+    input[type='number']::-webkit-inner-spin-button,
+    input[type='number'] {
+        -webkit-appearance: none;
+        margin: 0;
+        -moz-appearance: textfield !important;
+    }
+}
