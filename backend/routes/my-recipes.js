@@ -1,3 +1,8 @@
+/* 
+  Route for getting a list of partial recipe data matching search criteria.
+  Intended for "/my-recipes".
+*/
+
 const express = require("express");
 const router = express.Router();
 const Recipe = require("../models/recipe");

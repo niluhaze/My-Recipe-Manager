@@ -1,6 +1,6 @@
 /* 
   Routes for editing existing and creating new recipes.
-  "/edit" 
+  "/edit" and "/edit/urlName"
 */
 
 const express = require("express");

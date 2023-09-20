@@ -1,4 +1,7 @@
-//recipe schema, specifying the variables a recipe object should have
+/*
+  Recipe schema, specifying the variables a recipe object should have
+*/
+
 const mongoose = require("mongoose");
 
 const recipeSchema = new mongoose.Schema({

@@ -1,9 +1,12 @@
 /*
-This contains scripts related to the MongoDB database.
+  This contains scripts related to the MongoDB database.
 */
 
-const RECIPES_PER_PAGE = 24; //number of recipes per /my-recipes page
-//specifies recipe variables needed for the recipe list
+const unidecode = require("unidecode");
+const Recipe = require("../models/recipe");
+
+const RECIPES_PER_PAGE = 24; // number of recipes per /my-recipes page
+// specifies variables needed for the recipe list
 const VARS_FOR_RECIPE_LIST = {
   urlName: 1,
   recipeName: 1,
@@ -13,20 +16,18 @@ const VARS_FOR_RECIPE_LIST = {
   _id: 0,
 };
 
-const unidecode = require("unidecode");
-const Recipe = require("../models/recipe");
 
-//clean up the given string for use in a url
+// clean up the given string for use in a url
 function convertToUrlName(recipeName) {
-  const urlName = unidecode(recipeName) //decodes any special unicode chars like umlauts to ascii characters
-    .trim() //removes leading and trailing spaces
+  const urlName = unidecode(recipeName) // decode any special unicode chars like umlauts to ascii characters
+    .trim() // remove leading and trailing spaces
     .toLowerCase()
-    .replace(/ /g, "-") //replace spaces with -
-    .replace(/^a-z-/g, ""); //remove everything that is not a roman letter or -
+    .replace(/ /g, "-") // replace spaces with -
+    .replace(/^a-z-/g, ""); // remove everything that is not a roman letter or -
   return urlName;
 }
 
-//return true if a specific url name already exists
+// return true if a specific url name already exists
 async function checkIfUrlNameExists(toCheck) {
   try {
     if ((await Recipe.find({ urlName: toCheck }).limit(1).count()) == 0) {
@@ -40,22 +41,22 @@ async function checkIfUrlNameExists(toCheck) {
   return true;
 }
 
-//generate a valid url name from a recipe name
+// generate a valid url name from a recipe name
 async function getNewUrlName(recipeName) {
   const urlName = convertToUrlName(recipeName);
 
-  //if recipe name already exists in a different object, append a trailing number "-i"
-  //finds lowest i which doesn't exist yet
+  // if recipe name already exists in a different object, append a trailing number "-i"
+  // finds lowest i which doesn't exist yet
   if (await checkIfUrlNameExists(urlName)) {
     let i = 2;
     while (true) {
       var urlName_i = urlName + "-" + i;
-      //if unique name found, return urlName_i
+      // if unique name found, return urlName_i
       if (!(await checkIfUrlNameExists(urlName_i))) return urlName_i;
       i++;
     }
   }
-  return urlName; //return urlName if adding a trailing number is not needed
+  return urlName; // return urlName if adding a trailing number is not needed
 }
 
 // same as previous function, but if at any point urlName_i matches oldUrlName, return oldUrlName
@@ -63,8 +64,8 @@ async function getNewUrlNameAfterEdit(recipeName, oldUrlName) {
   const urlName = convertToUrlName(recipeName);
   if (urlName == oldUrlName) return oldUrlName; // new matches old, return old
 
-  //if recipe name already exists in a different object, append a trailing number "-i"
-  //finds lowest i which doesn't exist yet
+  // if recipe name already exists in a different object, append a trailing number "-i"
+  // finds lowest i which doesn't exist yet
   if (await checkIfUrlNameExists(urlName)) {
     let i = 2;
     while (true) {
@@ -76,41 +77,43 @@ async function getNewUrlNameAfterEdit(recipeName, oldUrlName) {
       i++;
     }
   }
-  return urlName; //return urlName if adding a trailing number is not needed
+  return urlName; // return urlName if adding a trailing number is not needed
 }
 
-//takes array of strings which form json "key: value" pairs and uses them to create a json
+// takes array of strings which form json "key: value" pairs and uses them to create a json
 function createJson(jsonParts) {
-  let jsonString = "{"; //start with {
+  let jsonString = "{"; // start with {
 
   for (i in jsonParts) {
-    jsonString += jsonParts[i]; //add key:value pair
+    jsonString += jsonParts[i]; // add key:value pair
 
     if (i < jsonParts.length - 1) {
-      //if another pair follows, add a comma
+      // if another pair follows, add a comma
       jsonString += ",";
     }
   }
 
-  jsonString += "}"; //end with }
+  jsonString += "}"; // end with }
 
   return JSON.parse(jsonString);
 }
 
-/* generates the query that will go inside the Recipe.find() method
-to find a list of recipes matching the filter parameters given in query */
+/* 
+  Generates the query that will go inside the Recipe.find() method
+  to find a list of recipes matching the filter parameters given in query.
+*/
 function generateRecipeListFindEntry(query) {
   try {
     jsonParts = [];
 
-    //filter by search string if given
+    // filter by search string if given
     if (query.search != null) {
       jsonParts.push(
         `"recipeName": { "$regex": "${query.search}", "$options": "i" }`
       );
     }
 
-    //filter by tags if given
+    // filter by tags if given
     if (query.tags != null) {
       /*
         A comment on passing the tags array through the url query:
@@ -129,37 +132,37 @@ function generateRecipeListFindEntry(query) {
   }
 }
 
-//determine how many recipes to skip in the following query depending on which page was queried
+// determine how many recipes to skip in the following query depending on which page was queried
 function generateRecipeListSkipEntry(query) {
   if (query.page == null || query.page <= 0) {
-    return 0; //skip none if no page given, or if page value is not positive
+    return 0; // skip none if no page given, or if page value is not positive
   } else {
-    return RECIPES_PER_PAGE * (query.page - 1); //skip elements of previous pages if page number given
+    return RECIPES_PER_PAGE * (query.page - 1); // skip elements of previous pages if page number given
   }
 }
 
-//determine by which variables to sort the recipes depending on the query
+// determine by which variables to sort the recipes depending on the query
 function generateRecipeListSortEntry(query) {
   try {
     console.log("sortBy", query.sortBy);
-    //if no (valid) sortBy given in query
+    // if no (valid) sortBy given in query
     if (query.sortBy == undefined || query.sortBy.length < 1) {
-      return { dateAdded: -1, name: 1 }; //resort to default sorting
+      return { dateAdded: -1, name: 1 }; // resort to default sorting
     }
     let sortDirection = 1; // set default sort direction
     // The search direction can be reversed with a leading "-", check if this is the case
     console.log(query.sortBy.charAt(0), query.sortBy.charAt(0) === "-");
     if (query.sortBy.charAt(0) === "-") {
       console.log("reverse");
-      //if this is the case, remove leading "-" and set search direction accordingly
+      // if this is the case, remove leading "-" and set search direction accordingly
       query.sortBy = query.sortBy.substring(1, query.sortBy.length);
       sortDirection = -1;
     }
 
-    let jsonParts = []; //build custom sort json based on query
+    let jsonParts = []; // build custom sort json based on query
     jsonParts.push(`"${query.sortBy}": "${sortDirection}"`);
 
-    //include the following if they are not already included in the query
+    // include the following if they are not already included in the query
     if (query.sortBy != "dateAdded") {
       jsonParts.push('"dateAdded": "1"');
     }
@@ -173,18 +176,17 @@ function generateRecipeListSortEntry(query) {
   }
 }
 
-//returns the amount of recipes that fit the given filter
+// returns the amount of recipes that fit the given filter
 async function getRecipeListAmount(query) {
   return await Recipe.find(generateRecipeListFindEntry(query)).count();
 }
 
-//get a json of the required recipe data for the /my-recipes list
+// get a json of the required recipe data for the /my-recipes list
 async function getRecipeListData(query) {
   try {
     const query_count = await getRecipeListAmount(query); //get amount of recipes that fit the filter
     const pages_amount = Math.round(query_count / RECIPES_PER_PAGE); //get the amount  of resulting pages
 
-    //TODO: sort: query.sort_by: query.sort_direction,
     //retrieve needed recipe data given the filters, sort type and page number
     recipes = await Recipe.find(
       generateRecipeListFindEntry(query), //find objects which match the query
@@ -192,7 +194,7 @@ async function getRecipeListData(query) {
     )
       .sort(generateRecipeListSortEntry(query)) //specify how elements are sorted
       .skip(generateRecipeListSkipEntry(query)) //skip elements of previous pages
-      .limit(RECIPES_PER_PAGE); //only retrieve elements needed for current page
+      .limit(RECIPES_PER_PAGE); //only retrieve number of elements needed for current page
     return recipes;
   } catch (error) {
     throw error;
