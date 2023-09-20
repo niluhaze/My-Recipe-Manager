@@ -51,9 +51,28 @@ async function getNewUrlName(recipeName) {
     while (true) {
       var urlName_i = urlName + "-" + i;
       //if unique name found, return urlName_i
-      if (!(await checkIfUrlNameExists(urlName_i))) {
-        return urlName_i;
-      }
+      if (!(await checkIfUrlNameExists(urlName_i))) return urlName_i;
+      i++;
+    }
+  }
+  return urlName; //return urlName if adding a trailing number is not needed
+}
+
+// same as previous function, but if at any point urlName_i matches oldUrlName, return oldUrlName
+async function getNewUrlNameAfterEdit(recipeName, oldUrlName) {
+  const urlName = convertToUrlName(recipeName);
+  if (urlName == oldUrlName) return oldUrlName; // new matches old, return old
+
+  //if recipe name already exists in a different object, append a trailing number "-i"
+  //finds lowest i which doesn't exist yet
+  if (await checkIfUrlNameExists(urlName)) {
+    let i = 2;
+    while (true) {
+      var urlName_i = urlName + "-" + i;
+      // if new matches old, return old
+      if (urlName == oldUrlName) return oldUrlName;
+      // if unique name found, return urlName_i
+      if (!(await checkIfUrlNameExists(urlName_i))) return urlName_i;
       i++;
     }
   }
@@ -185,6 +204,7 @@ module.exports = {
   convertToUrlName,
   checkIfUrlNameExists,
   getNewUrlName,
+  getNewUrlNameAfterEdit,
   getRecipeListAmount,
   getRecipeListData,
 };
