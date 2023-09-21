@@ -5,7 +5,6 @@
 
 const express = require("express");
 const router = express.Router();
-const Recipe = require("../models/recipe");
 const getRecipe = require("../scripts/getRecipe");
 
 router.get("/:urlName", getRecipe, async (req, res) => {

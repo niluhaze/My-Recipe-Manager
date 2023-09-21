@@ -5,7 +5,6 @@
 
 const express = require("express");
 const router = express.Router();
-const Recipe = require("../models/recipe");
 const database = require("../scripts/database");
 
 router.get("/", async (req, res) => {

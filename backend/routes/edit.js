@@ -6,7 +6,6 @@
 const express = require("express");
 const router = express.Router();
 const Recipe = require("../models/recipe");
-const getRecipe = require("../scripts/getRecipe");
 const database = require("../scripts/database");
 
 // route for posting a new recipe under "/edit":
