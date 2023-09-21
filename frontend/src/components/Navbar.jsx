@@ -41,18 +41,21 @@ const Navbar = () => {
       >
         <div className="text-2xl flex flex-col md:flex-row">
           <Link
+            onClick={(e) => setToggle(!toggle)}
             className="p-2 md:px-3 md:py-6 hover:bg-primary-light active:bg-primary-light-light"
             to="/my-recipes"
           >
             RECIPES
           </Link>
           <Link
+            onClick={(e) => setToggle(!toggle)}
             className="p-2 md:px-3 md:py-6 hover:bg-primary-light active:bg-primary-light-light"
             to="/saved"
           >
             SAVED
           </Link>
           <Link
+            onClick={(e) => setToggle(!toggle)}
             className="p-2 md:px-3 md:py-6 hover:bg-primary-light active:bg-primary-light-light"
             to="/edit"
           >
