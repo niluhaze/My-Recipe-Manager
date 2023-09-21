@@ -1,13 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { doPostQuery } from "../scripts/query";
 
-export const SaveButton = ({ isSavedDefault = false }) => {
+export const SaveButton = ({ urlName, isSavedDefault = false }) => {
   const [isSaved, setIsSaved] = useState(isSavedDefault);
+
+  // prepare POST hook
+  const postQuery = doPostQuery("/save/" + urlName);
 
   const handleClick = (event) => {
     event.preventDefault();
-    setIsSaved(saved => !saved)
-    console.log("save click")
+    console.log("saved before:", isSaved)
+    setIsSaved(isSaved => !isSaved)
   }
+
+  useEffect(() => {
+    postQuery.mutate({saved: isSaved});
+    console.log("saved:", isSaved)
+  },[isSaved])
 
   return (
     <button onClick={handleClick} className="p-3 w-10 h-10 bg-gray-translucent-500 hover:bg-components-translucent-500 rounded-full  child:hover:fill-primary-light">
