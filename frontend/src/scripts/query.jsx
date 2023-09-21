@@ -31,3 +31,13 @@ export function doPostQuery(urlPath) {
   });
   return mutation;
 }
+
+// makes an http DELETE request to the backend with the given queryKey and to the given urlPath
+export function doDeleteQuery(urlPath) {
+  const mutation = useMutation({
+    mutationFn: () => {
+      return axios.delete(HOST_PATH + urlPath);
+    },
+  });
+  return mutation;
+}

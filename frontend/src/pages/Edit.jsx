@@ -9,8 +9,9 @@ import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import TextareaAutosize from "react-textarea-autosize";
 import ImageUpload from "/src/components/ImageUpload";
-import { doPostQuery } from "/src/scripts/query.jsx";
+import { doPostQuery, doDeleteQuery } from "/src/scripts/query.jsx";
 import { minutesToHoursMinutes } from "../scripts/time";
+import { delay } from "../scripts/delay";
 import allTags from "/src/assets/tags.json";
 
 export const Edit = ({ existingData = {} }) => {
@@ -36,6 +37,8 @@ export const Edit = ({ existingData = {} }) => {
   // prepare POST hook
   const url = isEditExisting ? "/edit/" + urlName : "/edit";
   const postRecipe = doPostQuery(url);
+  // prepare DELETE hook
+  const deleteRecipe = doDeleteQuery(url);
 
   // convert form data to JSON and send as POST request to backend
   const handleSubmit = (event) => {
@@ -72,6 +75,13 @@ export const Edit = ({ existingData = {} }) => {
     formJSON.image = image;
     console.log(formJSON);
     postRecipe.mutate(formJSON);
+  };
+
+  // delete recipe when delete button clicked
+  const handleDeleteClick = (event) => {
+    event.preventDefault();
+
+    deleteRecipe.mutate();
   };
 
   useEffect(() => {
@@ -111,9 +121,15 @@ export const Edit = ({ existingData = {} }) => {
   // if the recipe has been successfully posted:
   if (postRecipe.isSuccess) {
     console.log("Success!!", postRecipe.data.data.recipeName);
-    const delay = (ms) => new Promise((res) => setTimeout(res, ms));
     delay(1000);
-    return <Navigate to={"/recipe/" + postRecipe.data.data.urlName} replace/>;
+    return <Navigate to={"/recipe/" + postRecipe.data.data.urlName} replace />;
+  }
+
+  // if the recipe has been successfully deleted:
+  if (deleteRecipe.isSuccess) {
+    console.log("Delete Success!!");
+    delay(1000);
+    return <Navigate to="/my-recipes" replace />;
   }
 
   return (
@@ -179,7 +195,7 @@ export const Edit = ({ existingData = {} }) => {
       </div>
       <div className="p-3 flex flex-col gap-2">
         {/* Time, Quantity, Unit and Submit wrapper */}
-        <div className="flex flex-col lg:flex-row lg:items-end gap-4">
+        <div className="flex flex-col gap-4">
           {/* Time wrapper */}
           <div className="flex gap-2">
             {/* Total Time */}
@@ -271,16 +287,28 @@ export const Edit = ({ existingData = {} }) => {
                 id="quantityUnit"
                 placeholder="Portions"
                 defaultValue={getValue("quantitiy", "Portions")}
+                className="w-32"
               />
             </div>
           </div>
-          {/* Submit Button */}
-          <input
-            type="submit"
-            disabled={isButtonDisabled}
-            value={isEditExisting ? "Save Edits" : "Save new Recipe"}
-            className="w-36 h-8 p-1 rounded-lg text-components bg-primary hover:bg-primary-light active:bg-primary-light-light disabled:bg-neutral-400"
-          />
+          {/* Submit and Delete Buttons */}
+          <div className="flex gap-2">
+            <input
+              type="submit"
+              disabled={isButtonDisabled}
+              value={isEditExisting ? "Save Edits" : "Save new Recipe"}
+              className="w-36 h-8 p-1 rounded-lg text-components bg-primary hover:bg-primary-light active:bg-primary-light-light disabled:bg-neutral-400"
+            />
+            {isEditExisting ? ( // show delete button only if editing exisiting recipe
+              <button
+                onClick={handleDeleteClick}
+                disabled={isButtonDisabled}
+                className="w-36 h-8 p-1 rounded-lg text-primary bg-components border border-primary hover:border-primary-light hover:text-primary-light active:border-primary-light-light active:text-primary-light-light"
+              >
+                Delete Recipe
+              </button>
+            ) : null}
+          </div>
         </div>
         <div className="flex flex-col gap-1">
           {/* Ingredients */}
@@ -290,10 +318,10 @@ export const Edit = ({ existingData = {} }) => {
           <TextareaAutosize
             name="ingredients"
             id="ingredients"
-            className="w-full"
             rows="128"
             defaultValue={getValue("ingredients")}
             minRows={8}
+            className="w-full"
           />
         </div>
         <div className="flex flex-col gap-1">
