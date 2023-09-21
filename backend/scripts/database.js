@@ -10,6 +10,7 @@ const RECIPES_PER_PAGE = 24; // number of recipes per /my-recipes page
 const VARS_FOR_RECIPE_LIST = {
   urlName: 1,
   recipeName: 1,
+  saved: 1,
   cookTimeTotal: 1,
   cookTimeActive: 1,
   image: 1,
@@ -169,34 +170,40 @@ function generateRecipeListSortEntry(query) {
     if (query.sortBy != "recipeName") {
       jsonParts.push('"recipeName": "1"');
     }
-
     return createJson(jsonParts);
   } catch (error) {
     throw error;
   }
 }
 
-// returns the amount of recipes that fit the given filter
-async function getRecipeListAmount(query) {
-  return await Recipe.find(generateRecipeListFindEntry(query)).count();
-}
+// returns the amount of recipes that fit the given findEntry filter
+    async function getRecipeListAmount(findEntry) {
+      return await Recipe.find(findEntry).count();
+    }
 
 // get a json of the required recipe data for the /my-recipes list
 async function getRecipeListData(query) {
   try {
-    const query_count = await getRecipeListAmount(query); //get amount of recipes that fit the filter
+    const findEntry = generateRecipeListFindEntry(query); // filter recipes
+    const sortEntry = generateRecipeListSortEntry(query); // specify how elements are sorted
+    const skipEntry = generateRecipeListSkipEntry(query); // skip elements of previous pages
+
+    console.log("find, sort, skip entries:", findEntry, sortEntry, skipEntry)
+
+    const query_count = await getRecipeListAmount(findEntry); //get amount of recipes that fit the filter
     const pages_amount = Math.round(query_count / RECIPES_PER_PAGE); //get the amount  of resulting pages
 
-    //retrieve needed recipe data given the filters, sort type and page number
-    recipes = await Recipe.find(
-      generateRecipeListFindEntry(query), //find objects which match the query
-      VARS_FOR_RECIPE_LIST //and only include the relevant vars for the recipe list
+    // retrieve needed recipe data given the filters, sort type and page number
+    var recipes = await Recipe.find(
+      findEntry, // find recipes which match the findEntry filter
+      VARS_FOR_RECIPE_LIST // and only include the relevant vars for the recipe list
     )
-      .sort(generateRecipeListSortEntry(query)) //specify how elements are sorted
-      .skip(generateRecipeListSkipEntry(query)) //skip elements of previous pages
-      .limit(RECIPES_PER_PAGE); //only retrieve number of elements needed for current page
+      .sort(sortEntry)
+      .skip(skipEntry)
+      .limit(RECIPES_PER_PAGE); // only retrieve number of elements needed for current page
     return recipes;
   } catch (error) {
+    console.log(error)
     throw error;
   }
 }
