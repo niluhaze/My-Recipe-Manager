@@ -34,10 +34,12 @@ app.get("/", (req, res) => {
 const editRouter = require("./routes/edit");
 const myRecipesRouter = require("./routes/my-recipes");
 const recipeRouter = require("./routes/recipe");
+const saveRouter = require("./routes/save");
 
 app.use("/edit", editRouter);
 app.use("/my-recipes", myRecipesRouter);
 app.use("/recipe", recipeRouter);
+app.use("/save", saveRouter);
 
 // tell server to listen on specified port and ip
 app.listen(3000, "192.168.178.31", () => console.log("Server Started"));

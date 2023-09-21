@@ -32,3 +32,23 @@ Content-Type: application/json
 
 // delete specified recipe
 DELETE http://192.168.178.31:3000/edit/falafel-2
+
+###
+
+// save recipe
+POST http://192.168.178.31:3000/save/falafel
+Content-Type: application/json
+
+{
+    "saved": true
+}
+
+###
+
+// unsave recipe
+POST http://192.168.178.31:3000/save/falafel
+Content-Type: application/json
+
+{
+    "saved": false
+}
