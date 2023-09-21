@@ -78,19 +78,19 @@ export function MyRecipes() {
   }, [toggleFiltersMenu]);
 
   return (
+    
     <form
       onSubmit={handleSubmit}
-      className="h-full max-w-[1500px] flex mx-auto"
+      className="h-full flex justify-center"
     >
       {/* Filters menu */}
       <div
         id="filters-menu"
-        className="z-20 hidden md:block absolute left-0 top-0 bottom-0 md:static h-auto md:max-w-xs bg-components drop-shadow"
+        className="z-20 hidden md:block absolute left-0 top-0 bottom-0 md:static h-auto w-[200px] bg-components drop-shadow"
       >
         <FiltersMenu
           toggleFiltersMenu={toggleFiltersMenu}
           setToggleFiltersMenu={setToggleFiltersMenu}
-          handleSubmit={handleSubmit}
         />
       </div>
       {/* When filters menu is active:
@@ -101,7 +101,8 @@ export function MyRecipes() {
         className="z-10 hidden md:hidden backdrop-blur-sm absolute top-0 bottom-0 left-0 right-0"
       ></div>
       {/* Wrapper for filter menu button, search bar, and recipe grid */}
-      <div className="mx-auto">
+      <div
+       className="h-full max-w-[1200px] ">
         {/* Wrapper for filter menu button and search bar */}
         <div className="flex justify-center p-5 gap-3">
           {/* Filter menu toggle button (for small view) */}

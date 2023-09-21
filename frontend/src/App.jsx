@@ -23,7 +23,7 @@ import { NotFound } from "./pages/NotFound";
 //create the main App structure
 function App() {
   return (
-    <div className="flex flex-col w-screen h-screen">
+    <div className="w-screen h-screen">
       {/* Page Navbar */}
       <Navbar />
       {/* Assign the pages to routes */}
