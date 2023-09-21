@@ -144,7 +144,7 @@ export function MyRecipes() {
         </div>
         {/* Recipe Grid */}
         {/* updating key tells react to update component */}
-        <RecipeGrid queryString={queryString} key={queryString} />
+        <RecipeGrid key={queryString} />
       </div>
     </form>
   );
