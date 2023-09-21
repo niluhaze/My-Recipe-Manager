@@ -53,7 +53,6 @@ router.post("/:urlName", async (req, res) => {
         recipeName: req.body.recipeName,
         cookTimeTotal: req.body.cookTimeTotal,
         cookTimeActive: req.body.cookTimeActive,
-        dateChanged: Date.now(),
         tags: req.body.tags,
         quantity: req.body.quantity,
         quantityUnit: req.body.quantityUnit,
