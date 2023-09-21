@@ -4,6 +4,7 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
+import { SaveButton } from "../components/SaveButton";
 import { minutesToTime } from "../scripts/time";
 
 const RecipeTile = (query) => {
@@ -17,6 +18,10 @@ const RecipeTile = (query) => {
       >
         {/* Image section */}
         <div className="w-full aspect-[4/3]">
+          <div className="absolute right-0 p-3">
+            <SaveButton></SaveButton>
+          </div>
+
           <img
             className="rounded-t-lg object-cover w-full h-full bg-not-found text-neutral-400 flex justify-center items-center"
             src={data.image}
