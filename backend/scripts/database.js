@@ -17,7 +17,6 @@ const VARS_FOR_RECIPE_LIST = {
   _id: 0,
 };
 
-
 // clean up the given string for use in a url
 function convertToUrlName(recipeName) {
   const urlName = unidecode(recipeName) // decode any special unicode chars like umlauts to ascii characters
@@ -105,29 +104,33 @@ function createJson(jsonParts) {
 */
 function generateRecipeListFindEntry(query) {
   try {
-    jsonParts = [];
+    const findJSON = {};
 
     // filter by search string if given
-    if (query.search != null) {
-      jsonParts.push(
-        `"recipeName": { "$regex": "${query.search}", "$options": "i" }`
-      );
+    if (query.search != undefined) {
+      findJSON.recipeName = { $regex: query.search, $options: "i" };
+    }
+
+    // filter by saved if given
+    if (query.saved != undefined) {
+      if (query.saved === "true") findJSON.saved = true;
+      else if (query.saved === "false") findJSON.saved = false;
     }
 
     // filter by tags if given
-    if (query.tags != null) {
+    if (query.tags != undefined) {
       /*
         A comment on passing the tags array through the url query:
         Since we want to be able to select multiple tags to search for at once,
         we will pass them through the url query like "?tags=vegan&tags=oriental".
         Express will combine these as an array ["vegan", "oriental"],
-        whereas a single tag "?tags=vegan" will result in "vegan" in Express.
+        whereas a single tag "?tags=vegan" will result in the string "vegan" in Express.
         According to the docs and my tests, the MongoDB $all tag handles both of these data types.
       */
-      jsonParts.push(`"tags": {"$all": "${query.tags}"}`);
+        findJSON.tags = {$all: query.tags};
     }
 
-    return createJson(jsonParts); //create json from parts and return
+    return findJSON;
   } catch (error) {
     throw error;
   }
@@ -177,9 +180,9 @@ function generateRecipeListSortEntry(query) {
 }
 
 // returns the amount of recipes that fit the given findEntry filter
-    async function getRecipeListAmount(findEntry) {
-      return await Recipe.find(findEntry).count();
-    }
+async function getRecipeListAmount(findEntry) {
+  return await Recipe.find(findEntry).count();
+}
 
 // get a json of the required recipe data for the /my-recipes list
 async function getRecipeListData(query) {
@@ -188,7 +191,7 @@ async function getRecipeListData(query) {
     const sortEntry = generateRecipeListSortEntry(query); // specify how elements are sorted
     const skipEntry = generateRecipeListSkipEntry(query); // skip elements of previous pages
 
-    console.log("find, sort, skip entries:", findEntry, sortEntry, skipEntry)
+    console.log("find, sort, skip entries:", findEntry, sortEntry, skipEntry);
 
     const query_count = await getRecipeListAmount(findEntry); //get amount of recipes that fit the filter
     const pages_amount = Math.round(query_count / RECIPES_PER_PAGE); //get the amount  of resulting pages
@@ -203,7 +206,7 @@ async function getRecipeListData(query) {
       .limit(RECIPES_PER_PAGE); // only retrieve number of elements needed for current page
     return recipes;
   } catch (error) {
-    console.log(error)
+    console.log(error);
     throw error;
   }
 }

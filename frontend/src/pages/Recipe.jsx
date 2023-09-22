@@ -5,6 +5,7 @@
 
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { SaveButton } from "../components/SaveButton";
 import { minutesToTime } from "../scripts/time";
 import { multiplyNumbersInStringBy } from "../scripts/multiplyNumbersInStringBy";
 
@@ -30,9 +31,14 @@ export function Recipe({ data }) {
 
   return (
     <>
-      <div className="w-full max-w-3xl md:mx-auto md:m-4 md:rounded-2xl shadow bg-components">
+      <div className="max-w-3xl md:mx-auto md:m-4 md:rounded-2xl shadow bg-components">
+        {/* Save Button */}
+          <div className="absolute right-0 m-3">
+            <SaveButton urlName={data.urlName} isSavedDefault={data.saved} />
+          </div>
         {/* Image */}
         <div className="w-full aspect-[4/3] flex flex-col justify-center items-center border-b">
+          
           {data.image != undefined && data.image != "" ? (
             <img
               className="object-cover w-full h-full md:rounded-t-2xl"

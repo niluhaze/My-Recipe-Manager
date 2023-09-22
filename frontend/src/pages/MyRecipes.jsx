@@ -6,25 +6,26 @@
 */
 
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import FiltersMenu from "/src/components/FiltersMenu";
 import { RecipeGrid } from "../components/RecipeGrid";
+import { getValue } from "../scripts/getValue";
 
 export function MyRecipes() {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // prepare useNavigate hook for applying search parameters to url
 
-  // const test = useParams()
-  // console.log(test)
+  // get the query parameters from the url to set the default values of filters
+  const [searchParams] = useSearchParams();
+  const searchParamsJSON = Object.fromEntries(searchParams); // then use them to create a json object
+  searchParamsJSON.tags = searchParams.getAll("tags"); // and include any tags in an array
 
   /* Variables and functions for the page's dynamic elements */
-
-  //needed to rerender page when user types in search bar
-  const [queryString, setQueryString] = useState(""); // stores the url query string for a get request with filters
 
   //toggle visibility of the filter menu (for small screens)
   const [isFirst, setIsFirst] = useState(true); //for making sure the toggle doesn't trigger on mount
   const [toggleFiltersMenu, setToggleFiltersMenu] = useState(false); //toggle whether the filter menu is shown or hidden
 
+  // use the form data to build the query string to be put into the url
   const buildQueryString = (formJSON) => {
     let newQueryString = "";
 
@@ -34,17 +35,13 @@ export function MyRecipes() {
       newQueryString += `${key}=${value}`;
     };
 
-    // SortBy
-    addToQueryString("sortBy", formJSON.sortBy);
-
-    // Search
-    if (formJSON.search.length > 0) addToQueryString("search", formJSON.search);
-
-    // Tags
+    addToQueryString("sortBy", formJSON.sortBy); // add SortBy
+    if (formJSON.saved == "on") addToQueryString("saved", true); // add Saved if marked as true
+    if (formJSON.search.length > 0) addToQueryString("search", formJSON.search); // add Search if query entered
+    // add all selected Tags
     for (const tag of formJSON.tags) {
       addToQueryString("tags", tag);
     }
-
     return newQueryString;
   };
 
@@ -59,10 +56,6 @@ export function MyRecipes() {
     console.log(formJSON);
 
     const newQueryString = buildQueryString(formJSON);
-    setQueryString(newQueryString);
-    console.log("newQueryString:", newQueryString);
-    console.log("queryString", queryString);
-
     navigate(`/my-recipes?${newQueryString}`);
   };
 
@@ -78,11 +71,7 @@ export function MyRecipes() {
   }, [toggleFiltersMenu]);
 
   return (
-    
-    <form
-      onSubmit={handleSubmit}
-      className="h-full flex justify-center"
-    >
+    <form onSubmit={handleSubmit} className="h-full flex justify-center">
       {/* Filters menu */}
       <div
         id="filters-menu"
@@ -91,6 +80,7 @@ export function MyRecipes() {
         <FiltersMenu
           toggleFiltersMenu={toggleFiltersMenu}
           setToggleFiltersMenu={setToggleFiltersMenu}
+          searchParamsJSON={searchParamsJSON}
         />
       </div>
       {/* When filters menu is active:
@@ -101,8 +91,7 @@ export function MyRecipes() {
         className="z-10 hidden md:hidden backdrop-blur-sm absolute top-0 bottom-0 left-0 right-0"
       ></div>
       {/* Wrapper for filter menu button, search bar, and recipe grid */}
-      <div
-       className="h-full max-w-[1200px] ">
+      <div className="h-full max-w-[1200px] ">
         {/* Wrapper for filter menu button and search bar */}
         <div className="flex justify-center p-5 gap-3">
           {/* Filter menu toggle button (for small view) */}
@@ -128,6 +117,7 @@ export function MyRecipes() {
               id="searchBar"
               name="search"
               placeholder="Search recipes..."
+              defaultValue={getValue({data: searchParamsJSON, key: "search"})}
               className="outline-none bg-transparent"
             />
             {/* Submit button */}
@@ -145,7 +135,7 @@ export function MyRecipes() {
         </div>
         {/* Recipe Grid */}
         {/* updating key tells react to update component */}
-        <RecipeGrid key={queryString} />
+        <RecipeGrid key={Date.now()} />
       </div>
     </form>
   );

@@ -23,13 +23,13 @@ import { NotFound } from "./pages/NotFound";
 //create the main App structure
 function App() {
   return (
-    <div className="w-screen h-screen">
+    <div className="w-screen h-full">
       {/* Page Navbar */}
       <Navbar />
       {/* Assign the pages to routes */}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/my-recipes" element={<MyRecipes />} />
+        <Route path="/my-recipes" element={<MyRecipes />} key={Date.now()} />
         <Route path="/recipe/:urlName" element={<RecipeQuerier />} />
         <Route path="/edit">
           <Route index element={<EditNew />} />{" "}

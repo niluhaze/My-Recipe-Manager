@@ -50,7 +50,7 @@ const Navbar = () => {
           <Link
             onClick={(e) => setToggle(!toggle)}
             className="p-2 md:px-3 md:py-6 hover:bg-primary-light active:bg-primary-light-light"
-            to="/saved"
+            to="/my-recipes?saved=true"
           >
             SAVED
           </Link>

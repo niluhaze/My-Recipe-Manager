@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { doPostQuery } from "../scripts/query";
 
 export const SaveButton = ({ urlName, isSavedDefault = false }) => {
@@ -13,7 +13,13 @@ export const SaveButton = ({ urlName, isSavedDefault = false }) => {
     setIsSaved(isSaved => !isSaved)
   }
 
+  const [isFirst, setIsFirst] = useState(true); //for making sure the toggle doesn't trigger on mount
   useEffect(() => {
+    //make sure the code after if block does't get run on mount
+    if (isFirst) {
+      setIsFirst(false);
+      return;
+    }
     postQuery.mutate({saved: isSaved});
     console.log("saved:", isSaved)
   },[isSaved])

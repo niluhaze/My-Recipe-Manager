@@ -21,7 +21,6 @@ const RecipeTile = (query) => {
           <div className="absolute right-0 p-3">
             <SaveButton urlName={data.urlName} isSavedDefault={data.saved} />
           </div>
-
           <img
             className="rounded-t-lg object-cover w-full h-full bg-not-found text-neutral-400 flex justify-center items-center"
             src={data.image}

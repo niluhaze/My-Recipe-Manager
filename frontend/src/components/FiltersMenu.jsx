@@ -4,8 +4,18 @@
 
 import React from "react";
 import allTags from "../assets/tags.json";
+import { useNavigate } from "react-router-dom";
+import { getValue, getValueTags } from "../scripts/getValue";
 
-const FiltersMenu = ({ toggleFiltersMenu, setToggleFiltersMenu }) => {
+const FiltersMenu = ({ toggleFiltersMenu, setToggleFiltersMenu, searchParamsJSON }) => {
+  // prepare useNavigate hook for handleClearButton
+  const navigate = useNavigate();
+  // redirect to "/my-recipes" without query string, clearing all form inputs
+  const handleClearButton = (event) => {
+    event.preventDefault();
+    navigate("/my-recipes");
+  };
+
   return (
     <>
       {/* Cancel button */}
@@ -33,10 +43,17 @@ const FiltersMenu = ({ toggleFiltersMenu, setToggleFiltersMenu }) => {
         >
           Apply
         </button>
+        {/* Clear button */}
+        <button
+          onClick={handleClearButton}
+          className="p-1 rounded font-semibold text-lg text-primary border border-primary bg-components hover:bg-primary-light active:bg-primary-light-light"
+        >
+          Clear Filters
+        </button>
         {/* SortBy dropdown */}
         <div>
           <div className="font-semibold text-lg">Sort by</div>
-          <select id="selectSortBy" name="sortBy">
+          <select id="selectSortBy" name="sortBy" defaultValue={getValue({data: searchParamsJSON, key:"sortBy"})}>
             <option value="-dateAdded">Newest</option>
             <option value="dateAdded">Oldest</option>
             <option value="cookTimeTotal">Fastest (total)</option>
@@ -44,6 +61,19 @@ const FiltersMenu = ({ toggleFiltersMenu, setToggleFiltersMenu }) => {
             <option value="cookTimeActive">Fastest (active)</option>
             <option value="-cookTimeActive">Longest (active)</option>
           </select>
+        </div>
+        {/* Saved toggle */}
+        <div>
+          <label className="font-semibold text-lg mr-2" htmlFor="saved">
+            Saved only
+          </label>
+          <input
+            className="accent-primary"
+            type="checkbox"
+            name="saved"
+            id="saved"
+            defaultChecked={getValue({data: searchParamsJSON, key:"saved"})}
+          />
         </div>
         {/* Tags */}
         <div>
@@ -70,6 +100,7 @@ const FiltersMenu = ({ toggleFiltersMenu, setToggleFiltersMenu }) => {
                       name="tags"
                       id={"id-" + tag}
                       value={tag}
+                      defaultChecked={getValueTags({tagArray: searchParamsJSON.tags, tag: tag})}
                     />
                     <label
                       className="px-2 py-[2px] rounded-full bg-neutral-400 text-components peer-checked/check:bg-primary"
