@@ -121,7 +121,7 @@ export const Edit = ({ existingData = {} }) => {
   };
 
   if (postRecipe.isSuccess) {
-    return <Navigate to={"/recipe/" + postRecipe.data.data.urlName} replace />;
+    return <Navigate to={"/recipe/" + postRecipe.data.data.urlName} />;
   }
 
   return (
