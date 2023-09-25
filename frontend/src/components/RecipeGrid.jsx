@@ -4,7 +4,8 @@
 */
 
 import { useSearchParams } from "react-router-dom";
-import { doGetQuery } from "../scripts/query";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import RecipeTile from "/src/components/RecipeTile";
 
 export const RecipeGrid = () => {
@@ -15,7 +16,14 @@ export const RecipeGrid = () => {
   // build queryUrl and use it to make GET request to backend
   let queryUrl = "/my-recipes";
   queryUrl += queryString.length > 0 ? "?" + queryString : "";
-  const recipesQuery = doGetQuery("my-recipes", queryUrl);
+  // make GET request
+  const recipesQuery = useQuery({
+    queryKey: ["my-recipes"],
+    queryFn: async () => {
+      const { data } = await axios.get(import.meta.env.VITE_APP_BACKEND_URL + queryUrl);
+      return data;
+    },
+  });
 
   // loading message
   if (recipesQuery.isLoading) return <h1>Loading recipes...</h1>;

@@ -4,14 +4,23 @@
 */
 
 import { useParams, Navigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import { Recipe } from "./Recipe";
-import { doGetQuery } from "../scripts/query";
 
 export const RecipeQuerier = () => {
   const { urlName } = useParams();
 
   // query the recipe data
-  const recipeQuery = doGetQuery("recipe", "/recipe/" + urlName);
+  const recipeQuery = useQuery({
+    queryKey: [`recipe-${urlName}`],
+    queryFn: async () => {
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_APP_BACKEND_URL}/recipe/${urlName}`
+      );
+      return data;
+    },
+  });
 
   if (recipeQuery.isLoading) return <h1>Loading...</h1>;
   if (recipeQuery.isError) {
@@ -27,8 +36,5 @@ export const RecipeQuerier = () => {
 
   const data = recipeQuery.data[0];
 
-  /* 
-    A unique key tells React to rerender the Recipe, otherwise it might show old data after an edit.
-  */
-  return <Recipe key={"key-" + Date.now()} data={data} />;
+  return <Recipe key={Date.now} data={data} />;
 };

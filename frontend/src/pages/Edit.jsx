@@ -6,12 +6,12 @@
 
 // specify imports
 import React, { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
 import TextareaAutosize from "react-textarea-autosize";
 import ImageUpload from "/src/components/ImageUpload";
-import { doPostQuery, doDeleteQuery } from "/src/scripts/query.jsx";
 import { minutesToHoursMinutes } from "../scripts/time";
-import { delay } from "../scripts/delay";
 import allTags from "/src/assets/tags.json";
 
 export const Edit = ({ existingData = {} }) => {
@@ -31,14 +31,33 @@ export const Edit = ({ existingData = {} }) => {
   const [image, setImage] = useState(defaultImage); // stores image from ImageUpload
   const [isButtonDisabled, setIsButtonDisabled] = useState(false); // stores whether submit button is disabled or not
 
-  // reference for the form element
-  const formRef = React.useRef(null);
+  // prepate useNavigate hook
+  const navigate = useNavigate();
 
-  // prepare POST hook
-  const url = isEditExisting ? "/edit/" + urlName : "/edit";
-  const postRecipe = doPostQuery(url);
-  // prepare DELETE hook
-  const deleteRecipe = doDeleteQuery(url);
+  const queryClient = useQueryClient(); // used to invalidate queries after mutation
+  // prepare POST mutation
+  const urlPath = isEditExisting ? "/edit/" + urlName : "/edit";
+  const postRecipe = useMutation({
+    mutationFn: (data) => {
+      return axios.post(import.meta.env.VITE_APP_BACKEND_URL + urlPath, data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["my-recipes", `recipe-${urlName}`]);
+      console.log("Post success!!");
+    },
+  });
+
+  // prepare DELETE mutation
+  const deleteRecipe = useMutation({
+    mutationFn: () => {
+      return axios.delete(import.meta.env.VITE_APP_BACKEND_URL + urlPath);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["my-recipes", `recipe-${urlName}`]);
+      console.log("Delete success!!");
+      navigate("/my-recipes");
+    },
+  });
 
   // convert form data to JSON and send as POST request to backend
   const handleSubmit = (event) => {
@@ -80,25 +99,8 @@ export const Edit = ({ existingData = {} }) => {
   // delete recipe when delete button clicked
   const handleDeleteClick = (event) => {
     event.preventDefault();
-
     deleteRecipe.mutate();
   };
-
-  useEffect(() => {
-    // listen for form submit event and then run handleSubmit
-    try {
-      formRef.current.addEventListener("submit", handleSubmit);
-    } catch (error) {
-      console.log("addEventListner error");
-    }
-    return () => {
-      try {
-        formRef.current.removeEventListener("submit", handleSubmit);
-      } catch (error) {
-        console.log("removeEventListner error");
-      }
-    };
-  });
 
   // used for setting value prop of the form inputs
   // get a value from existing recipe data if it is defined, else return a default value
@@ -118,23 +120,13 @@ export const Edit = ({ existingData = {} }) => {
     return existingData.tags.includes(tag);
   };
 
-  // if the recipe has been successfully posted:
   if (postRecipe.isSuccess) {
-    console.log("Success!!", postRecipe.data.data.recipeName);
-    delay(1000);
     return <Navigate to={"/recipe/" + postRecipe.data.data.urlName} replace />;
-  }
-
-  // if the recipe has been successfully deleted:
-  if (deleteRecipe.isSuccess) {
-    console.log("Delete Success!!");
-    delay(1000);
-    return <Navigate to="/my-recipes" replace />;
   }
 
   return (
     <form
-      ref={formRef}
+      onSubmit={handleSubmit}
       className="w-full max-w-3xl md:mx-auto md:m-4 md:rounded-2xl shadow bg-components"
     >
       {/* Image and Title wrapper */}

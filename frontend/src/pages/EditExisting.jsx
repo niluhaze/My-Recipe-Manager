@@ -4,12 +4,19 @@
 
 import React from "react";
 import { useParams } from "react-router-dom";
-import { doGetQuery } from "../scripts/query";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import { Edit } from "./Edit";
 
 export const EditExisting = () => {
-  const { urlName } = useParams(); // get accessed urlName from /edit/urlName
-  const recipeQuery = doGetQuery("edit-recipe", "/recipe/" + urlName);
+  const { urlName } = useParams(); // get accessed urlName from url
+  const recipeQuery = useQuery({
+    queryKey: [`recipe-${urlName}`],
+    queryFn: async () => {
+      const { data } = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/recipe/${urlName}`);
+      return data;
+    },
+  });
 
   // show if loading data
   if (recipeQuery.isLoading) return <h1>Loading...</h1>;

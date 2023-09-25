@@ -10,6 +10,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
+// const nocache = require("nocache");
 
 const app = express();
 
@@ -18,6 +19,11 @@ app.use(bodyParser.json({ limit: "10mb" }));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(cors({ origin: "http://localhost:5173" })); // allows queries from localhost
+ 
+/* 
+// tell frontend not to cache data
+app.use(nocache());
+app.set("etag", false); */
 
 // connect to MongoDB database on localhost
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
@@ -41,5 +47,5 @@ app.use("/my-recipes", myRecipesRouter);
 app.use("/recipe", recipeRouter);
 app.use("/save", saveRouter);
 
-// tell server to listen on specified port and ip
+// tell server to listen on specified port and local ip
 app.listen(3000, "192.168.178.31", () => console.log("Server Started"));

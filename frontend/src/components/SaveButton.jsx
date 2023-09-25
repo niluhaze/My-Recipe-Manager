@@ -1,11 +1,22 @@
 import React, { useEffect, useState, useRef } from "react";
-import { doPostQuery } from "../scripts/query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
 
 export const SaveButton = ({ urlName, isSavedDefault = false }) => {
-  const [isSaved, setIsSaved] = useState(isSavedDefault);
+  const [isSaved, setIsSaved] = useState(isSavedDefault); // stores saved state of recipe
 
-  // prepare POST hook
-  const postQuery = doPostQuery("/save/" + urlName);
+  const queryClient = useQueryClient(); // used to invalidate queries after mutation
+  // prepare POST mutation
+  const postMutation = useMutation({
+    mutationFn: (data) => {
+      return axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/save/${urlName}`, data);
+    },
+    onSuccess: () => {
+      // invalidate queries that contain save Button
+      queryClient.invalidateQueries(["my-recipes", `recipe-${urlName}`])
+      console.log("invalidated")
+    }
+  });
 
   const handleClick = (event) => {
     event.preventDefault();
@@ -20,7 +31,7 @@ export const SaveButton = ({ urlName, isSavedDefault = false }) => {
       setIsFirst(false);
       return;
     }
-    postQuery.mutate({saved: isSaved});
+    postMutation.mutate({saved: isSaved});
     console.log("saved:", isSaved)
   },[isSaved])
 

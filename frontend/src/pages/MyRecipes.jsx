@@ -24,6 +24,7 @@ export function MyRecipes() {
   //toggle visibility of the filter menu (for small screens)
   const [isFirst, setIsFirst] = useState(true); //for making sure the toggle doesn't trigger on mount
   const [toggleFiltersMenu, setToggleFiltersMenu] = useState(false); //toggle whether the filter menu is shown or hidden
+  const [toggleUpdate, setToggleUpdate] = useState(0);
 
   // use the form data to build the query string to be put into the url
   const buildQueryString = (formJSON) => {
@@ -57,6 +58,7 @@ export function MyRecipes() {
 
     const newQueryString = buildQueryString(formJSON);
     navigate(`/my-recipes?${newQueryString}`);
+    setToggleUpdate(toggleUpdate => toggleUpdate+1)
   };
 
   //run this whenever toggle changes
@@ -135,7 +137,7 @@ export function MyRecipes() {
         </div>
         {/* Recipe Grid */}
         {/* updating key tells react to update component */}
-        <RecipeGrid key={Date.now()} />
+        <RecipeGrid key={toggleUpdate + Date.now()} />
       </div>
     </form>
   );

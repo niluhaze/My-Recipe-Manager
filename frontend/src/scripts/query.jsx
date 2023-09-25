@@ -38,6 +38,7 @@ export function doDeleteQuery(urlPath) {
     mutationFn: () => {
       return axios.delete(HOST_PATH + urlPath);
     },
+    onSuccess: onSuccessFunction
   });
   return mutation;
 }
