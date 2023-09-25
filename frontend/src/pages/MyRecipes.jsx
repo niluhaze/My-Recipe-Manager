@@ -1,7 +1,10 @@
 /* 
   Displays a grid of recipes, including properties by which to filter and sort recipes.
   Set to display 24 recipes per page.
-  When filters applied, sends query to RecipeGrid which performs the GET request and displays the resulting data.
+  When page gets loaded it retrieves the search parameters (e.g. "sortBy=dateAdded" after the "?" in the url).
+  From this, the default values are extracted and applied to the page's filters.
+  Recipe data is loaded by a child - RecipeGrid - when a redirect to /my-recipes?... happens.
+  When filters are applied or cleared, the page updates the search parameters using a redirect.
   "/my-recipes"
 */
 
@@ -9,7 +12,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import FiltersMenu from "/src/components/FiltersMenu";
 import { RecipeGrid } from "../components/RecipeGrid";
-import { getValue } from "../scripts/getValue";
+import { getDefaultsMyRecipes } from "../scripts/getDefaultsMyRecipes";
 import { buildQueryString } from "../scripts/buildQueryString";
 
 export function MyRecipes() {
@@ -19,6 +22,9 @@ export function MyRecipes() {
   const [searchParams] = useSearchParams();
   const searchParamsJSON = Object.fromEntries(searchParams); // then use them to create a json object
   searchParamsJSON.tags = searchParams.getAll("tags"); // and include any tags in an array
+  // use search parameters to get a json of all default form values based on the url query
+  const defaultFormValues = getDefaultsMyRecipes(searchParamsJSON);
+  console.log(defaultFormValues)
 
   /* Variables and functions for the page's dynamic elements */
 
@@ -63,7 +69,7 @@ export function MyRecipes() {
         <FiltersMenu
           toggleFiltersMenu={toggleFiltersMenu}
           setToggleFiltersMenu={setToggleFiltersMenu}
-          searchParamsJSON={searchParamsJSON}
+          defaultFormValues={defaultFormValues}
         />
       </div>
       {/* When filters menu is active:
@@ -100,7 +106,8 @@ export function MyRecipes() {
               id="searchBar"
               name="search"
               placeholder="Search recipes..."
-              defaultValue={getValue({data: searchParamsJSON, key: "search"})}
+              defaultValue={defaultFormValues.search}
+              key={Date.now()}
               className="outline-none bg-transparent"
             />
             {/* Submit button */}

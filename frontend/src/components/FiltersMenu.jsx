@@ -5,11 +5,15 @@
 import React from "react";
 import allTags from "../assets/tags.json";
 import { useNavigate } from "react-router-dom";
-import { getValue, getValueTags } from "../scripts/getValue";
 
-const FiltersMenu = ({ toggleFiltersMenu, setToggleFiltersMenu, searchParamsJSON }) => {
+const FiltersMenu = ({
+  toggleFiltersMenu,
+  setToggleFiltersMenu,
+  defaultFormValues,
+}) => {
   // prepare useNavigate hook for handleClearButton
   const navigate = useNavigate();
+
   // redirect to "/my-recipes" without query string, clearing all form inputs
   const handleClearButton = (event) => {
     event.preventDefault();
@@ -53,7 +57,13 @@ const FiltersMenu = ({ toggleFiltersMenu, setToggleFiltersMenu, searchParamsJSON
         {/* SortBy dropdown */}
         <div>
           <div className="font-semibold text-lg">Sort by</div>
-          <select id="selectSortBy" name="sortBy" defaultValue={getValue({data: searchParamsJSON, key:"sortBy"})}>
+          <select
+            id="selectSortBy"
+            name="sortBy"
+            defaultValue={defaultFormValues.sortBy}
+            key={Date.now()}
+            // unique key forces react to rerender component, updating the default value
+          >
             <option value="-dateAdded">Newest</option>
             <option value="dateAdded">Oldest</option>
             <option value="cookTimeTotal">Fastest (total)</option>
@@ -72,7 +82,8 @@ const FiltersMenu = ({ toggleFiltersMenu, setToggleFiltersMenu, searchParamsJSON
             type="checkbox"
             name="saved"
             id="saved"
-            defaultChecked={getValue({data: searchParamsJSON, key:"saved"})}
+            defaultChecked={defaultFormValues.saved}
+            key={Date.now()}
           />
         </div>
         {/* Tags */}
@@ -94,13 +105,15 @@ const FiltersMenu = ({ toggleFiltersMenu, setToggleFiltersMenu, searchParamsJSON
                 {/* ...and then create the corresponding tag checkmarks below: */}
                 {allTags[category].map((tag) => (
                   <div key={"key-tag-" + tag}>
+                    { console.log(tag, defaultFormValues.tags[tag]) }
                     <input
                       className="peer/check hidden"
                       type="checkbox"
                       name="tags"
                       id={"id-" + tag}
                       value={tag}
-                      defaultChecked={getValueTags({tagArray: searchParamsJSON.tags, tag: tag})}
+                      defaultChecked={defaultFormValues.tags[tag]}
+                      key={Date.now()}
                     />
                     <label
                       className="px-2 py-[2px] rounded-full bg-neutral-400 text-components peer-checked/check:bg-primary"
