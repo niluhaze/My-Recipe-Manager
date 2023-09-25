@@ -136,13 +136,14 @@ export const Edit = ({ existingData = {} }) => {
         {/* Title */}
         <div className="p-3 flex flex-col gap-1 text-lg font-semibold">
           <label htmlFor="recipeName">Title</label>
-          <input
+          <TextareaAutosize
             required
             type="text"
             name="recipeName"
             id="recipeName"
             className="w-full text-3xl"
             defaultValue={getValue("recipeName")}
+            minRows={1}
           />
         </div>
       </div>
