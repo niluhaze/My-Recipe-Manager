@@ -36,5 +36,5 @@ export const RecipeQuerier = () => {
 
   const data = recipeQuery.data[0];
 
-  return <Recipe key={Date.now} data={data} />;
+  return <Recipe data={data} />;
 };

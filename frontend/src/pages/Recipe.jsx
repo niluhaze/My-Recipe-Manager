@@ -34,7 +34,7 @@ export function Recipe({ data }) {
       <div className="max-w-3xl md:mx-auto md:m-4 md:rounded-2xl shadow bg-components">
         {/* Save Button */}
           <div className="absolute right-0 m-3">
-            <SaveButton urlName={data.urlName} isSavedDefault={data.saved} />
+            <SaveButton urlName={data.urlName} isSavedDefault={data.saved} key={data.saved} />
           </div>
         {/* Image */}
         <div className="w-full aspect-[4/3] flex flex-col justify-center items-center border-b">

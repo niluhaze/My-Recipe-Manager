@@ -19,7 +19,7 @@ const RecipeTile = (query) => {
         {/* Image section */}
         <div className="w-full aspect-[4/3]">
           <div className="absolute right-0 p-3">
-            <SaveButton urlName={data.urlName} isSavedDefault={data.saved} />
+            <SaveButton urlName={data.urlName} isSavedDefault={data.saved} key={data.saved}/>
           </div>
           <img
             className="rounded-t-lg object-cover w-full h-full bg-not-found text-neutral-400 flex justify-center items-center"
