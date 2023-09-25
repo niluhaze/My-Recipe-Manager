@@ -4,13 +4,22 @@
 */
 
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { SaveButton } from "../components/SaveButton";
 import { minutesToTime } from "../scripts/time";
 import { multiplyNumbersInStringBy } from "../scripts/multiplyNumbersInStringBy";
 
 export function Recipe({ data }) {
   const [ingredients, setIngredients] = useState(data.ingredients);
+
+  /*
+    Update the ingredients state when data.ingredients changes.
+    Otherwise the state stays the same when data.ingredients changes after an edit.
+  */
+  useEffect(() => {
+    
+    setIngredients(data.ingredients);
+  }, [data.ingredients]);
 
   const handleQuantityChange = (event) => {
     event.preventDefault(); // prevent page reload on submit
@@ -125,7 +134,7 @@ export function Recipe({ data }) {
           </form>
           {/* Ingredients */}
           <h2 className="text-lg font-semibold">Ingredients</h2>
-          <p className="whitespace-pre-line" key={ingredients}>{ingredients}</p>
+          <p className="whitespace-pre-line" key={data.ingredients}>{ingredients}</p>
           {/* Instructions / Body */}
           <h2 className="text-lg font-semibold">Instructions</h2>
           <p className="whitespace-pre-line">{data.body}</p>
