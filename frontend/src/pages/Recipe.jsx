@@ -31,7 +31,7 @@ export function Recipe({ data }) {
 
   return (
     <>
-      <div className="max-w-3xl md:mx-auto md:m-4 md:rounded-2xl shadow bg-components">
+      <div className="max-w-3xl md:mx-auto md:m-4 md:rounded-2xl pb-2 shadow bg-components">
         {/* Save Button */}
           <div className="absolute right-0 m-3">
             <SaveButton urlName={data.urlName} isSavedDefault={data.saved} key={data.saved} />
@@ -107,6 +107,7 @@ export function Recipe({ data }) {
             <input
               type="number"
               defaultValue={data.quantity}
+              key={data.quantity}
               id="quantity"
               name="quantity"
               min={0}
@@ -123,10 +124,10 @@ export function Recipe({ data }) {
             </button>
           </form>
           {/* Ingredients */}
-          <p className="text-lg font-semibold">Ingredients</p>
-          <p className="whitespace-pre-line">{ingredients}</p>
+          <h2 className="text-lg font-semibold">Ingredients</h2>
+          <p className="whitespace-pre-line" key={ingredients}>{ingredients}</p>
           {/* Instructions / Body */}
-          <p className="text-lg font-semibold">Instructions</p>
+          <h2 className="text-lg font-semibold">Instructions</h2>
           <p className="whitespace-pre-line">{data.body}</p>
         </div>
       </div>
