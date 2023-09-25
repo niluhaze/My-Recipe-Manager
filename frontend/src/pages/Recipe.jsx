@@ -17,7 +17,6 @@ export function Recipe({ data }) {
     Otherwise the state stays the same when data.ingredients changes after an edit.
   */
   useEffect(() => {
-    
     setIngredients(data.ingredients);
   }, [data.ingredients]);
 
@@ -42,12 +41,15 @@ export function Recipe({ data }) {
     <>
       <div className="max-w-3xl md:mx-auto md:m-4 md:rounded-2xl pb-2 shadow bg-components">
         {/* Save Button */}
-          <div className="absolute right-0 m-3">
-            <SaveButton urlName={data.urlName} isSavedDefault={data.saved} key={data.saved} />
-          </div>
+        <div className="absolute right-0 m-3">
+          <SaveButton
+            urlName={data.urlName}
+            isSavedDefault={data.saved}
+            key={data.saved}
+          />
+        </div>
         {/* Image */}
         <div className="w-full aspect-[4/3] flex flex-col justify-center items-center border-b">
-          
           {data.image != undefined && data.image != "" ? (
             <img
               className="object-cover w-full h-full md:rounded-t-2xl"
@@ -91,11 +93,13 @@ export function Recipe({ data }) {
               >
                 <path d="M464 256a208 208 0 1 1-416 0 208 208 0 1 1 416 0zM0 256a256 256 0 1 0 512 0 256 256 0 1 0-512 0zm232-136v136c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2V120c0-13.3-10.7-24-24-24s-24 10.7-24 24z" />
               </svg>
-              Active {minutesToTime(data.cookTimeActive)} / Total{" "}
-              {minutesToTime(data.cookTimeTotal)}
+              <p className="relative bottom-px">
+                Active {minutesToTime(data.cookTimeActive)} / Total{" "}
+                {minutesToTime(data.cookTimeTotal)}
+              </p>
             </div>
             {/* Date */}
-            <div>{date}</div>
+            <p className="relative bottom-px">{date}</p>
           </div>
           {/* Tags */}
           {data.tags.length > 0 ? (
@@ -112,7 +116,7 @@ export function Recipe({ data }) {
           ) : null}
 
           {/* Quantity */}
-          <form className="flex gap-2">
+          <form className="flex items-center h-8 w-fit gap-2 rounded-lg bg-white">
             <input
               type="number"
               defaultValue={data.quantity}
@@ -121,12 +125,12 @@ export function Recipe({ data }) {
               name="quantity"
               min={0}
               max={999}
-              className="w-12"
+              className="w-12 pl-2 bg-transparent outline-none"
             />
             <label htmlFor="quantity">{data.quantityUnit}</label>
             <button
               type="submit"
-              className="px-2 rounded text-components bg-primary hover:bg-primary-light active:bg-primary-light-light"
+              className="h-8 px-2 rounded-r-lg text-components bg-primary hover:bg-primary-light active:bg-primary-light-light"
               onClick={handleQuantityChange}
             >
               Apply
@@ -134,7 +138,9 @@ export function Recipe({ data }) {
           </form>
           {/* Ingredients */}
           <h2 className="text-lg font-semibold">Ingredients</h2>
-          <p className="whitespace-pre-line" key={data.ingredients}>{ingredients}</p>
+          <p className="whitespace-pre-line" key={data.ingredients}>
+            {ingredients}
+          </p>
           {/* Instructions / Body */}
           <h2 className="text-lg font-semibold">Instructions</h2>
           <p className="whitespace-pre-line">{data.body}</p>
