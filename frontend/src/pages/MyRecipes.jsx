@@ -10,6 +10,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import FiltersMenu from "/src/components/FiltersMenu";
 import { RecipeGrid } from "../components/RecipeGrid";
 import { getValue } from "../scripts/getValue";
+import { buildQueryString } from "../scripts/buildQueryString";
 
 export function MyRecipes() {
   const navigate = useNavigate(); // prepare useNavigate hook for applying search parameters to url
@@ -25,26 +26,6 @@ export function MyRecipes() {
   const [isFirst, setIsFirst] = useState(true); //for making sure the toggle doesn't trigger on mount
   const [toggleFiltersMenu, setToggleFiltersMenu] = useState(false); //toggle whether the filter menu is shown or hidden
   const [toggleUpdate, setToggleUpdate] = useState(0);
-
-  // use the form data to build the query string to be put into the url
-  const buildQueryString = (formJSON) => {
-    let newQueryString = "";
-
-    // add key-value pairs to search string
-    const addToQueryString = (key, value) => {
-      if (newQueryString.length > 0) newQueryString += "&"; // add "&" between key-value pairs
-      newQueryString += `${key}=${value}`;
-    };
-
-    addToQueryString("sortBy", formJSON.sortBy); // add SortBy
-    if (formJSON.saved == "on") addToQueryString("saved", true); // add Saved if marked as true
-    if (formJSON.search.length > 0) addToQueryString("search", formJSON.search); // add Search if query entered
-    // add all selected Tags
-    for (const tag of formJSON.tags) {
-      addToQueryString("tags", tag);
-    }
-    return newQueryString;
-  };
 
   // handle submission of filters and search
   const handleSubmit = (event) => {
