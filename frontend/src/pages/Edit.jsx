@@ -5,13 +5,14 @@
 */
 
 // specify imports
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import TextareaAutosize from "react-textarea-autosize";
 import ImageUpload from "/src/components/ImageUpload";
-import { minutesToHoursMinutes } from "../scripts/time";
+import { getValue, getValueTags } from "../scripts/getValue";
+import { getValueHoursMinutes } from "../scripts/getValueHoursMinutes";
 import allTags from "/src/assets/tags.json";
 
 export const Edit = ({ existingData = {} }) => {
@@ -26,7 +27,8 @@ export const Edit = ({ existingData = {} }) => {
     defaultImage = existingData.image !== "" ? existingData.image : null;
   }
 
-  console.log("title:", existingData.recipeName);
+  // get json of default values for active/total time entries
+  const cookTime = getValueHoursMinutes(existingData, isEditExisting);
 
   const [image, setImage] = useState(defaultImage); // stores image from ImageUpload
   const [isButtonDisabled, setIsButtonDisabled] = useState(false); // stores whether submit button is disabled or not
@@ -102,24 +104,7 @@ export const Edit = ({ existingData = {} }) => {
     deleteRecipe.mutate();
   };
 
-  // used for setting value prop of the form inputs
-  // get a value from existing recipe data if it is defined, else return a default value
-  const getValue = (valueKey, defaultValue = null) => {
-    if (existingData[valueKey] != undefined) {
-      return existingData[valueKey];
-    }
-    return defaultValue;
-  };
-
-  // same as previous function but intended to get active status for tag checkboxes
-  // checks if given tag value is
-  const getValueTags = (tag, defaultValue = false) => {
-    // if not editing existing, return default value
-    if (!isEditExisting) return defaultValue;
-    // if tag included in existing data return true, else false
-    return existingData.tags.includes(tag);
-  };
-
+  // if recipe was successfully updated, navigate to its page
   if (postRecipe.isSuccess) {
     return <Navigate to={"/recipe/" + postRecipe.data.data.urlName} />;
   }
@@ -142,7 +127,7 @@ export const Edit = ({ existingData = {} }) => {
             name="recipeName"
             id="recipeName"
             className="w-full text-3xl"
-            defaultValue={getValue("recipeName")}
+            defaultValue={getValue({ data: existingData, key: "recipeName" })}
             minRows={1}
           />
         </div>
@@ -172,7 +157,10 @@ export const Edit = ({ existingData = {} }) => {
                     name="tags"
                     id={"id-" + tag}
                     value={tag}
-                    defaultChecked={getValueTags(tag)}
+                    defaultChecked={getValueTags({
+                      tagArray: existingData.tags,
+                      tag: tag,
+                    })}
                   />
                   <label
                     className="px-2 py-[2px] rounded-full bg-neutral-400 text-components peer-checked/check:bg-primary"
@@ -191,36 +179,6 @@ export const Edit = ({ existingData = {} }) => {
         <div className="flex flex-col gap-4">
           {/* Time wrapper */}
           <div className="flex gap-2">
-            {/* Total Time */}
-            <div className="flex flex-col gap-1">
-              <label htmlFor="cookTimeTotalMinutes">Total time</label>
-              <div className="flex gap-1">
-                <input
-                  type="number"
-                  name="cookTimeTotalHours"
-                  id="cookTimeTotalHours"
-                  placeholder="h"
-                  min={0}
-                  max={990}
-                  className="w-12 no-arrows"
-                  defaultValue={
-                    minutesToHoursMinutes(getValue("cookTimeTotal")).hours
-                  }
-                />
-                <input
-                  type="number"
-                  name="cookTimeTotalMinutes"
-                  id="cookTimeTotalMinutes"
-                  placeholder="min"
-                  min={0}
-                  max={240}
-                  className="w-12 no-arrows"
-                  defaultValue={
-                    minutesToHoursMinutes(getValue("cookTimeTotal")).minutes
-                  }
-                />
-              </div>
-            </div>
             {/* Active Time */}
             <div className="flex flex-col gap-1">
               <label htmlFor="cookTimeActiveMinutes">Active time</label>
@@ -233,9 +191,7 @@ export const Edit = ({ existingData = {} }) => {
                   min={0}
                   max={990}
                   className="w-12 no-arrows"
-                  defaultValue={
-                    minutesToHoursMinutes(getValue("cookTimeActive")).hours
-                  }
+                  defaultValue={cookTime.activeHours}
                 />
                 <input
                   required
@@ -246,9 +202,33 @@ export const Edit = ({ existingData = {} }) => {
                   min={0}
                   max={240}
                   className="w-12 no-arrows"
-                  defaultValue={
-                    minutesToHoursMinutes(getValue("cookTimeActive")).minutes
-                  }
+                  defaultValue={cookTime.activeMinutes}
+                />
+              </div>
+            </div>
+            {/* Total Time */}
+            <div className="flex flex-col gap-1">
+              <label htmlFor="cookTimeTotalMinutes">Total time</label>
+              <div className="flex gap-1">
+                <input
+                  type="number"
+                  name="cookTimeTotalHours"
+                  id="cookTimeTotalHours"
+                  placeholder="h"
+                  min={0}
+                  max={990}
+                  className="w-12 no-arrows"
+                  defaultValue={cookTime.totalHours}
+                />
+                <input
+                  type="number"
+                  name="cookTimeTotalMinutes"
+                  id="cookTimeTotalMinutes"
+                  placeholder="min"
+                  min={0}
+                  max={240}
+                  className="w-12 no-arrows"
+                  defaultValue={cookTime.totalMinutes}
                 />
               </div>
             </div>
@@ -267,7 +247,7 @@ export const Edit = ({ existingData = {} }) => {
                 min={0}
                 max={9999}
                 className="w-16"
-                defaultValue={getValue("quantity")}
+                defaultValue={getValue({ data: existingData, key: "quantity" })}
               />
             </div>
             <div className="flex flex-col gap-1">
@@ -279,7 +259,11 @@ export const Edit = ({ existingData = {} }) => {
                 name="quantityUnit"
                 id="quantityUnit"
                 placeholder="Portions"
-                defaultValue={getValue("quantitiy", "Portions")}
+                defaultValue={getValue({
+                  data: existingData,
+                  key: "quantityUnit",
+                  defaultValue: "Portions",
+                })}
                 className="w-32"
               />
             </div>
@@ -312,7 +296,7 @@ export const Edit = ({ existingData = {} }) => {
             name="ingredients"
             id="ingredients"
             rows="128"
-            defaultValue={getValue("ingredients")}
+            defaultValue={getValue({ data: existingData, key: "ingredients" })}
             minRows={8}
             className="w-full"
           />
@@ -327,7 +311,7 @@ export const Edit = ({ existingData = {} }) => {
             id="body"
             className="w-full"
             rows="128"
-            defaultValue={getValue("body")}
+            defaultValue={getValue({ data: existingData, key: "body" })}
             minRows={8}
           />
         </div>
