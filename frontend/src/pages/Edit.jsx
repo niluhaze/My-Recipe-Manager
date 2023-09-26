@@ -296,7 +296,7 @@ export const Edit = ({ existingData = {} }) => {
               <button
                 onClick={handleDeleteClick}
                 disabled={isButtonDisabled}
-                className="w-36 h-8 p-1 rounded-lg text-primary bg-components border border-primary hover:border-primary-light hover:text-primary-light active:border-primary-light-light active:text-primary-light-light"
+                className="w-36 h-8 p-1 rounded-lg text-primary bg-components border border-primary hover:border-red-500 hover:text-red-500 active:border-red-600 active:text-red-600"
               >
                 Delete Recipe
               </button>
