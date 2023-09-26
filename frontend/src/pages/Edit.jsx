@@ -111,7 +111,6 @@ export const Edit = ({ existingData = {} }) => {
 
   return (
     <form
-      onSubmit={handleSubmit}
       className="w-full max-w-3xl md:mx-auto md:m-4 md:rounded-2xl shadow bg-components"
     >
       {/* Image and Title wrapper */}
@@ -272,6 +271,7 @@ export const Edit = ({ existingData = {} }) => {
           <div className="flex gap-2">
             <input
               type="submit"
+              onClick={handleSubmit}
               disabled={isButtonDisabled}
               value={isEditExisting ? "Save Edits" : "Save new Recipe"}
               className="w-36 h-8 p-1 rounded-lg text-components bg-primary hover:bg-primary-light active:bg-primary-light-light disabled:bg-neutral-400"
