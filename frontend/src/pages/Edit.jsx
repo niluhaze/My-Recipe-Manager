@@ -125,7 +125,7 @@ export const Edit = ({ existingData = {} }) => {
             type="text"
             name="recipeName"
             id="recipeName"
-            className="w-full text-3xl"
+            className="w-full text-3xl px-1 rounded-lg"
             defaultValue={getValue({ data: existingData, key: "recipeName" })}
             minRows={1}
           />
@@ -181,17 +181,18 @@ export const Edit = ({ existingData = {} }) => {
             {/* Active Time */}
             <div className="flex flex-col gap-1">
               <label htmlFor="cookTimeActiveMinutes">Active time</label>
-              <div className="flex gap-1">
+              <div className="flex gap-1 rounded-lg bg-white">
                 <input
                   type="number"
                   name="cookTimeActiveHours"
                   id="cookTimeActiveHours"
                   placeholder="h"
                   min={0}
-                  max={990}
-                  className="w-12 no-arrows"
+                  max={998}
+                  className="w-10 no-arrows rounded-l-lg pl-1"
                   defaultValue={cookTime.activeHours}
                 />
+                <p className="text-neutral-400 ">:</p>
                 <input
                   required
                   type="number"
@@ -199,8 +200,8 @@ export const Edit = ({ existingData = {} }) => {
                   id="cookTimeActiveMinutes"
                   placeholder="min"
                   min={0}
-                  max={240}
-                  className="w-12 no-arrows"
+                  max={60}
+                  className="w-10 no-arrows rounded-r-lg"
                   defaultValue={cookTime.activeMinutes}
                 />
               </div>
@@ -208,25 +209,26 @@ export const Edit = ({ existingData = {} }) => {
             {/* Total Time */}
             <div className="flex flex-col gap-1">
               <label htmlFor="cookTimeTotalMinutes">Total time</label>
-              <div className="flex gap-1">
+              <div className="flex gap-1 rounded-lg bg-white">
                 <input
                   type="number"
                   name="cookTimeTotalHours"
                   id="cookTimeTotalHours"
                   placeholder="h"
                   min={0}
-                  max={990}
-                  className="w-12 no-arrows"
+                  max={998}
+                  className="w-10 no-arrows rounded-l-lg pl-1"
                   defaultValue={cookTime.totalHours}
                 />
+                <p className="text-neutral-400 ">:</p>
                 <input
                   type="number"
                   name="cookTimeTotalMinutes"
                   id="cookTimeTotalMinutes"
                   placeholder="min"
                   min={0}
-                  max={240}
-                  className="w-12 no-arrows"
+                  max={60}
+                  className="w-10 no-arrows rounded-r-lg"
                   defaultValue={cookTime.totalMinutes}
                 />
               </div>
@@ -245,7 +247,7 @@ export const Edit = ({ existingData = {} }) => {
                 placeholder="4"
                 min={0}
                 max={9999}
-                className="w-16"
+                className="w-16 px-1 rounded-lg"
                 defaultValue={getValue({ data: existingData, key: "quantity" })}
               />
             </div>
@@ -263,7 +265,7 @@ export const Edit = ({ existingData = {} }) => {
                   key: "quantityUnit",
                   defaultValue: "Portions",
                 })}
-                className="w-32"
+                className="w-32 px-1 rounded-lg"
               />
             </div>
           </div>
