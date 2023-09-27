@@ -69,28 +69,26 @@ export function MyRecipes() {
   }, [toggleFiltersMenu]);
 
   return (
-    <form onSubmit={handleSubmit} className="flex min-h-full justify-center">
+    <form onSubmit={handleSubmit} className="flex min-h-screen justify-center">
       {/* Filters menu */}
       <div
         id="filters-menu"
-        className="z-10 hidden md:block fixed md:static top-0 bottom-0 h-full w-screen md:w-[200px]"
+        className="z-10 hidden md:block fixed md:static top-0 bottom-0 min-h-screen w-screen md:w-[200px]"
       >
-        <div className="flex sticky top-0 h-full">
-          <div className="w-[200px] h-full overflow-y-scroll bottom-0 drop-shadow bg-components">
-            <FiltersMenu
-              toggleFiltersMenu={toggleFiltersMenu}
-              setToggleFiltersMenu={setToggleFiltersMenu}
-              defaultFormValues={defaultFormValues}
-            />
-          </div>
-          {/* When filters menu is active on small screens:
-            Add a blur behind menu to obscure the recipes behind it
-            and to prevent accidental redirects when misclicking a recipe while setting filters */}
-          <div
-            // id="filters-blur" md:hidden
-            className="h-auto backdrop-blur-md flex-grow"
-          ></div>
+        <div className="w-[200px] h-full overflow-y-scroll bottom-0 drop-shadow bg-components">
+          <FiltersMenu
+            toggleFiltersMenu={toggleFiltersMenu}
+            setToggleFiltersMenu={setToggleFiltersMenu}
+            defaultFormValues={defaultFormValues}
+          />
         </div>
+        {/* When filters menu is active on small screens:
+          Add a blur behind menu to obscure the recipes behind it
+          and to prevent accidental redirects when misclicking a recipe while setting filters */}
+        <div
+          // id="filters-blur" md:hidden
+          className="h-auto backdrop-blur-md flex-grow"
+        ></div>
       </div>
       {/* Wrapper for filter menu button, search bar, and recipe grid */}
       <div className="h-full max-w-[1200px] flex-grow">
