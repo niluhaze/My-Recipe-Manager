@@ -14,6 +14,8 @@ import FiltersMenu from "/src/components/FiltersMenu";
 import { RecipeGrid } from "../components/RecipeGrid";
 import { getDefaultsMyRecipes } from "../scripts/getDefaultsMyRecipes";
 import { buildQueryString } from "../scripts/buildQueryString";
+import { toggleIfScreenSmall } from "../scripts/toggleIfScreenSmall";
+import useWindowDimensions from "../scripts/useWindowDimensions";
 
 export function MyRecipes() {
   const navigate = useNavigate(); // prepare useNavigate hook for applying search parameters to url
@@ -32,9 +34,19 @@ export function MyRecipes() {
   const [toggleFiltersMenu, setToggleFiltersMenu] = useState(false); //toggle whether the filter menu is shown or hidden
   const [toggleUpdate, setToggleUpdate] = useState(0);
 
+  // get window dimensions
+  const windowDimensions = useWindowDimensions();
+
   // handle submission of filters and search
   const handleSubmit = (event) => {
     event.preventDefault(); // prevent page reload on submit
+
+    // toggle filter menu on small screens
+    toggleIfScreenSmall(
+      toggleFiltersMenu,
+      setToggleFiltersMenu,
+      windowDimensions.width
+    );
 
     const formData = new FormData(event.target);
     const formJSON = Object.fromEntries(formData.entries()); // put form data into JSON
@@ -42,7 +54,7 @@ export function MyRecipes() {
 
     const newQueryString = buildQueryString(formJSON);
     navigate(`/my-recipes?${newQueryString}`);
-    setToggleUpdate(toggleUpdate => toggleUpdate+1)
+    setToggleUpdate((toggleUpdate) => toggleUpdate + 1);
   };
 
   //run this whenever toggle changes
@@ -87,6 +99,7 @@ export function MyRecipes() {
           {/* Filter menu toggle button (for small view) */}
           <div className="md:hidden h-10 aspect-square bg-components rounded-full drop-shadow hover:drop-shadow-lg">
             <button
+              type="button"
               onClick={(e) => setToggleFiltersMenu(!toggleFiltersMenu)}
               className="h-full w-full p-2"
             >

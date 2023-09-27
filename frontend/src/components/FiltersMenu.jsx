@@ -5,26 +5,39 @@
 import React from "react";
 import allTags from "../assets/tags.json";
 import { useNavigate } from "react-router-dom";
+import useWindowDimensions from "../scripts/useWindowDimensions";
+import { toggleIfScreenSmall } from "../scripts/toggleIfScreenSmall";
 
 const FiltersMenu = ({
   toggleFiltersMenu,
   setToggleFiltersMenu,
   defaultFormValues,
+
 }) => {
   // prepare useNavigate hook for handleClearButton
   const navigate = useNavigate();
 
+  // get window dimensions
+  const windowDimensions = useWindowDimensions();
+
   // redirect to "/my-recipes" without query string, clearing all form inputs
   const handleClearButton = (event) => {
     event.preventDefault();
+    // toggle filter menu on small screens
+    toggleIfScreenSmall(
+      toggleFiltersMenu,
+      setToggleFiltersMenu,
+      windowDimensions.width
+    );
     navigate("/my-recipes");
   };
 
   return (
     <>
-      {/* Cancel button */}
+      {/* Close button */}
       <div className="md:hidden flex justify-end pt-2 px-2">
         <button
+          type="button"
           onClick={(e) => setToggleFiltersMenu(!toggleFiltersMenu)}
           className="h-10 aspect-square fill-black"
         >
