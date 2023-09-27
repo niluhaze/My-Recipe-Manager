@@ -23,14 +23,14 @@ const FiltersMenu = ({
   return (
     <>
       {/* Cancel button */}
-      <div className="md:hidden flex justify-end mt-2 mx-2">
+      <div className="md:hidden flex justify-end pt-2 px-2">
         <button
           onClick={(e) => setToggleFiltersMenu(!toggleFiltersMenu)}
           className="h-10 aspect-square fill-black"
         >
           {/* X icon */}
           <svg
-            className="h-full"
+            className="h-full fill-neutral-500"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 384 512"
           >
@@ -105,7 +105,6 @@ const FiltersMenu = ({
                 {/* ...and then create the corresponding tag checkmarks below: */}
                 {allTags[category].map((tag) => (
                   <div key={"key-tag-" + tag}>
-                    { console.log(tag, defaultFormValues.tags[tag]) }
                     <input
                       className="peer/check hidden"
                       type="checkbox"

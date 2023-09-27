@@ -20,20 +20,27 @@ export const RecipeGrid = () => {
   const recipesQuery = useQuery({
     queryKey: ["my-recipes"],
     queryFn: async () => {
-      const { data } = await axios.get(import.meta.env.VITE_APP_BACKEND_URL + queryUrl);
+      const { data } = await axios.get(
+        import.meta.env.VITE_APP_BACKEND_URL + queryUrl
+      );
       return data;
     },
   });
 
   // loading message
-  if (recipesQuery.isLoading) return <h1>Loading recipes...</h1>;
+  if (recipesQuery.isLoading)
+    return <p className="flex justify-center text-neutral-400">Loading recipes...</p>;
   // error message
   if (recipesQuery.isError)
-    return <pre>{JSON.stringify(recipesQuery.error)}</pre>;
+    return (
+      <p className="w-full flex break-all justify-center">
+        {JSON.stringify(recipesQuery.error)}
+      </p>
+    );
   // no data found message
   if (recipesQuery.data.length === 0)
     return (
-      <p className="">
+      <p className="flex justify-center text-neutral-400">
         Could not find any recipes matching the applied filters.
       </p>
     );

@@ -24,7 +24,6 @@ export function MyRecipes() {
   searchParamsJSON.tags = searchParams.getAll("tags"); // and include any tags in an array
   // use search parameters to get a json of all default form values based on the url query
   const defaultFormValues = getDefaultsMyRecipes(searchParamsJSON);
-  console.log(defaultFormValues)
 
   /* Variables and functions for the page's dynamic elements */
 
@@ -41,8 +40,6 @@ export function MyRecipes() {
     const formJSON = Object.fromEntries(formData.entries()); // put form data into JSON
     formJSON.tags = formData.getAll("tags"); // put all selected tags into array and add it to formJSON
 
-    console.log(formJSON);
-
     const newQueryString = buildQueryString(formJSON);
     navigate(`/my-recipes?${newQueryString}`);
     setToggleUpdate(toggleUpdate => toggleUpdate+1)
@@ -56,31 +53,35 @@ export function MyRecipes() {
       return;
     }
     document.getElementById("filters-menu").classList.toggle("hidden");
-    document.getElementById("filters-blur").classList.toggle("hidden");
+    // document.getElementById("filters-blur").classList.toggle("hidden");
   }, [toggleFiltersMenu]);
 
   return (
-    <form onSubmit={handleSubmit} className="h-full flex justify-center">
+    <form onSubmit={handleSubmit} className="flex min-h-full justify-center">
       {/* Filters menu */}
       <div
         id="filters-menu"
-        className="z-20 hidden md:block absolute left-0 top-0 bottom-0 md:static h-auto w-[200px] bg-components drop-shadow"
+        className="z-10 hidden md:block fixed md:static top-0 bottom-0 h-full w-screen md:w-[200px]"
       >
-        <FiltersMenu
-          toggleFiltersMenu={toggleFiltersMenu}
-          setToggleFiltersMenu={setToggleFiltersMenu}
-          defaultFormValues={defaultFormValues}
-        />
+        <div className="flex sticky top-0 h-full">
+          <div className="w-[200px] h-full overflow-y-scroll bottom-0 drop-shadow bg-components">
+            <FiltersMenu
+              toggleFiltersMenu={toggleFiltersMenu}
+              setToggleFiltersMenu={setToggleFiltersMenu}
+              defaultFormValues={defaultFormValues}
+            />
+          </div>
+          {/* When filters menu is active on small screens:
+            Add a blur behind menu to obscure the recipes behind it
+            and to prevent accidental redirects when misclicking a recipe while setting filters */}
+          <div
+            // id="filters-blur" md:hidden
+            className="h-auto backdrop-blur-md flex-grow"
+          ></div>
+        </div>
       </div>
-      {/* When filters menu is active:
-          Add a blur behind menu to obscure the recipes behind it
-          and to prevent accidental redirects when misclicking a recipe while setting filters */}
-      <div
-        id="filters-blur"
-        className="z-10 hidden md:hidden backdrop-blur-sm absolute top-0 bottom-0 left-0 right-0"
-      ></div>
       {/* Wrapper for filter menu button, search bar, and recipe grid */}
-      <div className="h-full max-w-[1200px] ">
+      <div className="h-full max-w-[1200px] flex-grow">
         {/* Wrapper for filter menu button and search bar */}
         <div className="flex justify-center p-5 gap-3">
           {/* Filter menu toggle button (for small view) */}
@@ -100,7 +101,7 @@ export function MyRecipes() {
             </button>
           </div>
           {/* Search Bar */}
-          <div className="flex py-2 px-4 bg-components rounded-full drop-shadow hover:drop-shadow-lg">
+          <div className="flex max-w-[300px] py-2 px-4 bg-components rounded-full drop-shadow hover:drop-shadow-lg">
             <input
               type="search"
               id="searchBar"
@@ -108,7 +109,7 @@ export function MyRecipes() {
               placeholder="Search recipes..."
               defaultValue={defaultFormValues.search}
               key={Date.now()}
-              className="outline-none bg-transparent"
+              className="w-full outline-none bg-transparent"
             />
             {/* Submit button */}
             <button type="submit" className="h-6 aspect-square mx-1">
