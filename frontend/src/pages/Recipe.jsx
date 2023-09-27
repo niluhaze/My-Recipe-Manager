@@ -41,12 +41,14 @@ export function Recipe({ data }) {
     <>
       <div className="max-w-3xl md:mx-auto md:m-4 md:rounded-2xl pb-2 shadow bg-components">
         {/* Save Button */}
-        <div className="absolute right-0 m-3">
-          <SaveButton
-            urlName={data.urlName}
-            isSavedDefault={data.saved}
-            key={data.saved}
-          />
+        <div className="flex justify-end">
+          <div className="absolute m-3">
+            <SaveButton
+              urlName={data.urlName}
+              isSavedDefault={data.saved}
+              key={data.saved}
+            />
+          </div>
         </div>
         {/* Image */}
         <div className="w-full aspect-[4/3] flex flex-col justify-center items-center border-b">
@@ -137,12 +139,12 @@ export function Recipe({ data }) {
             </button>
           </form>
           {/* Ingredients */}
-          <h2 className="text-lg font-semibold">Ingredients</h2>
-          <p className="whitespace-pre-line" key={data.ingredients}>
+          <h2 className="text-2xl font-semibold">Ingredients</h2>
+          <p className="whitespace-break-spaces" key={data.ingredients}>
             {ingredients}
           </p>
           {/* Instructions / Body */}
-          <h2 className="text-lg font-semibold">Instructions</h2>
+          <h2 className="text-2xl font-semibold pt-6">Instructions</h2>
           <p className="whitespace-pre-line">{data.body}</p>
         </div>
       </div>

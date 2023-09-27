@@ -6,7 +6,7 @@
 
 // specify imports
 import React, { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import TextareaAutosize from "react-textarea-autosize";
@@ -61,6 +61,11 @@ export const Edit = ({ existingData = {} }) => {
     },
   });
 
+  // remove image when delete button clicked
+  const handleDeleteImage = () => {
+    setImage(null);
+  };
+
   // convert form data to JSON and send as POST request to backend
   const handleSubmit = (event) => {
     event.preventDefault(); // prevent page reload on submit
@@ -99,7 +104,7 @@ export const Edit = ({ existingData = {} }) => {
   };
 
   // delete recipe when delete button clicked
-  const handleDeleteClick = (event) => {
+  const handleDeleteRecipe = (event) => {
     event.preventDefault();
     deleteRecipe.mutate();
   };
@@ -110,9 +115,7 @@ export const Edit = ({ existingData = {} }) => {
   }
 
   return (
-    <form
-      className="w-full max-w-3xl md:mx-auto md:m-4 md:rounded-2xl shadow bg-components"
-    >
+    <form onSubmit={handleSubmit} className="w-full max-w-3xl md:mx-auto md:m-4 md:rounded-2xl shadow bg-components">
       {/* Image and Title wrapper */}
       <div>
         {/* Image */}
@@ -180,7 +183,9 @@ export const Edit = ({ existingData = {} }) => {
           <div className="flex gap-2">
             {/* Active Time */}
             <div className="flex flex-col gap-1">
-              <label htmlFor="cookTimeActiveMinutes">Active time</label>
+              <label htmlFor="cookTimeActiveMinutes" className="font-semibold">
+                Active time
+              </label>
               <div className="flex gap-1 rounded-lg bg-white">
                 <input
                   type="number"
@@ -189,7 +194,7 @@ export const Edit = ({ existingData = {} }) => {
                   placeholder="h"
                   min={0}
                   max={998}
-                  className="w-10 no-arrows rounded-l-lg pl-1"
+                  className="w-8 no-arrows rounded-l-lg px-1 text-end"
                   defaultValue={cookTime.activeHours}
                 />
                 <p className="text-neutral-400 ">:</p>
@@ -201,14 +206,16 @@ export const Edit = ({ existingData = {} }) => {
                   placeholder="min"
                   min={0}
                   max={60}
-                  className="w-10 no-arrows rounded-r-lg"
+                  className="w-12 no-arrows rounded-r-lg px-1"
                   defaultValue={cookTime.activeMinutes}
                 />
               </div>
             </div>
             {/* Total Time */}
             <div className="flex flex-col gap-1">
-              <label htmlFor="cookTimeTotalMinutes">Total time</label>
+              <label htmlFor="cookTimeTotalMinutes" className="font-semibold">
+                Total time
+              </label>
               <div className="flex gap-1 rounded-lg bg-white">
                 <input
                   type="number"
@@ -217,7 +224,7 @@ export const Edit = ({ existingData = {} }) => {
                   placeholder="h"
                   min={0}
                   max={998}
-                  className="w-10 no-arrows rounded-l-lg pl-1"
+                  className="w-8 no-arrows rounded-l-lg px-1 text-end"
                   defaultValue={cookTime.totalHours}
                 />
                 <p className="text-neutral-400 ">:</p>
@@ -228,7 +235,7 @@ export const Edit = ({ existingData = {} }) => {
                   placeholder="min"
                   min={0}
                   max={60}
-                  className="w-10 no-arrows rounded-r-lg"
+                  className="w-12 no-arrows rounded-r-lg px-1"
                   defaultValue={cookTime.totalMinutes}
                 />
               </div>
@@ -238,7 +245,9 @@ export const Edit = ({ existingData = {} }) => {
           <div className="flex gap-2">
             <div className="flex flex-col gap-1">
               {/* Quantity */}
-              <label htmlFor="quantity">Quantity</label>
+              <label htmlFor="quantity" className="font-semibold">
+                Quantity
+              </label>
               <input
                 required
                 type="number"
@@ -247,13 +256,15 @@ export const Edit = ({ existingData = {} }) => {
                 placeholder="4"
                 min={0}
                 max={9999}
-                className="w-16 px-1 rounded-lg"
                 defaultValue={getValue({ data: existingData, key: "quantity" })}
+                className="w-16 px-2 rounded-lg text-end"
               />
             </div>
             <div className="flex flex-col gap-1">
               {/* Unit */}
-              <label htmlFor="quantityUnit">Unit</label>
+              <label htmlFor="quantityUnit" className="font-semibold">
+                Unit
+              </label>
               <input
                 required
                 type="text"
@@ -265,33 +276,44 @@ export const Edit = ({ existingData = {} }) => {
                   key: "quantityUnit",
                   defaultValue: "Portions",
                 })}
-                className="w-32 px-1 rounded-lg"
+                className="w-32 px-2 rounded-lg"
               />
             </div>
           </div>
           {/* Submit and Delete Buttons */}
-          <div className="flex gap-2">
+          <div className="flex flex-col sm:flex-row gap-2">
             <input
               type="submit"
-              onClick={handleSubmit}
               disabled={isButtonDisabled}
               value={isEditExisting ? "Save Edits" : "Save new Recipe"}
               className="w-36 h-8 p-1 rounded-lg text-components bg-primary hover:bg-primary-light active:bg-primary-light-light disabled:bg-neutral-400"
             />
-            {isEditExisting ? ( // show delete button only if editing exisiting recipe
-              <button
-                onClick={handleDeleteClick}
-                disabled={isButtonDisabled}
-                className="w-36 h-8 p-1 rounded-lg text-primary bg-components border border-primary hover:border-red-500 hover:text-red-500 active:border-red-600 active:text-red-600"
-              >
-                Delete Recipe
-              </button>
+            {/* Exit and Delete Buttons */}
+            {isEditExisting ? ( // show buttons only if editing exisiting recipe
+              <>
+                {/* Exit Button */}
+                <Link
+                  to={"/recipe/" + existingData.urlName}
+                  disabled={isButtonDisabled}
+                  className="text-center w-36 h-8 p-1 rounded-lg text-primary bg-components border border-primary hover:border-red-500 hover:text-red-500 active:border-red-600 active:text-red-600 disabled:border-neutral-400 disabled:text-neutral-400"
+                >
+                  Discard Changes
+                </Link>
+                {/* Delete Button */}
+                <button
+                  onClick={handleDeleteRecipe}
+                  disabled={isButtonDisabled}
+                  className="w-36 h-8 p-1 rounded-lg text-primary bg-components border border-primary hover:border-red-500 hover:text-red-500 active:border-red-600 active:text-red-600 disabled:border-neutral-400 disabled:text-neutral-400"
+                >
+                  Delete Recipe
+                </button>
+              </>
             ) : null}
           </div>
         </div>
         <div className="flex flex-col gap-1">
           {/* Ingredients */}
-          <label htmlFor="body" className="text-lg">
+          <label htmlFor="body" className="text-2xl font-semibold">
             Ingredients
           </label>
           <TextareaAutosize
@@ -305,7 +327,7 @@ export const Edit = ({ existingData = {} }) => {
         </div>
         <div className="flex flex-col gap-1">
           {/* Recipe Instructions / Body */}
-          <label htmlFor="body" className="text-lg">
+          <label htmlFor="body" className="text-2xl font-semibold">
             Instructions
           </label>
           <TextareaAutosize
