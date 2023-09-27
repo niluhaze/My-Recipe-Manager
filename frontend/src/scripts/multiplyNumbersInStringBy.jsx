@@ -3,7 +3,7 @@
   Used by Recipe page to multiply ingredient quantities for different numbers of portions.
 */
 
-// import { toDecimal } from "vulgar-fractions";
+import { toDecimal } from "vulgar-fractions";
 
 export const multiplyNumbersInStringBy = (string, multiplyBy) => {
   //boolean storing whether start / end of a number has been found
@@ -52,6 +52,9 @@ export const multiplyNumbersInStringBy = (string, multiplyBy) => {
     // multiply number
     number = number * multiplyBy;
 
+    // round to third significant digit
+    number = Number(number.toPrecision(3));
+
     //replace number in text
     string = replaceWithAtPostition(number, numberStartIndex, numberEndIndex);
   };
@@ -61,11 +64,13 @@ export const multiplyNumbersInStringBy = (string, multiplyBy) => {
   for (let index = string.length - 1; index >= 0; index--) {
     // go through string from end to start until a digit has been found
     charAtIndex = string.charAt(index);
-    // TODO: handle unicode fractions
-    /* charToDecimal = toDecimal(charAtIndex); // convert any unicode fraction chars with their decimal representations, e.g.: ⅓ => 0.3333333333333333
-    if (charAtIndex != charToDecimal) {
 
-    } */
+    // see if current char is a unicode fraction by trying to convert it and comparing it to original
+    const charToDecimal = String(toDecimal(charAtIndex)); // convert any unicode fraction chars with their decimal representations, e.g.: ⅓ => 0.3333333333333333
+    if (charAtIndex !== charToDecimal) {
+      string = replaceWithAtPostition(charToDecimal, index, index+1);
+      index += charToDecimal.length-1;
+    }
     if (/[0-9]/.test(charAtIndex)) {
       // if char at index is a digit
       numberEndIndex = index + 1; // set end of found number to index
