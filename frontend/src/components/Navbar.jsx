@@ -21,9 +21,9 @@ const Navbar = () => {
   }, [toggle]);
 
   return (
-    <nav className="min-h-[80px] flex flex-col md:flex-row md:text-center justify-between bg-primary text-components">
+    <nav className="min-h-[64px] flex flex-col md:flex-row md:text-center justify-between bg-primary text-components">
       {/* Logo */}
-      <div className="h-20 aspect-square p-3 -ml-1 md:absolute">
+      <div className="h-16 aspect-square p-3 -ml-1 md:absolute">
         <Link to="/">
           <svg
             className="h-full fill-components"
@@ -37,26 +37,26 @@ const Navbar = () => {
       {/* Links */}
       <div
         id="navbar-links"
-        className="hidden md:inline-block bg-primary-light md:bg-transparent md:absolute md:top-0 md:right-1/2 md:translate-x-1/2"
+        className="hidden md:inline-block bg-primary-light md:bg-transparent md:absolute md:top-0 md:right-0"
       >
         <div className="text-2xl flex flex-col md:flex-row">
           <Link
             onClick={(e) => setToggle(!toggle)}
-            className="p-2 md:px-3 md:py-6 hover:bg-primary-light active:bg-primary-light-light"
+            className="p-2 md:px-3 md:py-4 hover:bg-primary-light active:bg-primary-light-light"
             to="/my-recipes"
           >
             RECIPES
           </Link>
           <Link
             onClick={(e) => setToggle(!toggle)}
-            className="p-2 md:px-3 md:py-6 hover:bg-primary-light active:bg-primary-light-light"
+            className="p-2 md:px-3 md:py-4 hover:bg-primary-light active:bg-primary-light-light"
             to="/my-recipes?saved=true"
           >
             SAVED
           </Link>
           <Link
             onClick={(e) => setToggle(!toggle)}
-            className="p-2 md:px-3 md:py-6 hover:bg-primary-light active:bg-primary-light-light"
+            className="p-2 md:px-3 md:py-4 hover:bg-primary-light active:bg-primary-light-light"
             to="/edit"
           >
             ADD
@@ -66,8 +66,9 @@ const Navbar = () => {
       {/* Hamburger menu button */}
       <button
         onClick={(e) => setToggle(!toggle)}
-        className="h-20 absolute top-0 right-0 md:static md:hidden aspect-square p-4 md:-mr-1"
+        className="h-16 absolute top-0 right-0 md:static md:hidden aspect-square p-4 md:-mr-1"
       >
+        {/* Hamburger menu logo */}
         <svg
           className="h-full fill-components"
           xmlns="http://www.w3.org/2000/svg"
