@@ -30,6 +30,23 @@ Content-Type: application/json
 
 ###
 
+// filler recipe
+POST http://192.168.178.31:3000/edit
+Content-Type: application/json
+
+{
+    "recipeName": "filler",
+    "cookTimeTotal": 1,
+    "cookTimeActive": 1,
+    "tags": [],
+    "quantity": 1,
+    "quantityUnit": "",
+    "ingredients": "",
+    "body": ""
+}
+
+###
+
 // delete specified recipe
 DELETE http://192.168.178.31:3000/edit/falafel-2
 
