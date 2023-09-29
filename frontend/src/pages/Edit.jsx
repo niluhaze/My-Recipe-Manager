@@ -33,7 +33,6 @@ export const Edit = ({ existingData = {} }) => {
   const [image, setImage] = useState(defaultImage); // stores image from ImageUpload
   const [isButtonDisabled, setIsButtonDisabled] = useState(false); // stores whether submit button is disabled or not
 
-  // prepate useNavigate hook
   const navigate = useNavigate();
 
   const queryClient = useQueryClient(); // used to invalidate queries after mutation

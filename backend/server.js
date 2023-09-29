@@ -10,7 +10,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
-// const nocache = require("nocache");
 
 const app = express();
 
@@ -19,17 +18,12 @@ app.use(bodyParser.json({ limit: "10mb" }));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(cors({ origin: "http://localhost:5173" })); // allows queries from localhost
- 
-/* 
-// tell frontend not to cache data
-app.use(nocache());
-app.set("etag", false); */
 
 // connect to MongoDB database on localhost
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
 const db = mongoose.connection;
-db.on("error", (error) => console.error(error)); // log errors in console
-db.once("open", () => console.log("Established connection to MongoDB")); //log when connection to database is established
+db.on("error", (error) => console.error(error));
+db.once("open", () => console.log("Established connection to MongoDB"));
 
 // redirect "/" to "/my-recipes"
 app.get("/", (req, res) => {
