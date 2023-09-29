@@ -127,7 +127,7 @@ function generateRecipeListFindEntry(query) {
         whereas a single tag "?tags=vegan" will result in the string "vegan" in Express.
         According to the docs and my tests, the MongoDB $all tag handles both of these data types.
       */
-        findJSON.tags = {$all: query.tags};
+      findJSON.tags = { $all: query.tags };
     }
 
     return findJSON;
@@ -180,12 +180,17 @@ function generateRecipeListSortEntry(query) {
 }
 
 // returns the amount of recipes that fit the given findEntry filter
-async function getRecipeListAmount(findEntry) {
+async function getRecipeQuantity(findEntry) {
   return await Recipe.find(findEntry).count();
 }
 
 // get a json of the required recipe data for the /my-recipes list
 async function getRecipeListData(query) {
+  const recipeListData = {
+    meta: {},
+    recipes: [],
+  };
+
   try {
     const findEntry = generateRecipeListFindEntry(query); // filter recipes
     const sortEntry = generateRecipeListSortEntry(query); // specify how elements are sorted
@@ -193,18 +198,23 @@ async function getRecipeListData(query) {
 
     console.log("find, sort, skip entries:", findEntry, sortEntry, skipEntry);
 
-    const query_count = await getRecipeListAmount(findEntry); //get amount of recipes that fit the filter
-    const pages_amount = Math.round(query_count / RECIPES_PER_PAGE); //get the amount  of resulting pages
+    // add metadata to data
+    recipeListData.meta.currentPage = query.page || 1;
+    recipeListData.meta.recipesPerPage = RECIPES_PER_PAGE;
+    recipeListData.meta.recipeQuantity = await getRecipeQuantity(findEntry); //get amount of recipes that fit the filter
+    recipeListData.meta.pageQuantity = Math.ceil(
+      recipeListData.meta.recipeQuantity / RECIPES_PER_PAGE //get the amount of resulting pages
+    );
 
     // retrieve needed recipe data given the filters, sort type and page number
-    var recipes = await Recipe.find(
+    recipeListData.recipes = await Recipe.find(
       findEntry, // find recipes which match the findEntry filter
       VARS_FOR_RECIPE_LIST // and only include the relevant vars for the recipe list
     )
       .sort(sortEntry)
       .skip(skipEntry)
       .limit(RECIPES_PER_PAGE); // only retrieve number of elements needed for current page
-    return recipes;
+    return recipeListData;
   } catch (error) {
     console.log(error);
     throw error;
@@ -217,6 +227,6 @@ module.exports = {
   checkIfUrlNameExists,
   getNewUrlName,
   getNewUrlNameAfterEdit,
-  getRecipeListAmount,
+  getRecipeQuantity,
   getRecipeListData,
 };

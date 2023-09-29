@@ -3,8 +3,6 @@ ajust css colors, especially buttons
 go through code
 
 *Frontend:
-MyRecipes:
-pages
 
 *Backend:
 my-recipes:

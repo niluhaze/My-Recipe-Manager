@@ -1,11 +1,11 @@
 /* 
   Displays a grid of recipes, including properties by which to filter and sort recipes.
   Set to display 24 recipes per page.
-  When page gets loaded it retrieves the search parameters (e.g. "sortBy=dateAdded" after the "?" in the url).
+  When page gets loaded it retrieves the search parameters (e.g. "sortBy=dateAdded", after the "?" in the url).
   From this, the default values are extracted and applied to the page's filters.
-  Recipe data is loaded by a child - RecipeGrid - when a redirect to /my-recipes?... happens.
+  Recipe data is requested by a child - RecipeGrid - when the page loads for the first time or a redirect happens.
   When filters are applied or cleared, the page updates the search parameters using a redirect.
-  "/my-recipes"
+  Url: "/my-recipes" or "/my-recipes?*searchParams*"
 */
 
 import { useEffect, useState } from "react";
@@ -20,19 +20,21 @@ import useWindowDimensions from "../scripts/useWindowDimensions";
 export function MyRecipes() {
   const navigate = useNavigate(); // prepare useNavigate hook for applying search parameters to url
 
-  // get the query parameters from the url to set the default values of filters
+  // get the search parameters from the url to set the default values of filters
   const [searchParams] = useSearchParams();
   const searchParamsJSON = Object.fromEntries(searchParams); // then use them to create a json object
   searchParamsJSON.tags = searchParams.getAll("tags"); // and include any tags in an array
   // use search parameters to get a json of all default form values based on the url query
   const defaultFormValues = getDefaultsMyRecipes(searchParamsJSON);
+  // store current query string, updating which also updates the recipe grid
+  const [currentSearchParams, setCurrentSearchParams] = useState(searchParams.toString());
 
   /* Variables and functions for the page's dynamic elements */
 
   //toggle visibility of the filter menu (for small screens)
   const [isFirst, setIsFirst] = useState(true); //for making sure the toggle doesn't trigger on mount
   const [toggleFiltersMenu, setToggleFiltersMenu] = useState(false); //toggle whether the filter menu is shown or hidden
-  const [toggleUpdate, setToggleUpdate] = useState(0);
+  
 
   // get window dimensions
   const windowDimensions = useWindowDimensions();
@@ -54,7 +56,6 @@ export function MyRecipes() {
 
     const newQueryString = buildQueryString(formJSON);
     navigate(`/my-recipes?${newQueryString}`);
-    setToggleUpdate((toggleUpdate) => toggleUpdate + 1);
   };
 
   //run this whenever toggle changes
@@ -67,6 +68,11 @@ export function MyRecipes() {
     document.getElementById("filters-menu").classList.toggle("hidden");
     // document.getElementById("filters-blur").classList.toggle("hidden");
   }, [toggleFiltersMenu]);
+
+  // when search parameters change, update currentSearchParams
+  useEffect(() => {
+    setCurrentSearchParams(searchParams.toString());
+  }, [searchParams])
 
   return (
     <form onSubmit={handleSubmit} className="flex min-h-screen justify-center">
@@ -137,7 +143,7 @@ export function MyRecipes() {
         </div>
         {/* Recipe Grid */}
         {/* updating key tells react to update component */}
-        <RecipeGrid key={toggleUpdate + Date.now()} />
+        <RecipeGrid searchParams={currentSearchParams} key={currentSearchParams}/>
       </div>
     </form>
   );
