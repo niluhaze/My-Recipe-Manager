@@ -56,7 +56,7 @@ export const RecipeGrid = ({searchParams}) => {
           <RecipeTile key={tileData.urlName} data={tileData} className="w-full" />
         ))}
       </div>
-      {/* <PageButtons {...recipesQuery.data.meta} /> */}
+      <PageButtons {...recipesQuery.data.meta} />
     </div>
   );
 };
