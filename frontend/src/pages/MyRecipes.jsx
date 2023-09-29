@@ -81,7 +81,7 @@ export function MyRecipes() {
         id="filters-menu"
         className="z-10 hidden md:block fixed md:static top-0 bottom-0 min-h-screen w-screen md:w-[200px]"
       >
-        <div className="w-[200px] h-full overflow-y-scroll bottom-0 drop-shadow bg-components">
+        <div className="w-[200px] h-full overflow-y-scroll overflow-x-hidden pb-8 drop-shadow bg-components">
           <FiltersMenu
             toggleFiltersMenu={toggleFiltersMenu}
             setToggleFiltersMenu={setToggleFiltersMenu}
@@ -92,8 +92,7 @@ export function MyRecipes() {
           Add a blur behind menu to obscure the recipes behind it
           and to prevent accidental redirects when misclicking a recipe while setting filters */}
         <div
-          // id="filters-blur" md:hidden
-          className="h-full backdrop-blur-md flex-grow"
+          className="md:hidden h-full backdrop-blur-md flex-grow"
         ></div>
       </div>
       {/* Wrapper for filter menu button, search bar, and recipe grid */}
