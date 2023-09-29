@@ -49,7 +49,7 @@ export const RecipeGrid = ({searchParams}) => {
   // default output
   return (
     // map data to recipe tiles and display as grid
-    <div className="w-full flex flex-col items-center">
+    <div className="w-full flex flex-col items-center mb-16">
       <PageButtons {...recipesQuery.data.meta} />
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 p-3">
         {recipesQuery.data.recipes.map((tileData) => (
