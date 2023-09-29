@@ -66,7 +66,7 @@ export function MyRecipes() {
       return;
     }
     document.getElementById("filters-menu").classList.toggle("hidden");
-    // document.getElementById("filters-blur").classList.toggle("hidden");
+    document.getElementById("filters-menu").classList.toggle("flex");
   }, [toggleFiltersMenu]);
 
   // when search parameters change, update currentSearchParams
@@ -93,7 +93,7 @@ export function MyRecipes() {
           and to prevent accidental redirects when misclicking a recipe while setting filters */}
         <div
           // id="filters-blur" md:hidden
-          className="h-auto backdrop-blur-md flex-grow"
+          className="h-full backdrop-blur-md flex-grow"
         ></div>
       </div>
       {/* Wrapper for filter menu button, search bar, and recipe grid */}
