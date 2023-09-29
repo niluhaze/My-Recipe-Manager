@@ -1,0 +1,88 @@
+// The following requests should all work with response status 200 / 201 when sent in order:
+
+// get list of first 24 recipes
+GET http://192.168.178.31:3000/my-recipes
+// response: {"meta": ..., "recipes": [...]}
+
+###
+
+// get list of recipes with custom query:
+// sort: cookTimeTotal, decreasing / tags: includes "Vegan"
+GET http://192.168.178.31:3000/my-recipes?sortBy=-cookTimeTotal&tags=Vegan
+// response: {"meta": ..., "recipes": [...]}
+
+###
+
+// get falafel recipe data
+GET http://192.168.178.31:3000/recipe/falafel
+// response: {"urlName": "falafel", "recipeName": "Falafel", ...}
+
+###
+
+// post new recipe
+POST http://192.168.178.31:3000/edit
+Content-Type: application/json
+
+{
+    "recipeName": "New Test Recipe",
+    "cookTimeTotal": 30,
+    "cookTimeActive": 20,
+    "tags": ["Main Course"],
+    "quantity": 2,
+    "quantityUnit": "Portions",
+    "ingredients": "Ingredients here.",
+    "body": "Instructions here.",
+    "image": null
+}
+
+// response: {"urlName": "new-test-recipe"}
+
+###
+
+// edit new test recipe
+POST http://192.168.178.31:3000/edit/new-test-recipe
+Content-Type: application/json
+
+{
+    "recipeName": "New Test Recipe With New Title",
+    "cookTimeTotal": 45,
+    "cookTimeActive": 40,
+    "tags": ["My favourites","Main Course"],
+    "quantity": 4,
+    "quantityUnit": "Portions",
+    "ingredients": "Ingredients here.",
+    "body": "Instructions here.",
+    "image": null
+}
+
+// response: {"urlName": "new-test-recipe-with-new-title"}
+
+###
+
+// save recipe
+POST http://192.168.178.31:3000/save/new-test-recipe-with-new-title
+Content-Type: application/json
+
+{
+    "saved": true
+}
+
+// response: {"urlName": "new-test-recipe-with-new-title", "saved": true}
+
+###
+
+// unsave recipe
+POST http://192.168.178.31:3000/save/new-test-recipe-with-new-title
+Content-Type: application/json
+
+{
+    "saved": false
+}
+
+// response: {"urlName": "new-test-recipe-with-new-title", "saved": false}
+
+###
+
+// delete new recipe
+DELETE http://192.168.178.31:3000/edit/new-test-recipe-with-new-title
+// response: {"message": "Deleted recipe 'new-test-recipe-with-new-title'"}

@@ -22,7 +22,7 @@ async function getRecipe(req, res, next) {
     // respond with 404 error if no recipe by that name found
     if (recipe.length == 0) {
       return res.status(404).json({
-        message: `No recipe found with urlName "${req.params.urlName}".`,
+        message: `Recipe '${req.params.urlName}' not found`,
       });
     }
   } catch (error) {

@@ -10,26 +10,27 @@ const database = require("../scripts/database");
 
 // route for posting a new recipe under "/edit":
 router.post("/", async (req, res) => {
-  const newUrlName = await database.getNewUrlName(req.body.recipeName);
-  const newDate = Date.now();
-
-  const recipe = new Recipe({
-    urlName: newUrlName,
-    recipeName: req.body.recipeName,
-    cookTimeTotal: req.body.cookTimeTotal,
-    cookTimeActive: req.body.cookTimeActive,
-    dateAdded: newDate,
-    tags: req.body.tags,
-    quantity: req.body.quantity,
-    quantityUnit: req.body.quantityUnit,
-    ingredients: req.body.ingredients,
-    body: req.body.body,
-    image: req.body.image,
-  });
-  console.log("edit-new:", newUrlName);
+  
   try {
-    const newRecipe = await recipe.save();
-    res.status(201).json({ urlName: newRecipe.urlName });
+    const newUrlName = await database.getNewUrlName(req.body.recipeName);
+    const newDate = Date.now();
+
+    const recipe = new Recipe({
+      urlName: newUrlName,
+      recipeName: req.body.recipeName,
+      cookTimeTotal: req.body.cookTimeTotal,
+      cookTimeActive: req.body.cookTimeActive,
+      dateAdded: newDate,
+      tags: req.body.tags,
+      quantity: req.body.quantity,
+      quantityUnit: req.body.quantityUnit,
+      ingredients: req.body.ingredients,
+      body: req.body.body,
+      image: req.body.image,
+    });
+
+    const updatedRecipe = await recipe.save();
+    res.status(201).json({ urlName: updatedRecipe.urlName });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -38,14 +39,19 @@ router.post("/", async (req, res) => {
 // route for editing an existing recipe under "/edit/urlName":
 router.post("/:urlName", async (req, res) => {
   const urlName = req.params.urlName;
-  const newUrlName = await database.getNewUrlNameAfterEdit( // urlName can change when title changes
-    req.body.recipeName, // new recipe name
-    urlName // old url name
-  );
-  console.log("edit-existing:", urlName, "to", newUrlName);
+
   try {
+    // check if recipe exists
+    if (!(await database.checkIfUrlNameExists(urlName))) {
+      return res.status(404).json({ message: `Recipe '${urlName}' not found` });
+    }
+    const newUrlName = await database.getNewUrlNameAfterEdit(
+      // urlName can change when title changes
+      req.body.recipeName, // new recipe name
+      urlName // old url name
+    );
     // find the recipe with the matching (potentially old) urlName and update it with recipe
-    const newRecipe = await Recipe.findOneAndUpdate(
+    const updatedRecipe = await Recipe.findOneAndUpdate(
       { urlName: urlName }, // condition
       {
         // update
@@ -62,7 +68,7 @@ router.post("/:urlName", async (req, res) => {
       },
       { new: true } // options: return new instead of old recipe data
     );
-    res.status(201).json({ urlName: newRecipe.urlName });
+    res.status(200).json({ urlName: updatedRecipe.urlName });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -70,20 +76,16 @@ router.post("/:urlName", async (req, res) => {
 
 // route for deleting a specific recipe under "/edit/urlName":
 router.delete("/:urlName", async (req, res) => {
+  const urlName = req.params.urlName;
   try {
-    if (await database.checkIfUrlNameExists(req.params.urlName)) {
-      //if the given urlName exists
-
-      await Recipe.deleteOne({ urlName: req.params.urlName }); //remove recipe from database
-      res
-        .status(201)
-        .json({ message: `Deleted recipe '${req.params.urlName}'` }); //respond with confirmation
-    } else {
-      //if the name doesn't exist
-      res
-        .status(404)
-        .json({ message: `Recipe '${req.params.urlName}' not found` });
-    }
+    // check if recipe exists
+    if (!(await database.checkIfUrlNameExists(urlName))) {
+      return res.status(404).json({ message: `Recipe '${urlName}' not found` });
+    } 
+    await Recipe.deleteOne({ urlName: req.params.urlName }); //remove recipe from database
+    res
+      .status(200)
+      .json({ message: `Deleted recipe '${req.params.urlName}'` }); //respond with confirmation
   } catch (error) {
     res.status(500).send({ message: error.message });
   }

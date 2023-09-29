@@ -1,0 +1,61 @@
+// test if all routes respond with 404 if trying to access / modify / delete non-existant recipe:
+
+// this is the only one, that responds with 200, just sends an empty recipe array
+GET http://192.168.178.31:3000/my-recipes?sortBy=-cookTimeTotal&search=this-should-be-a-non-existant-recipe
+// response: 200 {...}
+
+###
+
+// get recipe data
+GET http://192.168.178.31:3000/recipe/this-should-be-a-non-existant-recipe
+// response: 404 {"message": "Recipe 'this-should-be-a-non-existant-recipe' not found"}
+
+###
+
+// edit recipe
+POST http://192.168.178.31:3000/edit/this-should-be-a-non-existant-recipe
+Content-Type: application/json
+
+{
+    "recipeName": "New Test Recipe With New Title",
+    "cookTimeTotal": 45,
+    "cookTimeActive": 40,
+    "tags": ["My favourites","Main Course"],
+    "quantity": 4,
+    "quantityUnit": "Portions",
+    "ingredients": "Ingredients here.",
+    "body": "Instructions here.",
+    "image": null
+}
+
+// response: 404 {"message": "Recipe 'this-should-be-a-non-existant-recipe' not found"}
+
+###
+
+// save recipe
+POST http://192.168.178.31:3000/save/this-should-be-a-non-existant-recipe
+Content-Type: application/json
+
+{
+    "saved": true
+}
+
+// response: 404 {"message": "Recipe 'this-should-be-a-non-existant-recipe' not found"}
+
+###
+
+// unsave recipe
+POST http://192.168.178.31:3000/save/this-should-be-a-non-existant-recipe
+Content-Type: application/json
+
+{
+    "saved": false
+}
+
+// response: 404 {"message": "Recipe 'this-should-be-a-non-existant-recipe' not found"}
+
+###
+
+// delete new recipe
+DELETE http://192.168.178.31:3000/edit/this-should-be-a-non-existant-recipe
+// response: 404 {"message": "Recipe 'this-should-be-a-non-existant-recipe' not found"}

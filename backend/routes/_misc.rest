@@ -1,0 +1,16 @@
+// this is only really useful for creating a bunch of recipes to test if accessing different pages is working
+
+// filler recipe
+POST http://192.168.178.31:3000/edit
+Content-Type: application/json
+
+{
+    "recipeName": "filler",
+    "cookTimeTotal": 1,
+    "cookTimeActive": 1,
+    "tags": [],
+    "quantity": 1,
+    "quantityUnit": "",
+    "ingredients": "",
+    "body": ""
+}
