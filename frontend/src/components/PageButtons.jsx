@@ -26,23 +26,24 @@ const PageButtons = ({ currentPage, pageQuantity }) => {
     <div className="flex gap-2">
       {/* Previous Page (show if not first page) */}
       {currentPage > 1 ? (
-        <PageButton page={currentPage - 1} text="<" key="page-button-previous" />
+        <PageButton
+          page={currentPage - 1}
+          text="<"
+          key="page-button-previous"
+        />
       ) : (
         <div className="w-8"></div>
       )}
-      {[...pageNumbersToAdd].sort().map((value, index, elements) => (
-        <div className="flex gap-2" key={value}>
-          <PageButton
-            page={value}
-            isCurrentPage={currentPage === value}
-          />
-          {elements[index + 1] - value > 1 ? // if the difference between the current and next value is greater than 1, add ellipsis:
-            <span className="text-neutral-500">
-              ⋯
-            </span>
-          : null}
-        </div>
-      ))}
+      {[...pageNumbersToAdd]
+        .sort((a, b) => a - b)
+        .map((value, index, elements) => (
+          <div className="flex gap-2" key={value}>
+            <PageButton page={value} isCurrentPage={currentPage === value} />
+            {elements[index + 1] - value > 1 ? ( // if the difference between the current and next value is greater than 1, add ellipsis:
+              <span className="text-neutral-400">⋯</span>
+            ) : null}
+          </div>
+        ))}
       {/* Next Page (show if not last page) */}
       {currentPage < pageQuantity ? (
         <PageButton page={currentPage + 1} text=">" key="page-button-next" />
