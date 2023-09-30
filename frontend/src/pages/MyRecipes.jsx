@@ -81,7 +81,7 @@ export function MyRecipes() {
         id="filters-menu"
         className="z-10 hidden md:block fixed md:static top-0 bottom-0 min-h-screen w-screen md:w-[200px]"
       >
-        <div className="w-[200px] h-full overflow-y-scroll overflow-x-hidden pb-8 drop-shadow bg-components">
+        <div className="w-[200px] h-full overflow-y-auto overflow-x-hidden pb-8 drop-shadow bg-components">
           <FiltersMenu
             toggleFiltersMenu={toggleFiltersMenu}
             setToggleFiltersMenu={setToggleFiltersMenu}
