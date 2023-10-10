@@ -294,7 +294,7 @@ export const Edit = ({ existingData = {} }) => {
                 <Link
                   to={"/recipe/" + existingData.urlName}
                   disabled={isButtonDisabled}
-                  className="text-center w-36 h-8 p-1 rounded-lg text-primary bg-components border border-primary hover:border-red-500 hover:text-red-500 active:border-red-600 active:text-red-600 disabled:border-neutral-400 disabled:text-neutral-400"
+                  className="text-center w-36 h-8 p-1 rounded-lg text-primary bg-components border border-primary hover:border-red-500 hover:text-red-500 active:border-red-700 active:text-red-700 disabled:border-neutral-400 disabled:text-neutral-400"
                 >
                   Discard Changes
                 </Link>
@@ -302,7 +302,7 @@ export const Edit = ({ existingData = {} }) => {
                 <button
                   onClick={handleDeleteRecipe}
                   disabled={isButtonDisabled}
-                  className="w-36 h-8 p-1 rounded-lg text-primary bg-components border border-primary hover:border-red-500 hover:text-red-500 active:border-red-600 active:text-red-600 disabled:border-neutral-400 disabled:text-neutral-400"
+                  className="w-36 h-8 p-1 rounded-lg text-primary bg-components border border-primary hover:border-red-500 hover:text-red-500 active:border-red-700 active:text-red-700 disabled:border-neutral-400 disabled:text-neutral-400"
                 >
                   Delete Recipe
                 </button>
