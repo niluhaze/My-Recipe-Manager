@@ -13,7 +13,7 @@ module.exports = {
         "components": "#F5F6F3",
         "components-translucent-500": "#F5F6F3A0",
         "gray-translucent-500": "#B0B0B0A0",
-        
+        "neutral-450": "#8B8B8B",
         "not-found": "#E0E0D7"
       }
     }
