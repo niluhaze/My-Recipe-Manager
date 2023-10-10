@@ -14,10 +14,10 @@ const mongoose = require("mongoose");
 const app = express();
 
 // Increase the maximum payload size
-app.use(bodyParser.json({ limit: "10mb" }));
+app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(cors({ origin: "http://localhost:5173" })); // allows queries from localhost
+app.use(cors({ origin: "http://localhost:5173" }));
 
 // connect to MongoDB database on localhost
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
@@ -42,4 +42,4 @@ app.use("/recipe", recipeRouter);
 app.use("/save", saveRouter);
 
 // tell server to listen on specified port and local ip
-app.listen(3000, "192.168.178.31", () => console.log("Server Started"));
+app.listen(process.env.BACKEND_PORT, process.env.BACKEND_IP, () => console.log("Server Started"));
