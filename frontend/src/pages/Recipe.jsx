@@ -132,7 +132,7 @@ export function Recipe({ data }) {
             <label htmlFor="quantity">{data.quantityUnit}</label>
             <button
               type="submit"
-              className="h-8 px-2 rounded-r-lg text-components bg-primary hover:bg-primary-light active:bg-primary-light-light"
+              className="h-8 px-2 rounded-r-lg text-components bg-primary hover:bg-primary-400 active:bg-primary-300"
               onClick={handleQuantityChange}
             >
               Apply

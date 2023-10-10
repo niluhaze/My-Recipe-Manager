@@ -285,7 +285,7 @@ export const Edit = ({ existingData = {} }) => {
               type="submit"
               disabled={isButtonDisabled}
               value={isEditExisting ? "Save Edits" : "Save new Recipe"}
-              className="w-36 h-8 p-1 rounded-lg text-components bg-primary hover:bg-primary-light active:bg-primary-light-light disabled:bg-neutral-400"
+              className="w-36 h-8 p-1 rounded-lg text-components bg-primary hover:bg-primary-400 active:bg-primary-300 disabled:bg-neutral-400"
             />
             {/* Exit and Delete Buttons */}
             {isEditExisting ? ( // show buttons only if editing exisiting recipe

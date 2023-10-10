@@ -34,7 +34,7 @@ const ImageUpload = ({ image, setImage }) => {
           />
         ) : (
           <>
-            <p className="cursor-pointer rounded-lg p-2 text-components bg-primary hover:bg-primary-light active:bg-primary-light-light">
+            <p className="cursor-pointer rounded-lg p-2 text-components bg-primary hover:bg-primary-400 active:bg-primary-300">
               Upload image
             </p>
             <p className="text-neutral-400">or drag an image here...</p>

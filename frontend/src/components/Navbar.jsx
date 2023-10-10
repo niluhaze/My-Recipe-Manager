@@ -39,26 +39,26 @@ const Navbar = () => {
         {/* Links */}
         <div
           id="navbar-links"
-          className="hidden md:inline-block bg-primary-light md:bg-transparent"
+          className="hidden md:inline-block bg-primary-400 md:bg-transparent"
         >
           <div className="text-2xl flex flex-col md:flex-row">
             <Link
               onClick={(e) => setToggle(!toggle)}
-              className="p-2 md:px-3 md:py-4 hover:bg-primary-light active:bg-primary-light-light"
+              className="p-2 md:px-3 md:py-4 hover:bg-primary-400 active:bg-primary-300"
               to="/my-recipes"
             >
               RECIPES
             </Link>
             <Link
               onClick={(e) => setToggle(!toggle)}
-              className="p-2 md:px-3 md:py-4 hover:bg-primary-light active:bg-primary-light-light"
+              className="p-2 md:px-3 md:py-4 hover:bg-primary-400 active:bg-primary-300"
               to="/my-recipes?saved=true"
             >
               SAVED
             </Link>
             <Link
               onClick={(e) => setToggle(!toggle)}
-              className="p-2 md:px-3 md:py-4 hover:bg-primary-light active:bg-primary-light-light"
+              className="p-2 md:px-3 md:py-4 hover:bg-primary-400 active:bg-primary-300"
               to="/edit"
             >
               ADD

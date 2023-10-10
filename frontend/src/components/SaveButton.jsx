@@ -36,7 +36,7 @@ export const SaveButton = ({ urlName, isSavedDefault = false }) => {
   },[isSaved])
 
   return (
-    <button onClick={handleClick} className="p-3 w-10 h-10 bg-gray-translucent-500 hover:bg-components-translucent-500 rounded-full  child:hover:fill-primary-light">
+    <button onClick={handleClick} className="p-3 w-10 h-10 bg-gray-translucent-500 hover:bg-components-translucent-500 rounded-full  child:hover:fill-primary-400">
       {isSaved ? (
         <svg // bookmark icon solid
           className="fill-primary relative -top-[2px]"

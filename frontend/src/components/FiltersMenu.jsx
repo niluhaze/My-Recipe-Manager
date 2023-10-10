@@ -56,14 +56,14 @@ const FiltersMenu = ({
         {/* Submit button */}
         <button
           type="submit"
-          className="p-1 rounded font-semibold text-lg text-components bg-primary hover:bg-primary-light active:bg-primary-light-light"
+          className="p-1 rounded font-semibold text-lg text-components bg-primary hover:bg-primary-400 active:bg-primary-300"
         >
           Apply
         </button>
         {/* Clear button */}
         <button
           onClick={handleClearButton}
-          className="p-1 rounded font-semibold text-lg text-primary border border-primary bg-components hover:bg-primary-light active:bg-primary-light-light"
+          className="p-1 rounded font-semibold text-lg text-primary border border-primary bg-components hover:bg-primary-400 active:bg-primary-300"
         >
           Clear Filters
         </button>
