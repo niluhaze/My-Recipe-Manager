@@ -12,7 +12,6 @@ const FiltersMenu = ({
   toggleFiltersMenu,
   setToggleFiltersMenu,
   defaultFormValues,
-
 }) => {
   // prepare useNavigate hook for handleClearButton
   const navigate = useNavigate();
@@ -86,19 +85,20 @@ const FiltersMenu = ({
           </select>
         </div>
         {/* Saved toggle */}
-        <div>
-          <label className="font-semibold text-lg mr-2" htmlFor="saved">
-            Saved only
-          </label>
+        <label className="flex items-center gap-2 font-semibold text-lg mr-2">
+          Saved only
           <input
-            className="accent-primary"
+            className="peer hidden accent-primary"
             type="checkbox"
             name="saved"
             id="saved"
             defaultChecked={defaultFormValues.saved}
             key={Date.now()}
           />
-        </div>
+          <div className=" relative translate-y-[2px] flex peer-checked:child:translate-x-5 w-10 h-5 rounded-full bg-neutral-400 peer-checked:bg-primary transition-all duration-500 cursor-pointer">
+            <div className="relative h-4 aspect-square rounded-full bg-neutral-200 m-[2px] transition-all duration-500"></div>
+          </div>
+        </label>
         {/* Tags */}
         <div>
           <div className="text-lg font-semibold">Tags</div>
