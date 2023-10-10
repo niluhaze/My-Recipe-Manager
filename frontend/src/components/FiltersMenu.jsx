@@ -63,7 +63,7 @@ const FiltersMenu = ({
         {/* Clear button */}
         <button
           onClick={handleClearButton}
-          className="p-1 rounded font-semibold text-lg text-primary border border-primary bg-components hover:bg-primary-400 active:bg-primary-300"
+          className="p-1 rounded font-semibold text-lg text-primary border border-primary bg-components hover:bg-neutral-200 active:bg-neutral-300"
         >
           Clear Filters
         </button>
