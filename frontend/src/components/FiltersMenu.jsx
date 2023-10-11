@@ -74,6 +74,7 @@ const FiltersMenu = ({
             name="sortBy"
             defaultValue={defaultFormValues.sortBy}
             key={Date.now()}
+            className="px-2 py-1"
             // unique key forces react to rerender component, updating the default value
           >
             <option value="-dateAdded">Newest</option>
