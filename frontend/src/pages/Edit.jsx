@@ -164,7 +164,7 @@ export const Edit = ({ existingData = {} }) => {
                     })}
                   />
                   <label
-                    className="px-2 py-[2px] rounded-full bg-neutral-400 hover:bg-neutral-450 active:bg-neutral-500 text-components peer-checked/check:bg-primary peer-checked/check:hover:bg-primary-400 peer-checked/check:active:bg-primary-300"
+                    className="px-2 py-[2px] rounded-full bg-neutral-400 hover:bg-neutral-350 active:bg-neutral-300 text-components peer-checked/check:bg-primary peer-checked/check:hover:bg-primary-400 peer-checked/check:active:bg-primary-300"
                     htmlFor={"id-" + tag}
                   >
                     {tag}
