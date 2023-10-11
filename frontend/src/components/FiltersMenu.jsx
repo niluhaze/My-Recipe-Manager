@@ -95,8 +95,8 @@ const FiltersMenu = ({
             defaultChecked={defaultFormValues.saved}
             key={Date.now()}
           />
-          <div className=" relative translate-y-[2px] flex peer-checked:child:translate-x-5 w-10 h-5 rounded-full bg-neutral-400 peer-checked:bg-primary transition-all duration-500 cursor-pointer">
-            <div className="relative h-4 aspect-square rounded-full bg-neutral-200 m-[2px] transition-all duration-500"></div>
+          <div className=" relative translate-y-[2px] flex peer-checked:child:translate-x-5 w-10 h-5 rounded-full bg-neutral-400 hover:bg-neutral-350 peer-checked:bg-primary peer-checked:hover:bg-primary-400 transition-all duration-300 cursor-pointer">
+            <div className="relative h-4 aspect-square rounded-full bg-neutral-200 m-[2px] transition-all duration-300"></div>
           </div>
         </label>
         {/* Tags */}
