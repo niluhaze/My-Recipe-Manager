@@ -312,7 +312,7 @@ export const Edit = ({ existingData = {} }) => {
         </div>
         <div className="flex flex-col gap-1">
           {/* Ingredients */}
-          <label htmlFor="body" className="text-2xl font-semibold">
+          <label htmlFor="body" className="text-3xl font-semibold">
             Ingredients
           </label>
           <TextareaAutosize
@@ -321,18 +321,18 @@ export const Edit = ({ existingData = {} }) => {
             rows="128"
             defaultValue={getValue({ data: existingData, key: "ingredients" })}
             minRows={8}
-            className="w-full"
+            className="w-full text-xl"
           />
         </div>
         <div className="flex flex-col gap-1">
           {/* Recipe Instructions / Body */}
-          <label htmlFor="body" className="text-2xl font-semibold">
+          <label htmlFor="body" className="text-3xl font-semibold">
             Instructions
           </label>
           <TextareaAutosize
             name="body"
             id="body"
-            className="w-full"
+            className="w-full text-xl"
             rows="128"
             defaultValue={getValue({ data: existingData, key: "body" })}
             minRows={8}

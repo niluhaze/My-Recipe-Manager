@@ -139,13 +139,13 @@ export function Recipe({ data }) {
             </button>
           </form>
           {/* Ingredients */}
-          <h2 className="text-2xl font-semibold">Ingredients</h2>
-          <p className="whitespace-break-spaces" key={data.ingredients}>
+          <h2 className="text-3xl font-semibold">Ingredients</h2>
+          <p className="text-xl whitespace-break-spaces" key={data.ingredients}>
             {ingredients}
           </p>
           {/* Instructions / Body */}
-          <h2 className="text-2xl font-semibold pt-6">Instructions</h2>
-          <p className="whitespace-pre-line">{data.body}</p>
+          <h2 className="text-3xl font-semibold pt-6">Instructions</h2>
+          <p className="text-xl whitespace-pre-line">{data.body}</p>
         </div>
       </div>
     </>
