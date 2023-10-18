@@ -1,6 +1,6 @@
 // The following requests should all work with response status 200 / 201 when sent in order:
 
-// get list of first 24 recipes
+// get list of the first page of recipes
 GET http://127.0.0.1:3000/my-recipes
 // response: {"meta": ..., "recipes": [...]}
 
