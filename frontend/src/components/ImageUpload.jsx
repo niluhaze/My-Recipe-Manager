@@ -5,6 +5,7 @@
 // specify imports
 import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
+import { cropAndResizeImage } from "../scripts/cropAndResizeImage";
 
 const ImageUpload = ({ image, setImage }) => {
   const onDrop = useCallback((acceptedFiles) => {
@@ -14,8 +15,7 @@ const ImageUpload = ({ image, setImage }) => {
       reader.onabort = () => console.log("file reading was aborted");
       reader.onerror = () => console.log("file reading has failed");
       reader.onload = () => {
-        console.log(reader.result);
-        setImage(reader.result); // when loaded, save image to image state variable
+        setImage(cropAndResizeImage(reader.result)); // when loaded, save image to image state variable
       };
       reader.readAsDataURL(file);
     });
