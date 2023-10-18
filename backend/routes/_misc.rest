@@ -1,4 +1,4 @@
-// this is only really useful for creating a bunch of recipes to test if accessing different pages is working
+// this can be used for creating filler recipes, e.g. to test if accessing different pages is working
 
 // filler recipe
 POST http://192.168.178.31:3000/edit
