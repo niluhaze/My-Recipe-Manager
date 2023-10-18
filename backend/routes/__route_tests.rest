@@ -13,13 +13,13 @@ GET http://127.0.0.1:3000/my-recipes?sortBy=-cookTimeTotal&tags=Vegan
 
 ###
 
-// get falafel recipe data
+// get falafel recipe data (should exist in test data)
 GET http://127.0.0.1:3000/recipe/falafel
 // response: {"urlName": "falafel", "recipeName": "Falafel", ...}
 
 ###
 
-// post new recipe
+// post new test recipe
 POST http://127.0.0.1:3000/edit
 Content-Type: application/json
 
@@ -36,6 +36,12 @@ Content-Type: application/json
 }
 
 // response: {"urlName": "new-test-recipe"}
+
+###
+
+// get new test recipe
+GET http://127.0.0.1:3000/recipe/falafel
+// response: {"urlName": "falafel", "recipeName": "Falafel", ...}
 
 ###
 
