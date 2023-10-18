@@ -4,6 +4,9 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{js,jsx}"],
   mode: "jit",
   theme: {
+    fontFamily: {
+      sans: ["'Bree Serif'", "Sans"]
+    },
     extend: {
       colors: {
         "primary": "#407549",
