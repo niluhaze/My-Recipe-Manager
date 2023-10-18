@@ -23,7 +23,7 @@ module.exports = {
     }
   },
   plugins: [
-    // use "child:*class*" to make tailwind class affect children
+    // use "child:*class*" to make tailwind class affect an element's children
     function ({ addVariant }) { 
         addVariant('child', '& > *');
     }
