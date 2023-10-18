@@ -1,19 +1,19 @@
 // test if all routes respond with 404 if trying to access / modify / delete non-existant recipe:
 
 // this is the only one, that responds with 200, just sends an empty recipe array
-GET http://192.168.178.31:3000/my-recipes?sortBy=-cookTimeTotal&search=this-should-be-a-non-existant-recipe
+GET http://127.0.0.1:3000/my-recipes?sortBy=-cookTimeTotal&search=this-should-be-a-non-existant-recipe
 // response: 200 {...}
 
 ###
 
 // get recipe data
-GET http://192.168.178.31:3000/recipe/this-should-be-a-non-existant-recipe
+GET http://127.0.0.1:3000/recipe/this-should-be-a-non-existant-recipe
 // response: 404 {"message": "Recipe 'this-should-be-a-non-existant-recipe' not found"}
 
 ###
 
 // edit recipe
-POST http://192.168.178.31:3000/edit/this-should-be-a-non-existant-recipe
+POST http://127.0.0.1:3000/edit/this-should-be-a-non-existant-recipe
 Content-Type: application/json
 
 {
@@ -33,7 +33,7 @@ Content-Type: application/json
 ###
 
 // save recipe
-POST http://192.168.178.31:3000/save/this-should-be-a-non-existant-recipe
+POST http://127.0.0.1:3000/save/this-should-be-a-non-existant-recipe
 Content-Type: application/json
 
 {
@@ -45,7 +45,7 @@ Content-Type: application/json
 ###
 
 // unsave recipe
-POST http://192.168.178.31:3000/save/this-should-be-a-non-existant-recipe
+POST http://127.0.0.1:3000/save/this-should-be-a-non-existant-recipe
 Content-Type: application/json
 
 {
@@ -57,5 +57,5 @@ Content-Type: application/json
 ###
 
 // delete new recipe
-DELETE http://192.168.178.31:3000/edit/this-should-be-a-non-existant-recipe
+DELETE http://127.0.0.1:3000/edit/this-should-be-a-non-existant-recipe
 // response: 404 {"message": "Recipe 'this-should-be-a-non-existant-recipe' not found"}

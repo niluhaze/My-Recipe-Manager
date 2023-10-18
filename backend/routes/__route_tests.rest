@@ -1,26 +1,26 @@
 // The following requests should all work with response status 200 / 201 when sent in order:
 
 // get list of first 24 recipes
-GET http://192.168.178.31:3000/my-recipes
+GET http://127.0.0.1:3000/my-recipes
 // response: {"meta": ..., "recipes": [...]}
 
 ###
 
 // get list of recipes with custom query:
 // sort: cookTimeTotal, decreasing / tags: includes "Vegan"
-GET http://192.168.178.31:3000/my-recipes?sortBy=-cookTimeTotal&tags=Vegan
+GET http://127.0.0.1:3000/my-recipes?sortBy=-cookTimeTotal&tags=Vegan
 // response: {"meta": ..., "recipes": [...]}
 
 ###
 
 // get falafel recipe data
-GET http://192.168.178.31:3000/recipe/falafel
+GET http://127.0.0.1:3000/recipe/falafel
 // response: {"urlName": "falafel", "recipeName": "Falafel", ...}
 
 ###
 
 // post new recipe
-POST http://192.168.178.31:3000/edit
+POST http://127.0.0.1:3000/edit
 Content-Type: application/json
 
 {
@@ -40,7 +40,7 @@ Content-Type: application/json
 ###
 
 // edit new test recipe
-POST http://192.168.178.31:3000/edit/new-test-recipe
+POST http://127.0.0.1:3000/edit/new-test-recipe
 Content-Type: application/json
 
 {
@@ -60,7 +60,7 @@ Content-Type: application/json
 ###
 
 // save recipe
-POST http://192.168.178.31:3000/save/new-test-recipe-with-new-title
+POST http://127.0.0.1:3000/save/new-test-recipe-with-new-title
 Content-Type: application/json
 
 {
@@ -72,7 +72,7 @@ Content-Type: application/json
 ###
 
 // unsave recipe
-POST http://192.168.178.31:3000/save/new-test-recipe-with-new-title
+POST http://127.0.0.1:3000/save/new-test-recipe-with-new-title
 Content-Type: application/json
 
 {
@@ -84,5 +84,5 @@ Content-Type: application/json
 ###
 
 // delete new recipe
-DELETE http://192.168.178.31:3000/edit/new-test-recipe-with-new-title
+DELETE http://127.0.0.1:3000/edit/new-test-recipe-with-new-title
 // response: {"message": "Deleted recipe 'new-test-recipe-with-new-title'"}
