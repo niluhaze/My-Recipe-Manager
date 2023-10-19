@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     fontFamily: {
       // overwrite default font
-      sans: ["'Bree Serif'", "Sans"]
+      sans: ["'Arvo'", "Sans"]
     },
     extend: {
       colors: {
