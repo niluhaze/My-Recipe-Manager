@@ -1,7 +1,7 @@
 {
     "About": ["My Favourites", "Vegan"],
-    "Season": ["Spring", "Summer", "Autumn", "Winter", "All Seasons"],
     "Type": ["Appetizer", "Main Course", "Side Dish", "Dessert", "Baking", "Breakfast", "Snack"],
+    "Seasonal Ingredients": ["Spring", "Summer", "Autumn", "Winter", "All Seasons"],
     "Origin": ["African", "American", "Asian", "European", "Latin American", "Middle Eastern"]
 
 }
