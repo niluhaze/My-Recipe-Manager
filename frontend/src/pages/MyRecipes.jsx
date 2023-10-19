@@ -108,7 +108,7 @@ export function MyRecipes() {
             >
               {/* Sliders icon */}
               <svg
-                className="fill-neutral-500"
+                className="fill-neutral-400"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 512 512"
               >
@@ -131,7 +131,7 @@ export function MyRecipes() {
             <button type="submit" className="h-6 aspect-square mx-1">
               {/* Magnifying glass icon */}
               <svg
-                className="fill-neutral-500"
+                className="fill-neutral-400"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 512 512"
               >

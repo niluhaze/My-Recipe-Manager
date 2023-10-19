@@ -42,7 +42,7 @@ const FiltersMenu = ({
         >
           {/* X icon */}
           <svg
-            className="h-full fill-neutral-500"
+            className="h-full fill-neutral-400"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 384 512"
           >
