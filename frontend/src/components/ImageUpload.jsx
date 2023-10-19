@@ -15,7 +15,10 @@ const ImageUpload = ({ image, setImage }) => {
       reader.onabort = () => console.log("file reading was aborted");
       reader.onerror = () => console.log("file reading has failed");
       reader.onload = () => {
-        setImage(cropAndResizeImage(reader.result)); // when loaded, save image to image state variable
+        // when loaded, crop, resize, and save image
+        cropAndResizeImage(reader.result).then((result) => {
+          setImage(result);
+        });
       };
       reader.readAsDataURL(file);
     });
