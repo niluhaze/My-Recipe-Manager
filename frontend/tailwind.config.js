@@ -5,6 +5,7 @@ module.exports = {
   mode: "jit",
   theme: {
     fontFamily: {
+      // overwrite default font
       sans: ["'Bree Serif'", "Sans"]
     },
     extend: {
