@@ -1,7 +1,20 @@
-General:
-ajust css colors, especially buttons
-go through code
+TODO:
 
-*Frontend:
+* General:
+  - go through code
 
-*Backend:
+* Frontend:
+
+* Backend:
+
+FEATURE IDEAS:
+
+- improve and add ways to easily customize how recipe content is displayed:
+  - for ingredients: alternate between normal and slightly off background color for every ingredient to improve readability
+  - markdown-like way to create ordered and unordered lists, headings, links, etc.
+- better season calendar system without using tags
+- ability to add/edit tags
+- search by ingredients
+- generate grocery list based on saved recipes, taking into account ingredients the user has at home 
+- sort by last cooked (potentially most/least cooked?)
+  - requires way to track when user cooks recipe (just a button on recipe page?)
