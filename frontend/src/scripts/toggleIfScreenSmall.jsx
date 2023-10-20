@@ -5,7 +5,6 @@
 const MAX_SMALL_WIDTH = 767;
 
 export const toggleIfScreenSmall = (state, setState, windowWidth) => {
-  console.log("toggleIfScreenSmall")
   if (windowWidth <= MAX_SMALL_WIDTH) {
     // toggle state by setting it to its inverse
     setState(!state)

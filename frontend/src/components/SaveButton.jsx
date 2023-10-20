@@ -14,13 +14,11 @@ export const SaveButton = ({ urlName, isSavedDefault = false }) => {
     onSuccess: () => {
       // invalidate queries that contain save Button
       queryClient.invalidateQueries(["my-recipes", `recipe-${urlName}`])
-      console.log("invalidated")
     }
   });
 
   const handleClick = (event) => {
     event.preventDefault();
-    console.log("saved before:", isSaved)
     setIsSaved(isSaved => !isSaved)
   }
 
@@ -32,7 +30,6 @@ export const SaveButton = ({ urlName, isSavedDefault = false }) => {
       return;
     }
     postMutation.mutate({saved: isSaved});
-    console.log("saved:", isSaved)
   },[isSaved])
 
   return (
