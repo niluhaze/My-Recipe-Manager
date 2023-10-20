@@ -68,7 +68,7 @@ const FiltersMenu = ({
         </button>
         {/* SortBy dropdown */}
         <div>
-          <div className="font-semibold text-lg">Sort by</div>
+          <h5 className="font-semibold text-lg">Sort by</h5>
           <select
             id="selectSortBy"
             name="sortBy"
