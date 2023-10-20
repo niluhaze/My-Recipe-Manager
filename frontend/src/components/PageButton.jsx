@@ -11,7 +11,7 @@ const PageButton = ({ page=1, text=page, isCurrentPage=false }) => {
   return(
     <Link to={getLinkAddress(page)}>
       <div className={`${(isCurrentPage) ? "text-primary" : ""} h-8 w-8 flex justify-center items-center rounded-full drop-shadow hover:drop-shadow-lg bg-components text-neutral-400`}>
-        <p className="relative -top-px text-lg font-semibold">
+        <p className="relative text-lg font-semibold">
           {text}
         </p>
       </div>
