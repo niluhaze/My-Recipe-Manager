@@ -130,16 +130,13 @@ function generateRecipeListSkipEntry(query) {
 // determine by which variables to sort the recipes depending on the query
 function generateRecipeListSortEntry(query) {
   try {
-    console.log("sortBy", query.sortBy);
     // if no (valid) sortBy given in query
     if (query.sortBy == undefined || query.sortBy.length < 1) {
       return { dateAdded: -1, name: 1 }; // resort to default sorting
     }
     let sortDirection = 1; // set default sort direction
     // The search direction can be reversed with a leading "-", check if this is the case
-    console.log(query.sortBy.charAt(0), query.sortBy.charAt(0) === "-");
     if (query.sortBy.charAt(0) === "-") {
-      console.log("reverse");
       // if this is the case, remove leading "-" and set sort direction accordingly
       query.sortBy = query.sortBy.substring(1, query.sortBy.length);
       sortDirection = -1;
@@ -177,8 +174,6 @@ async function getRecipeListData(query) {
     const findEntry = generateRecipeListFindEntry(query); // filter recipes
     const sortEntry = generateRecipeListSortEntry(query); // specify how elements are sorted
     const skipEntry = generateRecipeListSkipEntry(query); // skip elements of previous pages
-
-    console.log("find, sort, skip entries:", findEntry, sortEntry, skipEntry);
 
     // add metadata to data
     recipeListData.meta.currentPage = query.page || 1;
