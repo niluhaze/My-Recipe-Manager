@@ -80,24 +80,6 @@ async function getNewUrlNameAfterEdit(recipeName, oldUrlName) {
   return urlName; // return urlName if adding a trailing number is not needed
 }
 
-// takes array of strings which form json "key: value" pairs and uses them to create a json
-function createJson(jsonParts) {
-  let jsonString = "{"; // start with {
-
-  for (i in jsonParts) {
-    jsonString += jsonParts[i]; // add key:value pair
-
-    if (i < jsonParts.length - 1) {
-      // if another pair follows, add a comma
-      jsonString += ",";
-    }
-  }
-
-  jsonString += "}"; // end with }
-
-  return JSON.parse(jsonString);
-}
-
 /* 
   Generates the query that will go inside the Recipe.find() method
   to find a list of recipes matching the filter parameters given in query.
@@ -158,22 +140,22 @@ function generateRecipeListSortEntry(query) {
     console.log(query.sortBy.charAt(0), query.sortBy.charAt(0) === "-");
     if (query.sortBy.charAt(0) === "-") {
       console.log("reverse");
-      // if this is the case, remove leading "-" and set search direction accordingly
+      // if this is the case, remove leading "-" and set sort direction accordingly
       query.sortBy = query.sortBy.substring(1, query.sortBy.length);
       sortDirection = -1;
     }
 
-    let jsonParts = []; // build custom sort json based on query
-    jsonParts.push(`"${query.sortBy}": "${sortDirection}"`);
+    let sortJSON = {};
+    sortJSON[query.sortBy] = sortDirection;
 
     // include the following if they are not already included in the query
     if (query.sortBy != "dateAdded") {
-      jsonParts.push('"dateAdded": "1"');
+      sortJSON[dateAdded] = 1;
     }
     if (query.sortBy != "recipeName") {
-      jsonParts.push('"recipeName": "1"');
+      sortJSON[dateAdded] = 1;
     }
-    return createJson(jsonParts);
+    return sortJSON;
   } catch (error) {
     throw error;
   }
