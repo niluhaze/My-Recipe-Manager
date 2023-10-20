@@ -22,7 +22,6 @@ export const Edit = ({ existingData = {} }) => {
   let defaultImage = null;
   //prepare data if available
   if (isEditExisting) {
-    console.log("isEditExisting: true");
     urlName = existingData.urlName;
     defaultImage = existingData.image !== "" ? existingData.image : null;
   }
@@ -44,7 +43,6 @@ export const Edit = ({ existingData = {} }) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["my-recipes", `recipe-${urlName}`]);
-      console.log("Post success!!");
     },
   });
 
@@ -55,7 +53,6 @@ export const Edit = ({ existingData = {} }) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["my-recipes", `recipe-${urlName}`]);
-      console.log("Delete success!!");
       navigate("/my-recipes");
     },
   });
@@ -98,7 +95,6 @@ export const Edit = ({ existingData = {} }) => {
     ].forEach((e) => delete formJSON[e]);
 
     formJSON.image = image;
-    console.log(formJSON);
     postRecipe.mutate(formJSON);
   };
 

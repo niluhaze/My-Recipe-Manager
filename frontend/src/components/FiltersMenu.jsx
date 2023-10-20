@@ -68,14 +68,14 @@ const FiltersMenu = ({
         </button>
         {/* SortBy dropdown */}
         <div>
-          <div className="font-semibold text-lg">Sort by</div>
+          <h5 className="font-semibold text-lg">Sort by</h5>
           <select
             id="selectSortBy"
             name="sortBy"
             defaultValue={defaultFormValues.sortBy}
-            key={Date.now()}
             className="px-2 py-1"
             // unique key forces react to rerender component, updating the default value
+            key={Date.now()}
           >
             <option value="-dateAdded">Newest</option>
             <option value="dateAdded">Oldest</option>
