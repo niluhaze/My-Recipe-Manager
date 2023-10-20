@@ -44,4 +44,9 @@ app.use("/recipe", recipeRouter);
 app.use("/save", saveRouter);
 
 // tell server to listen on specified port and local ip
-app.listen(process.env.BACKEND_PORT, process.env.BACKEND_IP, () => console.log("Server Started"));
+app.listen(process.env.BACKEND_PORT, process.env.BACKEND_IP, () => {
+  console.log("Server Started");
+  console.log(
+    `Listening on: http://${process.env.BACKEND_IP}:${process.env.BACKEND_PORT}`
+  );
+});
