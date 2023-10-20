@@ -17,7 +17,9 @@ const app = express();
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(cors({ origin: "http://127.0.0.1:5173" }));
+const corsSettings = { origin: `${process.env.FRONTEND_URL}` };
+console.log("cors settings set to:", corsSettings);
+app.use(cors(corsSettings));
 
 // connect to MongoDB database on localhost
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
