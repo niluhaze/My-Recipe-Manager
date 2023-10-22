@@ -147,10 +147,10 @@ function generateRecipeListSortEntry(query) {
 
     // include the following if they are not already included in the query
     if (query.sortBy != "dateAdded") {
-      sortJSON[dateAdded] = 1;
+      sortJSON["dateAdded"] = 1;
     }
     if (query.sortBy != "recipeName") {
-      sortJSON[dateAdded] = 1;
+      sortJSON["recipeName"] = 1;
     }
     return sortJSON;
   } catch (error) {
