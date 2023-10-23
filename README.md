@@ -16,8 +16,8 @@ Assuming you already have git, MongoDB(7.0.1), and node.js(18.18.0) installed:
 10. Open "http://127.0.0.1:5173" in your browser and the fist page of the recipe list should load.
 
 If needed, IPs and ports can be changed in the .env files in the frontend and backend folders,
-just make sure they match up with each other and the CORS setting in the /backend/server.js file.
+just make sure they match up with each other.
 
-If you would like to test the backend, you can use the provided __route_test.rest and __route_test_404.rest files located in ./backend/routes
+If you would like to test the backend routes, you can use the provided __route_test.rest and __route_test_404.rest files located in ./backend/routes
 To run the queries defined in the files, you need to install the "REST Client" Extention by Huachao Mao from the VSCode marketplace.
 If you have done so, you should see a "send request" button over each query which should result in a response from the server when clicked.
