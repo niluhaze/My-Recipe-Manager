@@ -1,7 +1,7 @@
 // this can be used for creating filler recipes, e.g. to test if accessing different pages is working
 
 // filler recipe
-POST http://192.168.178.31:3000/edit
+ POST http://localhost:80/edit
 Content-Type: application/json
 
 {

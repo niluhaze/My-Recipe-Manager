@@ -1,26 +1,26 @@
 // The following requests should all work with response status 200 / 201 when sent in order:
 
 // get list of the first page of recipes
-GET http://127.0.0.1:3000/my-recipes
+GET http://localhost:80/my-recipes
 // response: {"meta": ..., "recipes": [...]}
 
 ###
 
 // get list of recipes with custom query:
 // sort: cookTimeTotal, decreasing / tags: includes "Vegan"
-GET http://127.0.0.1:3000/my-recipes?sortBy=-cookTimeTotal&tags=Vegan
+GET http://localhost:80/my-recipes?sortBy=-cookTimeTotal&tags=Vegan
 // response: {"meta": ..., "recipes": [...]}
 
 ###
 
 // get falafel recipe data (should exist in test data)
-GET http://127.0.0.1:3000/recipe/falafel
+GET http://localhost:80/recipe/falafel
 // response: {"urlName": "falafel", "recipeName": "Falafel", ...}
 
 ###
 
 // post new test recipe
-POST http://127.0.0.1:3000/edit
+POST http://localhost:80/edit
 Content-Type: application/json
 
 {
@@ -40,13 +40,13 @@ Content-Type: application/json
 ###
 
 // get new test recipe
-GET http://127.0.0.1:3000/recipe/new-test-recipe
+GET http://localhost:80/recipe/new-test-recipe
 // response: {"urlName": "falafel", "recipeName": "Falafel", ...}
 
 ###
 
 // edit new test recipe
-POST http://127.0.0.1:3000/edit/new-test-recipe
+POST http://localhost:80/edit/new-test-recipe
 Content-Type: application/json
 
 {
@@ -66,7 +66,7 @@ Content-Type: application/json
 ###
 
 // save recipe
-POST http://127.0.0.1:3000/save/new-test-recipe-with-new-title
+POST http://localhost:80/save/new-test-recipe-with-new-title
 Content-Type: application/json
 
 {
@@ -78,7 +78,7 @@ Content-Type: application/json
 ###
 
 // unsave recipe
-POST http://127.0.0.1:3000/save/new-test-recipe-with-new-title
+POST http://localhost:80/save/new-test-recipe-with-new-title
 Content-Type: application/json
 
 {
@@ -90,5 +90,5 @@ Content-Type: application/json
 ###
 
 // delete new recipe
-DELETE http://127.0.0.1:3000/edit/new-test-recipe-with-new-title
+DELETE http://localhost:80/edit/new-test-recipe-with-new-title
 // response: {"message": "Deleted recipe 'new-test-recipe-with-new-title'"}
