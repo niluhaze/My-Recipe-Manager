@@ -7,6 +7,7 @@ require("dotenv").config();
 
 // specify requirements
 const express = require("express");
+const http = require("http");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
@@ -43,10 +44,42 @@ app.use("/my-recipes", myRecipesRouter);
 app.use("/recipe", recipeRouter);
 app.use("/save", saveRouter);
 
-// tell server to listen on specified port and local ip
-app.listen(process.env.BACKEND_PORT, process.env.BACKEND_IP, () => {
-  console.log("Server Started");
-  console.log(
-    `Listening on: http://${process.env.BACKEND_IP}:${process.env.BACKEND_PORT}`
-  );
-});
+var server = http.createServer(app);
+
+// try to start server listener with 3 different sets of parameters
+const startParameters = [
+  {
+    parameters: [process.env.BACKEND_PORT, process.env.BACKEND_IP],
+    errorMessage:
+      "Could not start server on default ip, listening on all local ips instead.",
+  },
+  {
+    parameters: [process.env.BACKEND_PORT],
+    errorMessage:
+      "Could not start server on default port, trying to choose free port instead.",
+  },
+  {
+    parameters: [],
+    errorMessage: "Could not start server at all.",
+  },
+];
+
+// run listener functions
+const iterateStartParameters = (parameterNumber = 0) => {
+  server.on("error", (error) => {
+    if (error.code !== "EADDRINUSE" && parameterNumber + 1 < startParameters.length) {
+      console.log("An unexpected error happened, trying error handling for known startup error \"EADDRINUSE\" anyways.")
+    }
+    console.log(startParameters[parameterNumber].errorMessage);
+    if (parameterNumber + 1 < startParameters.length) {
+      iterateStartParameters(parameterNumber + 1);
+    }
+  });
+  server.listen(
+    ...startParameters[parameterNumber].parameters,
+    () => {
+      console.log("Server started, listening on:", server.address());
+    });
+};
+ 
+iterateStartParameters();
